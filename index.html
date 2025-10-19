@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICP Club - Plataforma</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Login Page */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at top, rgba(79, 70, 229, 0.1) 0%, transparent 50%);
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .link-text {
+            color: #4F46E5;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .link-text:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: rgba(255, 255, 255, 0.03);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            flex: 1;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a1a1aa;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        .nav-item.active {
+            background: rgba(79, 70, 229, 0.2);
+            color: #4F46E5;
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            padding: 12px 16px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #a1a1aa;
+            font-size: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4F46E5;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #a1a1aa;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Week Cards */
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .week-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .week-card:hover {
+            transform: translateY(-5px);
+            border-color: #4F46E5;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
+        }
+
+        .week-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .week-number {
+            font-size: 0.9rem;
+            color: #4F46E5;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .week-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .week-description {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .week-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .badge-current {
+            background: rgba(79, 70, 229, 0.2);
+            color: #4F46E5;
+        }
+
+        .badge-locked {
+            background: rgba(161, 161, 170, 0.2);
+            color: #a1a1aa;
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(79, 70, 229, 0.2);
+            border-top-color: #4F46E5;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .weeks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <div class="logo">ICP Club</div>
+            
+            <div id="errorMessage" class="error-message hidden"></div>
+            <div id="successMessage" class="success-message hidden"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="tu@email.com"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        class="form-input" 
+                        placeholder="••••••••"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn" id="loginBtn">
+                    Iniciar Sesión
+                </button>
+            </form>
+            
+            <p class="text-center" style="margin-top: 1rem; color: #a1a1aa; font-size: 0.9rem;">
+                ¿Problemas para acceder? Contacta con tu mentor.
+            </p>
+        </div>
+    </div>
+
+    <!-- DASHBOARD APP -->
+    <div id="dashboardApp" class="app-container hidden">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">ICP Club</div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" data-page="weeks">
+                    <span class="nav-icon">📚</span>
+                    <span>Semanas</span>
+                </div>
+                <div class="nav-item" data-page="exercises">
+                    <span class="nav-icon">✍️</span>
+                    <span>Mis Ejercicios</span>
+                </div>
+                <div class="nav-item" data-page="calendar">
+                    <span class="nav-icon">📅</span>
+                    <span>Agendar Llamada</span>
+                </div>
+                <div class="nav-item" data-page="profile">
+                    <span class="nav-icon">👤</span>
+                    <span>Mi Perfil</span>
+                </div>
+            </div>
+            
+            <button class="logout-btn" id="logoutBtn">
+                Cerrar Sesión
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page-content">
+                <div class="page-header">
+                    <h1 class="page-title">¡Bienvenido, <span id="userName">Trader</span>!</h1>
+                    <p class="page-subtitle">Aquí tienes tu progreso y próximas tareas</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="currentWeekStat">1</div>
+                        <div class="stat-label">Semana Actual</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="completedExercises">0</div>
+                        <div class="stat-label">Ejercicios Completados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="progressPercentage">0%</div>
+                        <div class="stat-label">Progreso Total</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Tu Progreso General</h2>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Programa de 8 semanas</span>
+                            <span id="progressText">0/8 semanas</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">Semana Actual</h2>
+                    <p style="color: #a1a1aa; margin-bottom: 1rem;">Estás en la <strong style="color: #4F46E5;">Semana <span id="currentWeekText">1</span></strong></p>
+                    <button class="btn" onclick="navigateToPage('weeks')" style="width: auto;">
+                        Ver Contenido de la Semana →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Weeks Page -->
+            <div id="weeksPage" class="page-content hidden">
+                <div class="page-header">
+                    <h1 class="page-title">Estructura del Programa</h1>
+                    <p class="page-subtitle">8 semanas de contenido estructurado</p>
+                </div>
+
+                <div class="weeks-grid">
+                    <div class="week-card" data-week="1">
+                        <div class="week-number">SEMANA 1</div>
+                        <h3 class="week-title">Baseline, set-up, objetivos y plan personal</h3>
+                        <p class="week-description">Establecemos tu situación actual y definimos objetivos claros</p>
+                        <span class="week-badge badge-current">Actual</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="2">
+                        <div class="week-number">SEMANA 2</div>
+                        <h3 class="week-title">Identificar errores y triggers</h3>
+                        <p class="week-description">Análisis profundo de patrones negativos</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="3">
+                        <div class="week-number">SEMANA 3</div>
+                        <h3 class="week-title">Hábitos previos y checklist en ejecución</h3>
+                        <p class="week-description">Construcción de rutinas pre-sesión</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="4">
+                        <div class="week-number">SEMANA 4</div>
+                        <h3 class="week-title">Integrar plan de trading</h3>
+                        <p class="week-description">Documentación y sistematización de tu plan</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="5">
+                        <div class="week-number">SEMANA 5</div>
+                        <h3 class="week-title">Journal y métricas clave</h3>
+                        <p class="week-description">Sistema de tracking y análisis</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="6">
+                        <div class="week-number">SEMANA 6</div>
+                        <h3 class="week-title">Gestión emocional y sesgos</h3>
+                        <p class="week-description">Psicología del trading avanzada</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="7">
+                        <div class="week-number">SEMANA 7</div>
+                        <h3 class="week-title">Auditoría final y roadmap</h3>
+                        <p class="week-description">Revisión completa de tu progreso</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                    
+                    <div class="week-card locked" data-week="8">
+                        <div class="week-number">SEMANA 8</div>
+                        <h3 class="week-title">Graduación</h3>
+                        <p class="week-description">Plan de continuidad y siguiente nivel</p>
+                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Pages (Placeholder) -->
+            <div id="exercisesPage" class="page-content hidden">
+                <div class="page-header">
+                    <h1 class="page-title">Mis Ejercicios</h1>
+                    <p class="page-subtitle">Revisa tus ejercicios completados y pendientes</p>
+                </div>
+                <div class="card">
+                    <p style="color: #a1a1aa;">Esta sección se está construyendo...</p>
+                </div>
+            </div>
+
+            <div id="calendarPage" class="page-content hidden">
+                <div class="page-header">
+                    <h1 class="page-title">Agendar Llamada</h1>
+                    <p class="page-subtitle">Reserva tu sesión 1:1 con tu mentor</p>
+                </div>
+                <div class="card">
+                    <div style="min-height: 600px;">
+                        <iframe 
+                            src="https://calendly.com/edgartradea/30min" 
+                            width="100%" 
+                            height="600" 
+                            frameborder="0">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profilePage" class="page-content hidden">
+                <div class="page-header">
+                    <h1 class="page-title">Mi Perfil</h1>
+                    <p class="page-subtitle">Información de tu cuenta</p>
+                </div>
+                <div class="card">
+                    <p style="color: #a1a1aa;">Esta sección se está construyendo...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1U_K-9vkGGnKcbAALA-pSRMTv8f0B_M4",
+            authDomain: "icp-club-app.firebaseapp.com",
+            projectId: "icp-club-app",
+            storageBucket: "icp-club-app.firebasestorage.app",
+            messagingSenderId: "684016793931",
+            appId: "1:684016793931:web:127126cbb7b133ad5290ce",
+            measurementId: "G-VLP5LKF4J8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Global state
+        let currentUser = null;
+
+        // DOM Elements
+        const loginPage = document.getElementById('loginPage');
+        const dashboardApp = document.getElementById('dashboardApp');
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Auth State Observer
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                await loadUserData(user);
+                showDashboard();
+            } else {
+                currentUser = null;
+                showLogin();
+            }
+        });
+
+        // Login Handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            hideMessages();
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Iniciando...';
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                console.error('Login error:', error);
+                showError(getErrorMessage(error.code));
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Iniciar Sesión';
+            }
+        });
+
+        // Logout Handler
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+
+        // Load User Data
+        async function loadUserData(user) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    updateDashboardUI(userData);
+                } else {
+                    // Create default user profile if doesn't exist
+                    const defaultData = {
+                        email: user.email,
+                        displayName: user.email.split('@')[0],
+                        role: 'student',
+                        currentWeek: 1,
+                        completedWeeks: [],
+                        createdAt: new Date()
+                    };
+                    await setDoc(doc(db, 'users', user.uid), defaultData);
+                    updateDashboardUI(defaultData);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // Update Dashboard UI
+        function updateDashboardUI(userData) {
+            document.getElementById('userName').textContent = userData.displayName || 'Trader';
+            document.getElementById('currentWeekStat').textContent = userData.currentWeek || 1;
+            document.getElementById('currentWeekText').textContent = userData.currentWeek || 1;
+            
+            const completedCount = userData.completedWeeks?.length || 0;
+            document.getElementById('completedExercises').textContent = completedCount;
+            
+            const progress = Math.round((completedCount / 8) * 100);
+            document.getElementById('progressPercentage').textContent = progress + '%';
+            document.getElementById('progressText').textContent = `${completedCount}/8 semanas`;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        // Show/Hide Functions
+        function showLogin() {
+            loginPage.classList.remove('hidden');
+            dashboardApp.classList.add('hidden');
+        }
+
+        function showDashboard() {
+            loginPage.classList.add('hidden');
+            dashboardApp.classList.remove('hidden');
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            setTimeout(() => errorMessage.classList.add('hidden'), 5000);
+        }
+
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.remove('hidden');
+            setTimeout(() => successMessage.classList.add('hidden'), 3000);
+        }
+
+        function hideMessages() {
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
+        }
+
+        // Error Messages
+        function getErrorMessage(code) {
+            const messages = {
+                'auth/invalid-email': 'Email inválido',
+                'auth/user-disabled': 'Usuario deshabilitado',
+                'auth/user-not-found': 'Usuario no encontrado',
+                'auth/wrong-password': 'Contraseña incorrecta',
+                'auth/invalid-credential': 'Credenciales inválidas',
+                'auth/too-many-requests': 'Demasiados intentos. Intenta más tarde.'
+            };
+            return messages[code] || 'Error al iniciar sesión';
+        }
+
+        // Navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        const pages = document.querySelectorAll('.page-content');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const pageName = item.dataset.page;
+                navigateToPage(pageName);
+            });
+        });
+
+        window.navigateToPage = function(pageName) {
+            // Update active nav item
+            navItems.forEach(item => {
+                if (item.dataset.page === pageName) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Show corresponding page
+            pages.forEach(page => {
+                if (page.id === pageName + 'Page') {
+                    page.classList.remove('hidden');
+                } else {
+                    page.classList.add('hidden');
+                }
+            });
+        }
+
+        // Week Cards Click Handler
+        document.querySelectorAll('.week-card').forEach(card => {
+            card.addEventListener('click', () => {
+                if (!card.classList.contains('locked')) {
+                    const weekNumber = card.dataset.week;
+                    alert(`Abriendo semana ${weekNumber}...`);
+                    // TODO: Navigate to week detail page
+                }
+            });
+        });
+
+        // Make functions globally available
