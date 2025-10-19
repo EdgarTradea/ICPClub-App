@@ -687,17 +687,23 @@
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
+            
+            console.log('Attempting login with:', email);
             
             hideMessages();
             loginBtn.disabled = true;
             loginBtn.textContent = 'Iniciando...';
             
             try {
-                await signInWithEmailAndPassword(auth, email, password);
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log('Login successful:', userCredential.user.uid);
+                showSuccess('Login exitoso! Cargando dashboard...');
             } catch (error) {
                 console.error('Login error:', error);
+                console.error('Error code:', error.code);
+                console.error('Error message:', error.message);
                 showError(getErrorMessage(error.code));
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Iniciar Sesión';
