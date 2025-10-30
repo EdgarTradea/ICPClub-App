@@ -1327,45 +1327,65 @@
         }
 
         async function loadExercises() {
+            // Setup tabs first (remove old listeners)
+            const tabs = document.querySelectorAll('.exercises-tabs .tab');
+            tabs.forEach(tab => {
+                // Remove old listeners by cloning
+                const newTab = tab.cloneNode(true);
+                tab.parentNode.replaceChild(newTab, tab);
+            });
+
+            // Add new listeners
+            document.querySelectorAll('.exercises-tabs .tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.exercises-tabs .tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    if (tab.dataset.tab === 'pending') {
+                        document.getElementById('pendingExercises').classList.remove('hidden');
+                        document.getElementById('completedExercisesList').classList.add('hidden');
+                    } else {
+                        document.getElementById('pendingExercises').classList.add('hidden');
+                        document.getElementById('completedExercisesList').classList.remove('hidden');
+                    }
+                });
+            });
+
             try {
                 const exercisesRef = collection(db, 'exercises');
                 const q = query(
                     exercisesRef,
-                    where('userId', '==', currentUser.uid),
-                    orderBy('createdAt', 'desc')
+                    where('userId', '==', currentUser.uid)
                 );
                 
                 const snapshot = await getDocs(q);
                 const exercises = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Sort by createdAt manually
+                exercises.sort((a, b) => {
+                    const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+                    const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+                    return bTime - aTime;
+                });
+
+                console.log('Ejercicios cargados:', exercises); // Debug
 
                 const pending = exercises.filter(e => e.status === 'draft' || e.status === 'pending');
                 const completed = exercises.filter(e => e.status === 'completed');
 
                 renderExercisesList('pendingExercises', pending);
                 renderExercisesList('completedExercisesList', completed);
-
-                // Setup tabs
-                document.querySelectorAll('.exercises-tabs .tab').forEach(tab => {
-                    tab.addEventListener('click', () => {
-                        document.querySelectorAll('.exercises-tabs .tab').forEach(t => t.classList.remove('active'));
-                        tab.classList.add('active');
-                        
-                        if (tab.dataset.tab === 'pending') {
-                            document.getElementById('pendingExercises').classList.remove('hidden');
-                            document.getElementById('completedExercisesList').classList.add('hidden');
-                        } else {
-                            document.getElementById('pendingExercises').classList.add('hidden');
-                            document.getElementById('completedExercisesList').classList.remove('hidden');
-                        }
-                    });
-                });
             } catch (error) {
                 console.error('Error loading exercises:', error);
+                document.getElementById('pendingExercises').innerHTML = 
+                    `<p style="color: #ef4444; text-align: center; padding: 2rem;">Error al cargar ejercicios: ${error.message}</p>`;
             }
         }
 
         function renderExercisesList(containerId, exercises) {
             const container = document.getElementById(containerId);
+            
+            console.log(`Renderizando ${exercises.length} ejercicios en ${containerId}`); // Debug
             
             if (exercises.length === 0) {
                 container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay ejercicios aquí</p>';
@@ -1378,7 +1398,19 @@
                 const typeLabel = exercise.type === 'weekly' ? 'Semanal' : 
                                   exercise.type === 'monthly' ? 'Mensual' : 'Trimestral';
                 
-                const date = exercise.createdAt?.toDate ? exercise.createdAt.toDate().toLocaleDateString('es-ES') : 'Sin fecha';
+                let date = 'Sin fecha';
+                if (exercise.createdAt) {
+                    try {
+                        if (exercise.createdAt.toDate) {
+                            date = exercise.createdAt.toDate().toLocaleDateString('es-ES');
+                        } else if (exercise.createdAt.seconds) {
+                            date = new Date(exercise.createdAt.seconds * 1000).toLocaleDateString('es-ES');
+                        }
+                    } catch (e) {
+                        console.error('Error parsing date:', e);
+                    }
+                }
+                
                 const statusLabel = exercise.status === 'draft' ? '📝 Borrador' : 
                                     exercise.status === 'pending' ? '⏳ En revisión' : '✅ Completado';
 
