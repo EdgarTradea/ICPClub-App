@@ -57,9 +57,10 @@
             margin-bottom: 0.5rem;
             color: #a1a1aa;
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .form-input {
+        .form-input, .form-textarea, .form-select {
             width: 100%;
             padding: 12px 16px;
             background: rgba(255, 255, 255, 0.05);
@@ -68,12 +69,27 @@
             color: #ffffff;
             font-size: 1rem;
             transition: all 0.3s ease;
+            font-family: inherit;
         }
 
-        .form-input:focus {
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
             border-color: #4F46E5;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: #1a1a1a;
+            color: #ffffff;
         }
 
         .btn {
@@ -98,6 +114,25 @@
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.875rem;
+            width: auto;
         }
 
         .error-message, .success-message {
@@ -164,7 +199,7 @@
             color: #a1a1aa;
         }
 
-        .nav-item:hover {
+        .nav-item:hover:not(.locked) {
             background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
         }
@@ -179,19 +214,15 @@
             cursor: not-allowed;
         }
 
-        .nav-icon {
-            font-size: 1.2rem;
-        }
-
         .logout-btn {
             padding: 12px 16px;
             background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 8px;
+            color: #ef4444;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
         }
 
         .logout-btn:hover {
@@ -202,6 +233,15 @@
             flex: 1;
             padding: 2rem;
             overflow-y: auto;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         .page-header {
@@ -216,27 +256,12 @@
 
         .page-subtitle {
             color: #a1a1aa;
-            font-size: 1rem;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -252,7 +277,10 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
-            color: #4F46E5;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 0.5rem;
         }
 
@@ -261,36 +289,48 @@
             font-size: 0.9rem;
         }
 
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
         .progress-container {
-            margin: 1.5rem 0;
+            margin-top: 1rem;
         }
 
         .progress-label {
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
             color: #a1a1aa;
+            font-size: 0.9rem;
         }
 
         .progress-bar {
             width: 100%;
-            height: 8px;
+            height: 12px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 6px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(135deg, #4F46E5, #7C3AED);
-            border-radius: 4px;
-            transition: width 0.5s ease;
+            transition: width 0.3s ease;
         }
 
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
@@ -301,12 +341,14 @@
             padding: 1.5rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .step-card:hover:not(.locked) {
-            transform: translateY(-5px);
-            border-color: #4F46E5;
-            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
+        .step-card:not(.locked):hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
         }
 
         .step-card.locked {
@@ -314,26 +356,28 @@
             cursor: not-allowed;
         }
 
+        .step-info {
+            flex: 1;
+        }
+
         .step-number {
-            font-size: 0.9rem;
             color: #4F46E5;
+            font-size: 0.9rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .step-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .step-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-top: 0.5rem;
         }
 
         .badge-completed {
@@ -347,50 +391,50 @@
         }
 
         .badge-locked {
-            background: rgba(161, 161, 170, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             color: #a1a1aa;
         }
 
         .video-container {
-            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .video-container iframe, .video-container video {
-            width: 100%;
-            height: 450px;
-            display: block;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .tool-card {
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+            background: rgba(79, 70, 229, 0.1);
             border: 1px solid rgba(79, 70, 229, 0.3);
             border-radius: 12px;
             padding: 1.5rem;
-            text-align: center;
-        }
-
-        .tool-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #4F46E5;
+            margin-bottom: 1.5rem;
         }
 
         .exercises-tabs {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .tab {
             padding: 12px 24px;
             cursor: pointer;
             color: #a1a1aa;
+            font-weight: 500;
             border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
             transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            color: #ffffff;
         }
 
         .tab.active {
@@ -398,39 +442,31 @@
             border-bottom-color: #4F46E5;
         }
 
+        .exercises-list {
+            display: grid;
+            gap: 1rem;
+        }
+
         .exercise-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 1.5rem;
-            margin-bottom: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-
-        .exercise-card:hover {
-            border-color: #4F46E5;
-            box-shadow: 0 5px 20px rgba(79, 70, 229, 0.2);
-        }
-
-        .exercise-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .exercise-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .exercise-info h3 {
+            font-size: 1.2rem;
             margin-bottom: 0.5rem;
-        }
-
-        .exercise-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .exercise-type {
-            font-size: 0.8rem;
-            padding: 4px 12px;
-            border-radius: 8px;
-            background: rgba(79, 70, 229, 0.2);
-            color: #4F46E5;
         }
 
         .exercise-meta {
@@ -438,25 +474,277 @@
             font-size: 0.9rem;
         }
 
-        .hidden {
-            display: none !important;
+        .exercise-type {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .type-weekly {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .type-monthly {
+            background: rgba(168, 85, 247, 0.2);
+            color: #a855f7;
+        }
+
+        .type-quarterly {
+            background: rgba(236, 72, 153, 0.2);
+            color: #ec4899;
         }
 
         .locked-message {
             text-align: center;
-            padding: 3rem;
-            color: #a1a1aa;
+            padding: 4rem 2rem;
         }
 
         .locked-message h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
+        }
+
+        .locked-message p {
+            color: #a1a1aa;
+        }
+
+        .exercise-form {
+            max-width: 800px;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .form-section-desc {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .auto-save-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        .auto-save-indicator.saving {
+            color: #3b82f6;
+        }
+
+        .auto-save-indicator.saved {
+            color: #10b981;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .review-section {
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .review-content {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            color: #e5e7eb;
+            line-height: 1.6;
+        }
+
+        /* Admin styles */
+        .admin-section {
+            margin-bottom: 2rem;
+        }
+
+        .user-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-email {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-stat {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .user-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4F46E5;
+        }
+
+        .user-stat-label {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .step-unlock-controls {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .review-exercise-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .review-exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .review-field {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .review-field:last-child {
+            border-bottom: none;
+        }
+
+        .review-field-title {
+            font-weight: 600;
+            color: #4F46E5;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-field-content {
+            color: #e5e7eb;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #a1a1aa;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
             color: #ffffff;
         }
 
         @media (max-width: 768px) {
             .sidebar {
-                display: none;
+                width: 200px;
             }
 
             .main-content {
@@ -467,8 +755,12 @@
                 grid-template-columns: 1fr;
             }
 
-            .steps-grid {
-                grid-template-columns: 1fr;
+            .button-group {
+                flex-direction: column;
+            }
+
+            .user-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -505,27 +797,8 @@
         <div class="sidebar">
             <div class="sidebar-logo">ICP Club</div>
             
-            <div class="nav-menu">
-                <div class="nav-item active" data-page="dashboard">
-                    <span class="nav-icon">📊</span>
-                    <span>Dashboard</span>
-                </div>
-                <div class="nav-item" data-page="steps">
-                    <span class="nav-icon">🎯</span>
-                    <span>Etapas</span>
-                </div>
-                <div class="nav-item" data-page="exercises">
-                    <span class="nav-icon">✍️</span>
-                    <span>Mis Ejercicios</span>
-                </div>
-                <div class="nav-item locked" id="calendarNavItem" data-page="calendar">
-                    <span class="nav-icon">📅</span>
-                    <span>Agendar Llamada 🔒</span>
-                </div>
-                <div class="nav-item" data-page="profile">
-                    <span class="nav-icon">👤</span>
-                    <span>Mi Perfil</span>
-                </div>
+            <div class="nav-menu" id="navMenu">
+                <!-- Navigation items will be loaded here -->
             </div>
             
             <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
@@ -545,7 +818,7 @@
                         <div class="stat-label">Paso Actual</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number" id="completedExercises">0</div>
+                        <div class="stat-number" id="completedExercisesCount">0</div>
                         <div class="stat-label">Ejercicios Completados</div>
                     </div>
                     <div class="stat-card">
@@ -589,7 +862,7 @@
             <!-- Step Detail Page -->
             <div id="stepDetailPage" class="page-content hidden">
                 <div class="page-header">
-                    <button onclick="navigateToPage('steps')" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; margin-bottom: 1rem;">← Volver a Etapas</button>
+                    <button onclick="navigateToPage('steps')" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; margin-bottom: 1rem; font-size: 1rem;">← Volver a Etapas</button>
                     <h1 class="page-title" id="stepDetailTitle">Etapa</h1>
                     <p class="page-subtitle" id="stepDetailSubtitle"></p>
                 </div>
@@ -626,8 +899,131 @@
                     <!-- Pending exercises will be loaded here -->
                 </div>
 
-                <div id="completedExercises" class="exercises-list hidden">
+                <div id="completedExercisesList" class="exercises-list hidden">
                     <!-- Completed exercises will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Exercise Form Page -->
+            <div id="exerciseFormPage" class="page-content hidden">
+                <div class="page-header">
+                    <button onclick="navigateToPage('exercises')" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; margin-bottom: 1rem; font-size: 1rem;">← Volver a Ejercicios</button>
+                    <h1 class="page-title" id="exerciseFormTitle">Revisión</h1>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <p class="page-subtitle" id="exerciseFormSubtitle">Completa todos los campos</p>
+                        <div class="auto-save-indicator" id="autoSaveIndicator">
+                            <span id="autoSaveText">Sin cambios</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="exercise-form" id="exerciseForm">
+                    <div class="form-section">
+                        <div class="form-section-title">📊 Métricas</div>
+                        <div class="form-section-desc">Comparte tus métricas principales de este período</div>
+                        <div class="form-group">
+                            <textarea id="metrics" class="form-textarea" placeholder="Ej: Ganadas: 15, Perdidas: 8, Win rate: 65%, P&L: +$1,200..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">✅ Qué funcionó</div>
+                        <div class="form-section-desc">Describe qué estrategias, comportamientos o decisiones dieron resultado</div>
+                        <div class="form-group">
+                            <textarea id="whatWorked" class="form-textarea" placeholder="Ej: Respeté mi plan de trading, esperé setups claros, mantuve mi risk management..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">❌ Qué no funcionó</div>
+                        <div class="form-section-desc">Identifica errores, patrones negativos o decisiones que no dieron resultado</div>
+                        <div class="form-group">
+                            <textarea id="whatDidntWork" class="form-textarea" placeholder="Ej: Forcé trades sin setup, salí antes de tiempo por miedo..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">😓 Algo que me costó</div>
+                        <div class="form-section-desc">¿Qué te resultó difícil o desafiante en este período?</div>
+                        <div class="form-group">
+                            <textarea id="struggles" class="form-textarea" placeholder="Ej: Me costó mantener la disciplina después de una pérdida, controlar la ansiedad..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">🏆 Un win (logro)</div>
+                        <div class="form-section-desc">Celebra un logro, por pequeño que sea</div>
+                        <div class="form-group">
+                            <textarea id="wins" class="form-textarea" placeholder="Ej: Logré seguir mi checklist todos los días, tuve mi mejor semana en ganancias..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">🔄 Qué haría diferente</div>
+                        <div class="form-section-desc">Si pudieras volver atrás, ¿qué cambiarías?</div>
+                        <div class="form-group">
+                            <textarea id="whatDifferent" class="form-textarea" placeholder="Ej: Reduciría el tamaño de posición en días volátiles, haría más breaks..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">🎯 KPIs para el siguiente período</div>
+                        <div class="form-section-desc">Define tus objetivos medibles para la próxima semana/mes/trimestre</div>
+                        <div class="form-group">
+                            <textarea id="kpis" class="form-textarea" placeholder="Ej: Win rate > 60%, Max drawdown < 3%, Respetar plan 100% de los días..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div id="reviewSection" class="review-section hidden">
+                        <h3>💬 Feedback del Mentor</h3>
+                        <div class="review-content" id="reviewContent"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" onclick="saveAsDraft()">Guardar Borrador</button>
+                        <button type="submit" class="btn" id="submitExerciseBtn">Enviar para Revisión</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="adminPage" class="page-content hidden">
+                <div class="page-header">
+                    <h1 class="page-title">Panel de Administración</h1>
+                    <p class="page-subtitle">Gestiona alumnos, etapas y ejercicios</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="adminTotalStudents">0</div>
+                        <div class="stat-label">Total Alumnos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="adminPendingReviews">0</div>
+                        <div class="stat-label">Ejercicios Pendientes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="adminActiveStudents">0</div>
+                        <div class="stat-label">Alumnos Activos</div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div class="card">
+                        <h2 class="card-title">Gestión de Alumnos</h2>
+                        <div class="user-list" id="adminUsersList">
+                            <!-- Users will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div class="card">
+                        <h2 class="card-title">Ejercicios Pendientes de Revisión</h2>
+                        <div id="adminPendingExercises">
+                            <!-- Pending exercises will be loaded here -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -664,10 +1060,34 @@
         </div>
     </div>
 
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Revisar Ejercicio</h2>
+                <button class="modal-close" onclick="closeReviewModal()">×</button>
+            </div>
+            
+            <div id="reviewModalContent">
+                <!-- Exercise content will be loaded here -->
+            </div>
+
+            <div class="form-group" style="margin-top: 2rem;">
+                <label class="form-label" for="reviewFeedback">Feedback para el alumno</label>
+                <textarea id="reviewFeedback" class="form-textarea" placeholder="Escribe aquí tu feedback..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="closeReviewModal()">Cancelar</button>
+                <button class="btn btn-success" onclick="submitReview()">Aprobar y Enviar Feedback</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, updateDoc, addDoc, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyD1U_K-9vkGGnKcbAALA-pSRMTv8f0B_M4",
@@ -684,6 +1104,9 @@
 
         let currentUser = null;
         let userData = null;
+        let currentExercise = null;
+        let currentReviewExercise = null;
+        let autoSaveTimer = null;
 
         const steps = [
             { id: 1, title: "Identificar errores", video: "", tool: "" },
@@ -701,6 +1124,7 @@
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
 
+        // Auth
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
@@ -736,134 +1160,11 @@
             try {
                 await signOut(auth);
             } catch (error) {
-                console.error('Logout error:', error);
+                console.error('Error al cerrar sesión:', error);
             }
         });
 
-        async function loadUserData(user) {
-            try {
-                const userDoc = await getDoc(doc(db, 'users', user.uid));
-                
-                if (userDoc.exists()) {
-                    userData = userDoc.data();
-                    updateDashboardUI(userData);
-                    loadSteps(userData);
-                    updateCalendarAccess(userData);
-                } else {
-                    const defaultData = {
-                        email: user.email,
-                        displayName: user.email.split('@')[0],
-                        role: 'student',
-                        currentStep: 1,
-                        completedSteps: [],
-                        completedExercises: 0,
-                        calendarUnlocked: false,
-                        createdAt: new Date()
-                    };
-                    await setDoc(doc(db, 'users', user.uid), defaultData);
-                    userData = defaultData;
-                    updateDashboardUI(defaultData);
-                    loadSteps(defaultData);
-                    updateCalendarAccess(defaultData);
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-                showError('Error al cargar datos');
-            }
-        }
-
-        function updateDashboardUI(data) {
-            document.getElementById('userName').textContent = data.displayName || 'Trader';
-            document.getElementById('currentStepStat').textContent = data.currentStep || 1;
-            document.getElementById('currentStepText').textContent = data.currentStep || 1;
-            document.getElementById('completedExercises').textContent = data.completedExercises || 0;
-            
-            const completedCount = data.completedSteps?.length || 0;
-            const progress = Math.round((completedCount / 5) * 100);
-            document.getElementById('progressPercentage').textContent = progress + '%';
-            document.getElementById('progressText').textContent = `${completedCount}/5 etapas`;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        function loadSteps(data) {
-            const stepsGrid = document.getElementById('stepsGrid');
-            stepsGrid.innerHTML = '';
-            
-            steps.forEach((step, index) => {
-                const isCompleted = data.completedSteps?.includes(step.id);
-                const isCurrent = step.id === data.currentStep;
-                const isLocked = step.id > data.currentStep;
-                
-                const stepCard = document.createElement('div');
-                stepCard.className = 'step-card' + (isLocked ? ' locked' : '');
-                stepCard.dataset.step = step.id;
-                
-                let badge = '';
-                if (isCompleted) badge = '<span class="step-badge badge-completed">✓ Completado</span>';
-                else if (isCurrent) badge = '<span class="step-badge badge-current">Actual</span>';
-                else if (isLocked) badge = '<span class="step-badge badge-locked">🔒 Bloqueado</span>';
-                
-                stepCard.innerHTML = `
-                    <div class="step-number">ETAPA ${step.id}</div>
-                    <h3 class="step-title">${step.title}</h3>
-                    ${badge}
-                `;
-                
-                if (!isLocked) {
-                    stepCard.addEventListener('click', () => openStepDetail(step.id));
-                }
-                
-                stepsGrid.appendChild(stepCard);
-            });
-        }
-
-        function updateCalendarAccess(data) {
-            const calendarNavItem = document.getElementById('calendarNavItem');
-            const calendarLocked = document.getElementById('calendarLocked');
-            const calendarUnlocked = document.getElementById('calendarUnlocked');
-            
-            if (data.calendarUnlocked) {
-                calendarNavItem.classList.remove('locked');
-                calendarNavItem.innerHTML = '<span class="nav-icon">📅</span><span>Agendar Llamada</span>';
-                calendarLocked.classList.add('hidden');
-                calendarUnlocked.classList.remove('hidden');
-            } else {
-                calendarNavItem.classList.add('locked');
-                calendarNavItem.innerHTML = '<span class="nav-icon">📅</span><span>Agendar Llamada 🔒</span>';
-                calendarLocked.classList.remove('hidden');
-                calendarUnlocked.classList.add('hidden');
-            }
-        }
-
-        function openStepDetail(stepId) {
-            const step = steps.find(s => s.id === stepId);
-            if (!step) return;
-            
-            document.getElementById('stepDetailTitle').textContent = `Etapa ${step.id}: ${step.title}`;
-            document.getElementById('stepDetailSubtitle').textContent = `Contenido y recursos de la etapa ${step.id}`;
-            
-            const videoContainer = document.getElementById('stepVideo');
-            if (step.video) {
-                videoContainer.innerHTML = `<iframe src="${step.video}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
-            } else {
-                videoContainer.innerHTML = '<div style="padding: 3rem; text-align: center; color: #a1a1aa;">El video de esta etapa estará disponible pronto</div>';
-            }
-            
-            const toolButton = document.getElementById('toolButton');
-            if (step.tool) {
-                toolButton.onclick = () => window.open(step.tool, '_blank');
-            } else {
-                toolButton.onclick = () => alert('La herramienta estará disponible pronto');
-            }
-            
-            navigateToPage('stepDetail');
-        }
-
-        window.navigateToCurrentStep = function() {
-            const currentStep = userData?.currentStep || 1;
-            openStepDetail(currentStep);
-        }
-
+        // Navigation
         function showLogin() {
             loginPage.classList.remove('hidden');
             dashboardApp.classList.add('hidden');
@@ -872,19 +1173,640 @@
         function showDashboard() {
             loginPage.classList.add('hidden');
             dashboardApp.classList.remove('hidden');
-            loadExercises();
+            loadNavigation();
+            navigateToPage('dashboard');
         }
 
+        function loadNavigation() {
+            const navMenu = document.getElementById('navMenu');
+            const isAdmin = userData?.role === 'admin';
+            
+            const navItems = [
+                { id: 'dashboard', icon: '📊', label: 'Dashboard', locked: false },
+                { id: 'steps', icon: '📚', label: 'Etapas', locked: false },
+                { id: 'exercises', icon: '✍️', label: 'Mis Ejercicios', locked: false },
+                { id: 'calendar', icon: '📅', label: 'Agendar Llamada', locked: !userData?.calendarUnlocked && !isAdmin },
+                { id: 'profile', icon: '👤', label: 'Perfil', locked: false }
+            ];
+
+            if (isAdmin) {
+                navItems.splice(4, 0, { id: 'admin', icon: '⚙️', label: 'Admin', locked: false });
+            }
+
+            navMenu.innerHTML = navItems.map(item => `
+                <div class="nav-item ${item.locked ? 'locked' : ''}" data-page="${item.id}">
+                    <span>${item.icon}</span>
+                    <span>${item.label}</span>
+                    ${item.locked ? '<span>🔒</span>' : ''}
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.nav-item:not(.locked)').forEach(item => {
+                item.addEventListener('click', () => {
+                    navigateToPage(item.dataset.page);
+                });
+            });
+        }
+
+        window.navigateToPage = function(page) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            const pageElement = document.getElementById(`${page}Page`);
+            if (pageElement) {
+                pageElement.classList.remove('hidden');
+            }
+            
+            const navItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+            if (navItem) {
+                navItem.classList.add('active');
+            }
+
+            if (page === 'dashboard') loadDashboard();
+            else if (page === 'steps') loadSteps();
+            else if (page === 'exercises') loadExercises();
+            else if (page === 'calendar') loadCalendar();
+            else if (page === 'admin') loadAdminDashboard();
+        }
+
+        window.navigateToCurrentStep = function() {
+            const currentStep = userData?.currentStep || 1;
+            navigateToStep(currentStep);
+        }
+
+        window.navigateToStep = function(stepId) {
+            const step = steps.find(s => s.id === stepId);
+            if (!step) return;
+
+            const isUnlocked = userData?.unlockedSteps?.includes(stepId);
+            if (!isUnlocked && userData?.role !== 'admin') return;
+
+            document.getElementById('stepDetailTitle').textContent = `Etapa ${stepId}: ${step.title}`;
+            document.getElementById('stepDetailSubtitle').textContent = step.description || '';
+
+            const videoContainer = document.getElementById('stepVideo');
+            if (step.video) {
+                videoContainer.innerHTML = `<iframe width="100%" height="400" src="${step.video}" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                videoContainer.innerHTML = '<p style="color: #a1a1aa;">Video próximamente...</p>';
+            }
+
+            const toolButton = document.getElementById('toolButton');
+            if (step.tool) {
+                toolButton.onclick = () => window.open(step.tool, '_blank');
+                toolButton.style.display = 'block';
+            } else {
+                toolButton.style.display = 'none';
+            }
+
+            navigateToPage('stepDetail');
+        }
+
+        // Load functions
+        async function loadUserData(user) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                if (userDoc.exists()) {
+                    userData = userDoc.data();
+                    console.log('User data loaded:', userData);
+                } else {
+                    userData = {
+                        email: user.email,
+                        name: user.email.split('@')[0],
+                        currentStep: 1,
+                        unlockedSteps: [1],
+                        calendarUnlocked: false,
+                        completedExercises: 0,
+                        role: 'student'
+                    };
+                    await setDoc(doc(db, 'users', user.uid), userData);
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        async function loadDashboard() {
+            document.getElementById('userName').textContent = userData?.name || 'Trader';
+            document.getElementById('currentStepStat').textContent = userData?.currentStep || 1;
+            document.getElementById('currentStepText').textContent = userData?.currentStep || 1;
+            document.getElementById('completedExercisesCount').textContent = userData?.completedExercises || 0;
+
+            const completedSteps = (userData?.unlockedSteps?.length || 1) - 1;
+            const progressPercent = Math.round((completedSteps / 5) * 100);
+            document.getElementById('progressPercentage').textContent = `${progressPercent}%`;
+            document.getElementById('progressText').textContent = `${completedSteps}/5 etapas`;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+        }
+
+        async function loadSteps() {
+            const stepsGrid = document.getElementById('stepsGrid');
+            const unlockedSteps = userData?.unlockedSteps || [1];
+            const currentStep = userData?.currentStep || 1;
+
+            stepsGrid.innerHTML = steps.map(step => {
+                const isUnlocked = unlockedSteps.includes(step.id);
+                const isCurrent = step.id === currentStep;
+                const isCompleted = step.id < currentStep;
+                
+                let badge = '';
+                if (isCompleted) badge = '<span class="step-badge badge-completed">✓ Completado</span>';
+                else if (isCurrent) badge = '<span class="step-badge badge-current">Actual</span>';
+                else badge = '<span class="step-badge badge-locked">🔒 Bloqueado</span>';
+
+                return `
+                    <div class="step-card ${!isUnlocked ? 'locked' : ''}" onclick="${isUnlocked ? `navigateToStep(${step.id})` : ''}">
+                        <div class="step-info">
+                            <div class="step-number">Etapa ${step.id}</div>
+                            <div class="step-title">${step.title}</div>
+                        </div>
+                        ${badge}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function loadExercises() {
+            try {
+                const exercisesRef = collection(db, 'exercises');
+                const q = query(
+                    exercisesRef,
+                    where('userId', '==', currentUser.uid),
+                    orderBy('createdAt', 'desc')
+                );
+                
+                const snapshot = await getDocs(q);
+                const exercises = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                const pending = exercises.filter(e => e.status === 'draft' || e.status === 'pending');
+                const completed = exercises.filter(e => e.status === 'completed');
+
+                renderExercisesList('pendingExercises', pending);
+                renderExercisesList('completedExercisesList', completed);
+
+                // Setup tabs
+                document.querySelectorAll('.exercises-tabs .tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('.exercises-tabs .tab').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        
+                        if (tab.dataset.tab === 'pending') {
+                            document.getElementById('pendingExercises').classList.remove('hidden');
+                            document.getElementById('completedExercisesList').classList.add('hidden');
+                        } else {
+                            document.getElementById('pendingExercises').classList.add('hidden');
+                            document.getElementById('completedExercisesList').classList.remove('hidden');
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading exercises:', error);
+            }
+        }
+
+        function renderExercisesList(containerId, exercises) {
+            const container = document.getElementById(containerId);
+            
+            if (exercises.length === 0) {
+                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay ejercicios aquí</p>';
+                return;
+            }
+
+            container.innerHTML = exercises.map(exercise => {
+                const typeClass = exercise.type === 'weekly' ? 'type-weekly' : 
+                                  exercise.type === 'monthly' ? 'type-monthly' : 'type-quarterly';
+                const typeLabel = exercise.type === 'weekly' ? 'Semanal' : 
+                                  exercise.type === 'monthly' ? 'Mensual' : 'Trimestral';
+                
+                const date = exercise.createdAt?.toDate ? exercise.createdAt.toDate().toLocaleDateString('es-ES') : 'Sin fecha';
+                const statusLabel = exercise.status === 'draft' ? '📝 Borrador' : 
+                                    exercise.status === 'pending' ? '⏳ En revisión' : '✅ Completado';
+
+                return `
+                    <div class="exercise-card" onclick="openExercise('${exercise.id}')">
+                        <div class="exercise-info">
+                            <h3>Revisión ${typeLabel}</h3>
+                            <div class="exercise-meta">${date} · ${statusLabel}</div>
+                        </div>
+                        <span class="exercise-type ${typeClass}">${typeLabel}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.openExercise = async function(exerciseId) {
+            try {
+                const exerciseDoc = await getDoc(doc(db, 'exercises', exerciseId));
+                if (!exerciseDoc.exists()) return;
+
+                currentExercise = { id: exerciseId, ...exerciseDoc.data() };
+                
+                document.getElementById('exerciseFormTitle').textContent = `Revisión ${currentExercise.type === 'weekly' ? 'Semanal' : currentExercise.type === 'monthly' ? 'Mensual' : 'Trimestral'}`;
+                
+                // Fill form
+                document.getElementById('metrics').value = currentExercise.metrics || '';
+                document.getElementById('whatWorked').value = currentExercise.whatWorked || '';
+                document.getElementById('whatDidntWork').value = currentExercise.whatDidntWork || '';
+                document.getElementById('struggles').value = currentExercise.struggles || '';
+                document.getElementById('wins').value = currentExercise.wins || '';
+                document.getElementById('whatDifferent').value = currentExercise.whatDifferent || '';
+                document.getElementById('kpis').value = currentExercise.kpis || '';
+
+                // Show review if completed
+                const reviewSection = document.getElementById('reviewSection');
+                if (currentExercise.status === 'completed' && currentExercise.mentorFeedback) {
+                    reviewSection.classList.remove('hidden');
+                    document.getElementById('reviewContent').textContent = currentExercise.mentorFeedback;
+                } else {
+                    reviewSection.classList.add('hidden');
+                }
+
+                // Disable form if completed
+                const isCompleted = currentExercise.status === 'completed';
+                document.querySelectorAll('#exerciseForm textarea').forEach(textarea => {
+                    textarea.disabled = isCompleted;
+                });
+                document.getElementById('submitExerciseBtn').disabled = isCompleted;
+
+                navigateToPage('exerciseForm');
+                setupAutoSave();
+            } catch (error) {
+                console.error('Error opening exercise:', error);
+            }
+        }
+
+        function setupAutoSave() {
+            const fields = ['metrics', 'whatWorked', 'whatDidntWork', 'struggles', 'wins', 'whatDifferent', 'kpis'];
+            
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                element.addEventListener('input', () => {
+                    clearTimeout(autoSaveTimer);
+                    updateAutoSaveIndicator('saving');
+                    
+                    autoSaveTimer = setTimeout(async () => {
+                        await saveAsDraft();
+                        updateAutoSaveIndicator('saved');
+                    }, 2000);
+                });
+            });
+        }
+
+        function updateAutoSaveIndicator(state) {
+            const indicator = document.getElementById('autoSaveIndicator');
+            const text = document.getElementById('autoSaveText');
+            
+            indicator.className = 'auto-save-indicator';
+            
+            if (state === 'saving') {
+                indicator.classList.add('saving');
+                text.textContent = '💾 Guardando...';
+            } else if (state === 'saved') {
+                indicator.classList.add('saved');
+                text.textContent = '✓ Guardado';
+                setTimeout(() => {
+                    indicator.className = 'auto-save-indicator';
+                    text.textContent = 'Sin cambios';
+                }, 2000);
+            }
+        }
+
+        window.saveAsDraft = async function() {
+            if (!currentExercise) return;
+
+            const exerciseData = {
+                metrics: document.getElementById('metrics').value,
+                whatWorked: document.getElementById('whatWorked').value,
+                whatDidntWork: document.getElementById('whatDidntWork').value,
+                struggles: document.getElementById('struggles').value,
+                wins: document.getElementById('wins').value,
+                whatDifferent: document.getElementById('whatDifferent').value,
+                kpis: document.getElementById('kpis').value,
+                status: 'draft',
+                updatedAt: Timestamp.now()
+            };
+
+            try {
+                await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
+            } catch (error) {
+                console.error('Error saving draft:', error);
+            }
+        }
+
+        document.getElementById('exerciseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentExercise) return;
+
+            const submitBtn = document.getElementById('submitExerciseBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+
+            const exerciseData = {
+                metrics: document.getElementById('metrics').value,
+                whatWorked: document.getElementById('whatWorked').value,
+                whatDidntWork: document.getElementById('whatDidntWork').value,
+                struggles: document.getElementById('struggles').value,
+                wins: document.getElementById('wins').value,
+                whatDifferent: document.getElementById('whatDifferent').value,
+                kpis: document.getElementById('kpis').value,
+                status: 'pending',
+                submittedAt: Timestamp.now()
+            };
+
+            try {
+                await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
+                showSuccess('¡Ejercicio enviado para revisión!');
+                setTimeout(() => {
+                    navigateToPage('exercises');
+                }, 1500);
+            } catch (error) {
+                console.error('Error submitting exercise:', error);
+                showError('Error al enviar el ejercicio');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar para Revisión';
+            }
+        });
+
+        async function loadCalendar() {
+            const locked = document.getElementById('calendarLocked');
+            const unlocked = document.getElementById('calendarUnlocked');
+            
+            if (userData?.calendarUnlocked || userData?.role === 'admin') {
+                locked.classList.add('hidden');
+                unlocked.classList.remove('hidden');
+            } else {
+                locked.classList.remove('hidden');
+                unlocked.classList.add('hidden');
+            }
+        }
+
+        // Admin functions
+        async function loadAdminDashboard() {
+            if (userData?.role !== 'admin') {
+                navigateToPage('dashboard');
+                return;
+            }
+
+            try {
+                // Load all users
+                const usersSnapshot = await getDocs(collection(db, 'users'));
+                const users = usersSnapshot.docs
+                    .map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(u => u.role !== 'admin');
+
+                // Load pending exercises
+                const exercisesSnapshot = await getDocs(
+                    query(collection(db, 'exercises'), where('status', '==', 'pending'))
+                );
+                const pendingExercises = exercisesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Update stats
+                document.getElementById('adminTotalStudents').textContent = users.length;
+                document.getElementById('adminPendingReviews').textContent = pendingExercises.length;
+                document.getElementById('adminActiveStudents').textContent = users.filter(u => u.currentStep > 1).length;
+
+                // Render users list
+                renderAdminUsersList(users);
+
+                // Render pending exercises
+                renderAdminPendingExercises(pendingExercises, users);
+            } catch (error) {
+                console.error('Error loading admin dashboard:', error);
+            }
+        }
+
+        function renderAdminUsersList(users) {
+            const container = document.getElementById('adminUsersList');
+            
+            container.innerHTML = users.map(user => {
+                const completedSteps = (user.unlockedSteps?.length || 1) - 1;
+                
+                return `
+                    <div class="user-card">
+                        <div class="user-header">
+                            <div>
+                                <div class="user-name">${user.name || user.email}</div>
+                                <div class="user-email">${user.email}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="user-stats">
+                            <div class="user-stat">
+                                <div class="user-stat-value">${user.currentStep || 1}</div>
+                                <div class="user-stat-label">Etapa Actual</div>
+                            </div>
+                            <div class="user-stat">
+                                <div class="user-stat-value">${completedSteps}</div>
+                                <div class="user-stat-label">Completadas</div>
+                            </div>
+                            <div class="user-stat">
+                                <div class="user-stat-value">${user.completedExercises || 0}</div>
+                                <div class="user-stat-label">Ejercicios</div>
+                            </div>
+                        </div>
+
+                        <div class="step-unlock-controls">
+                            <select class="form-select" id="stepSelect_${user.id}" style="flex: 1;">
+                                ${steps.map(step => `
+                                    <option value="${step.id}" ${user.currentStep === step.id ? 'selected' : ''}>
+                                        Etapa ${step.id}: ${step.title}
+                                    </option>
+                                `).join('')}
+                            </select>
+                            <button class="btn btn-small" onclick="unlockStepForUser('${user.id}')">
+                                Desbloquear Etapa
+                            </button>
+                        </div>
+
+                        <div class="user-actions">
+                            <button class="btn btn-secondary btn-small" onclick="toggleCalendar('${user.id}', ${!user.calendarUnlocked})">
+                                ${user.calendarUnlocked ? '🔓 Bloquear' : '🔒 Desbloquear'} Calendario
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.unlockStepForUser = async function(userId) {
+            try {
+                const selectedStep = parseInt(document.getElementById(`stepSelect_${userId}`).value);
+                const userRef = doc(db, 'users', userId);
+                const userDoc = await getDoc(userRef);
+                const userData = userDoc.data();
+                
+                const unlockedSteps = userData.unlockedSteps || [1];
+                if (!unlockedSteps.includes(selectedStep)) {
+                    unlockedSteps.push(selectedStep);
+                    unlockedSteps.sort((a, b) => a - b);
+                }
+
+                await updateDoc(userRef, {
+                    currentStep: selectedStep,
+                    unlockedSteps: unlockedSteps
+                });
+
+                showSuccess(`Etapa ${selectedStep} desbloqueada para el alumno`);
+                loadAdminDashboard();
+            } catch (error) {
+                console.error('Error unlocking step:', error);
+                showError('Error al desbloquear la etapa');
+            }
+        }
+
+        window.toggleCalendar = async function(userId, unlock) {
+            try {
+                await updateDoc(doc(db, 'users', userId), {
+                    calendarUnlocked: unlock
+                });
+
+                showSuccess(unlock ? 'Calendario desbloqueado' : 'Calendario bloqueado');
+                loadAdminDashboard();
+            } catch (error) {
+                console.error('Error toggling calendar:', error);
+                showError('Error al actualizar el calendario');
+            }
+        }
+
+        function renderAdminPendingExercises(exercises, users) {
+            const container = document.getElementById('adminPendingExercises');
+            
+            if (exercises.length === 0) {
+                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay ejercicios pendientes de revisión</p>';
+                return;
+            }
+
+            container.innerHTML = exercises.map(exercise => {
+                const user = users.find(u => u.id === exercise.userId);
+                const typeClass = exercise.type === 'weekly' ? 'type-weekly' : 
+                                  exercise.type === 'monthly' ? 'type-monthly' : 'type-quarterly';
+                const typeLabel = exercise.type === 'weekly' ? 'Semanal' : 
+                                  exercise.type === 'monthly' ? 'Mensual' : 'Trimestral';
+                const date = exercise.submittedAt?.toDate ? exercise.submittedAt.toDate().toLocaleDateString('es-ES') : 'Sin fecha';
+
+                return `
+                    <div class="exercise-card" onclick="openReviewModal('${exercise.id}', '${user?.name || 'Alumno'}')">
+                        <div class="exercise-info">
+                            <h3>${user?.name || user?.email || 'Alumno'} - Revisión ${typeLabel}</h3>
+                            <div class="exercise-meta">Enviado el ${date}</div>
+                        </div>
+                        <span class="exercise-type ${typeClass}">${typeLabel}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.openReviewModal = async function(exerciseId, userName) {
+            try {
+                const exerciseDoc = await getDoc(doc(db, 'exercises', exerciseId));
+                if (!exerciseDoc.exists()) return;
+
+                currentReviewExercise = { id: exerciseId, ...exerciseDoc.data() };
+                
+                const modal = document.getElementById('reviewModal');
+                const content = document.getElementById('reviewModalContent');
+                
+                content.innerHTML = `
+                    <div class="review-exercise-header">
+                        <div>
+                            <h3>${userName}</h3>
+                            <p style="color: #a1a1aa;">Revisión ${currentReviewExercise.type === 'weekly' ? 'Semanal' : currentReviewExercise.type === 'monthly' ? 'Mensual' : 'Trimestral'}</p>
+                        </div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">📊 Métricas</div>
+                        <div class="review-field-content">${currentReviewExercise.metrics || 'Sin respuesta'}</div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">✅ Qué funcionó</div>
+                        <div class="review-field-content">${currentReviewExercise.whatWorked || 'Sin respuesta'}</div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">❌ Qué no funcionó</div>
+                        <div class="review-field-content">${currentReviewExercise.whatDidntWork || 'Sin respuesta'}</div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">😓 Algo que me costó</div>
+                        <div class="review-field-content">${currentReviewExercise.struggles || 'Sin respuesta'}</div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">🏆 Un win (logro)</div>
+                        <div class="review-field-content">${currentReviewExercise.wins || 'Sin respuesta'}</div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">🔄 Qué haría diferente</div>
+                        <div class="review-field-content">${currentReviewExercise.whatDifferent || 'Sin respuesta'}</div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">🎯 KPIs para el siguiente período</div>
+                        <div class="review-field-content">${currentReviewExercise.kpis || 'Sin respuesta'}</div>
+                    </div>
+                `;
+
+                document.getElementById('reviewFeedback').value = '';
+                modal.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error opening review modal:', error);
+            }
+        }
+
+        window.closeReviewModal = function() {
+            document.getElementById('reviewModal').classList.add('hidden');
+            currentReviewExercise = null;
+        }
+
+        window.submitReview = async function() {
+            if (!currentReviewExercise) return;
+
+            const feedback = document.getElementById('reviewFeedback').value.trim();
+            if (!feedback) {
+                showError('Por favor, escribe un feedback para el alumno');
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'exercises', currentReviewExercise.id), {
+                    status: 'completed',
+                    mentorFeedback: feedback,
+                    reviewedAt: Timestamp.now()
+                });
+
+                // Update user's completed exercises count
+                const userRef = doc(db, 'users', currentReviewExercise.userId);
+                const userDoc = await getDoc(userRef);
+                const currentCount = userDoc.data().completedExercises || 0;
+                await updateDoc(userRef, {
+                    completedExercises: currentCount + 1
+                });
+
+                showSuccess('¡Ejercicio revisado y feedback enviado!');
+                closeReviewModal();
+                loadAdminDashboard();
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                showError('Error al enviar la revisión');
+            }
+        }
+
+        // Utility functions
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.classList.remove('hidden');
-            setTimeout(() => errorMessage.classList.add('hidden'), 5000);
+            successMessage.classList.add('hidden');
         }
 
         function showSuccess(message) {
             successMessage.textContent = message;
             successMessage.classList.remove('hidden');
-            setTimeout(() => successMessage.classList.add('hidden'), 3000);
+            errorMessage.classList.add('hidden');
         }
 
         function hideMessages() {
@@ -898,87 +1820,22 @@
                 'auth/user-disabled': 'Usuario deshabilitado',
                 'auth/user-not-found': 'Usuario no encontrado',
                 'auth/wrong-password': 'Contraseña incorrecta',
-                'auth/invalid-credential': 'Credenciales inválidas',
-                'auth/too-many-requests': 'Demasiados intentos. Intenta más tarde.'
+                'auth/invalid-credential': 'Credenciales inválidas'
             };
             return messages[code] || 'Error al iniciar sesión';
         }
 
-        // Navigation
-        const navItems = document.querySelectorAll('.nav-item:not(.locked)');
-        const pages = document.querySelectorAll('.page-content');
-
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                if (!this.classList.contains('locked')) {
-                    const pageName = this.dataset.page;
-                    navigateToPage(pageName);
-                }
-            });
-        });
-
-        window.navigateToPage = function(pageName) {
-            navItems.forEach(item => {
-                if (item.dataset.page === pageName) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-
-            pages.forEach(page => {
-                if (page.id === pageName + 'Page') {
-                    page.classList.remove('hidden');
-                } else {
-                    page.classList.add('hidden');
-                }
-            });
-        }
-
-        // Exercise Tabs
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                const tabName = this.dataset.tab;
-                if (tabName === 'pending') {
-                    document.getElementById('pendingExercises').classList.remove('hidden');
-                    document.getElementById('completedExercises').classList.add('hidden');
-                } else {
-                    document.getElementById('pendingExercises').classList.add('hidden');
-                    document.getElementById('completedExercises').classList.remove('hidden');
-                }
-            });
-        });
-
-        // Load Exercises
-        async function loadExercises() {
-            const pendingContainer = document.getElementById('pendingExercises');
-            const completedContainer = document.getElementById('completedExercises');
-            
-            // Example exercises - In production, these would come from Firestore
-            const exerciseTypes = ['Semanal', 'Mensual', 'Trimestral'];
-            
-            pendingContainer.innerHTML = `
-                <div class="exercise-card">
-                    <div class="exercise-header">
-                        <div class="exercise-title">Revisión Semanal #1</div>
-                        <div class="exercise-type">Semanal</div>
-                    </div>
-                    <div class="exercise-meta">Pendiente • Creado hace 2 días</div>
-                </div>
-                <p style="color: #a1a1aa; text-align: center; padding: 2rem;">
-                    Más ejercicios aparecerán aquí cuando tu mentor los active
-                </p>
-            `;
-            
-            completedContainer.innerHTML = `
-                <p style="color: #a1a1aa; text-align: center; padding: 2rem;">
-                    Aún no has completado ningún ejercicio
-                </p>
-            `;
-        }
+        // Make functions global
+        window.navigateToPage = navigateToPage;
+        window.navigateToCurrentStep = navigateToCurrentStep;
+        window.navigateToStep = navigateToStep;
+        window.openExercise = openExercise;
+        window.saveAsDraft = saveAsDraft;
+        window.unlockStepForUser = unlockStepForUser;
+        window.toggleCalendar = toggleCalendar;
+        window.openReviewModal = openReviewModal;
+        window.closeReviewModal = closeReviewModal;
+        window.submitReview = submitReview;
     </script>
 </body>
 </html>
