@@ -760,6 +760,10 @@
             flex: 1;
         }
 
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
         .content-management-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -937,6 +941,28 @@
                     <p class="page-subtitle">Revisiones semanales, mensuales y trimestrales</p>
                 </div>
 
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1rem;">➕ Crear Nuevo Ejercicio</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <button class="btn btn-secondary" onclick="createMyExercise('weekly')" style="padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📅</div>
+                            <div style="font-weight: 600;">Revisión Semanal</div>
+                        </button>
+                        <button class="btn btn-secondary" onclick="createMyExercise('monthly')" style="padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📆</div>
+                            <div style="font-weight: 600;">Revisión Mensual</div>
+                        </button>
+                        <button class="btn btn-secondary" onclick="createMyExercise('quarterly')" style="padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                            <div style="font-weight: 600;">Revisión Trimestral</div>
+                        </button>
+                        <button class="btn btn-secondary" onclick="createMyExercise('pattern')" style="padding: 1.5rem;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧠</div>
+                            <div style="font-weight: 600;">Diario de Patrones</div>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="exercises-tabs">
                     <div class="tab active" data-tab="pending">Pendientes</div>
                     <div class="tab" data-tab="completed">Completados</div>
@@ -965,60 +991,8 @@
                 </div>
 
                 <form class="exercise-form" id="exerciseForm">
-                    <div class="form-section">
-                        <div class="form-section-title">📊 Métricas</div>
-                        <div class="form-section-desc">Comparte tus métricas principales de este período</div>
-                        <div class="form-group">
-                            <textarea id="metrics" class="form-textarea" placeholder="Ej: Ganadas: 15, Perdidas: 8, Win rate: 65%, P&L: +$1,200..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-section-title">✅ Qué funcionó</div>
-                        <div class="form-section-desc">Describe qué estrategias, comportamientos o decisiones dieron resultado</div>
-                        <div class="form-group">
-                            <textarea id="whatWorked" class="form-textarea" placeholder="Ej: Respeté mi plan de trading, esperé setups claros, mantuve mi risk management..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-section-title">❌ Qué no funcionó</div>
-                        <div class="form-section-desc">Identifica errores, patrones negativos o decisiones que no dieron resultado</div>
-                        <div class="form-group">
-                            <textarea id="whatDidntWork" class="form-textarea" placeholder="Ej: Forcé trades sin setup, salí antes de tiempo por miedo..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-section-title">😓 Algo que me costó</div>
-                        <div class="form-section-desc">¿Qué te resultó difícil o desafiante en este período?</div>
-                        <div class="form-group">
-                            <textarea id="struggles" class="form-textarea" placeholder="Ej: Me costó mantener la disciplina después de una pérdida, controlar la ansiedad..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-section-title">🏆 Un win (logro)</div>
-                        <div class="form-section-desc">Celebra un logro, por pequeño que sea</div>
-                        <div class="form-group">
-                            <textarea id="wins" class="form-textarea" placeholder="Ej: Logré seguir mi checklist todos los días, tuve mi mejor semana en ganancias..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-section-title">🔄 Qué haría diferente</div>
-                        <div class="form-section-desc">Si pudieras volver atrás, ¿qué cambiarías?</div>
-                        <div class="form-group">
-                            <textarea id="whatDifferent" class="form-textarea" placeholder="Ej: Reduciría el tamaño de posición en días volátiles, haría más breaks..." required></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-section-title">🎯 KPIs para el siguiente período</div>
-                        <div class="form-section-desc">Define tus objetivos medibles para la próxima semana/mes/trimestre</div>
-                        <div class="form-group">
-                            <textarea id="kpis" class="form-textarea" placeholder="Ej: Win rate > 60%, Max drawdown < 3%, Respetar plan 100% de los días..." required></textarea>
-                        </div>
+                    <div id="reviewFormContent">
+                        <!-- Form content will be loaded dynamically based on exercise type -->
                     </div>
 
                     <div id="reviewSection" class="review-section hidden">
@@ -1497,10 +1471,21 @@
             }
 
             container.innerHTML = exercises.map(exercise => {
-                const typeClass = exercise.type === 'weekly' ? 'type-weekly' : 
-                                  exercise.type === 'monthly' ? 'type-monthly' : 'type-quarterly';
-                const typeLabel = exercise.type === 'weekly' ? 'Semanal' : 
-                                  exercise.type === 'monthly' ? 'Mensual' : 'Trimestral';
+                let typeClass, typeLabel;
+                
+                if (exercise.type === 'weekly') {
+                    typeClass = 'type-weekly';
+                    typeLabel = 'Semanal';
+                } else if (exercise.type === 'monthly') {
+                    typeClass = 'type-monthly';
+                    typeLabel = 'Mensual';
+                } else if (exercise.type === 'quarterly') {
+                    typeClass = 'type-quarterly';
+                    typeLabel = 'Trimestral';
+                } else if (exercise.type === 'pattern') {
+                    typeClass = 'type-weekly';
+                    typeLabel = 'Diario de Patrones';
+                }
                 
                 let date = 'Sin fecha';
                 if (exercise.createdAt) {
@@ -1521,7 +1506,7 @@
                 return `
                     <div class="exercise-card" onclick="openExercise('${exercise.id}')">
                         <div class="exercise-info">
-                            <h3>Revisión ${typeLabel}</h3>
+                            <h3>${typeLabel}</h3>
                             <div class="exercise-meta">${date} · ${statusLabel}</div>
                         </div>
                         <span class="exercise-type ${typeClass}">${typeLabel}</span>
@@ -1530,23 +1515,77 @@
             }).join('');
         }
 
+        window.createMyExercise = async function(type) {
+            if (!currentUser) return;
+
+            try {
+                const exerciseData = {
+                    userId: currentUser.uid,
+                    type: type,
+                    status: 'draft',
+                    createdAt: Timestamp.now(),
+                    updatedAt: Timestamp.now()
+                };
+
+                // Add empty fields based on type
+                if (type === 'pattern') {
+                    exerciseData.when = '';
+                    exerciseData.feeling = '';
+                    exerciseData.action = '';
+                } else {
+                    exerciseData.tradesWon = 0;
+                    exerciseData.tradesLost = 0;
+                    exerciseData.tradesBreakeven = 0;
+                    exerciseData.pnl = 0;
+                    exerciseData.whatWorked = '';
+                    exerciseData.whatDidntWork = '';
+                    exerciseData.struggles = '';
+                    exerciseData.wins = '';
+                    exerciseData.whatChange = '';
+                    exerciseData.kpis = '';
+                }
+
+                const docRef = await addDoc(collection(db, 'exercises'), exerciseData);
+                
+                showSuccess('✅ Ejercicio creado! Ahora puedes completarlo');
+                
+                // Open the newly created exercise
+                await openExercise(docRef.id);
+            } catch (error) {
+                console.error('Error creating exercise:', error);
+                showError('Error al crear el ejercicio: ' + error.message);
+            }
+        }
+
         window.openExercise = async function(exerciseId) {
             try {
                 const exerciseDoc = await getDoc(doc(db, 'exercises', exerciseId));
-                if (!exerciseDoc.exists()) return;
+                if (!exerciseDoc.exists()) {
+                    showError('Ejercicio no encontrado');
+                    return;
+                }
 
                 currentExercise = { id: exerciseId, ...exerciseDoc.data() };
                 
-                document.getElementById('exerciseFormTitle').textContent = `Revisión ${currentExercise.type === 'weekly' ? 'Semanal' : currentExercise.type === 'monthly' ? 'Mensual' : 'Trimestral'}`;
+                // Set title based on type
+                let titleText = '';
+                if (currentExercise.type === 'weekly') titleText = 'Revisión Semanal';
+                else if (currentExercise.type === 'monthly') titleText = 'Revisión Mensual';
+                else if (currentExercise.type === 'quarterly') titleText = 'Revisión Trimestral';
+                else if (currentExercise.type === 'pattern') titleText = 'Diario de Patrones';
                 
-                // Fill form
-                document.getElementById('metrics').value = currentExercise.metrics || '';
-                document.getElementById('whatWorked').value = currentExercise.whatWorked || '';
-                document.getElementById('whatDidntWork').value = currentExercise.whatDidntWork || '';
-                document.getElementById('struggles').value = currentExercise.struggles || '';
-                document.getElementById('wins').value = currentExercise.wins || '';
-                document.getElementById('whatDifferent').value = currentExercise.whatDifferent || '';
-                document.getElementById('kpis').value = currentExercise.kpis || '';
+                document.getElementById('exerciseFormTitle').textContent = titleText;
+                
+                // Load appropriate form based on type
+                const formContent = document.getElementById('reviewFormContent');
+                if (currentExercise.type === 'pattern') {
+                    formContent.innerHTML = getPatternFormHTML();
+                } else {
+                    formContent.innerHTML = getReviewFormHTML();
+                }
+                
+                // Fill form with existing data
+                fillExerciseForm(currentExercise);
 
                 // Show review if completed
                 const reviewSection = document.getElementById('reviewSection');
@@ -1559,8 +1598,8 @@
 
                 // Disable form if completed
                 const isCompleted = currentExercise.status === 'completed';
-                document.querySelectorAll('#exerciseForm textarea').forEach(textarea => {
-                    textarea.disabled = isCompleted;
+                document.querySelectorAll('#exerciseForm input, #exerciseForm textarea').forEach(field => {
+                    field.disabled = isCompleted;
                 });
                 document.getElementById('submitExerciseBtn').disabled = isCompleted;
 
@@ -1568,23 +1607,179 @@
                 setupAutoSave();
             } catch (error) {
                 console.error('Error opening exercise:', error);
+                showError('Error al abrir el ejercicio');
+            }
+        }
+
+        function getReviewFormHTML() {
+            return `
+                <div class="form-section">
+                    <div class="form-section-title">📊 Métricas</div>
+                    <div class="form-section-desc">Resultados numéricos de tu trading</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Ganadas</label>
+                            <input type="number" id="tradesWon" class="form-input" min="0" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Perdidas</label>
+                            <input type="number" id="tradesLost" class="form-input" min="0" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Breakeven</label>
+                            <input type="number" id="tradesBreakeven" class="form-input" min="0" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">P&L ($)</label>
+                            <input type="number" id="pnl" class="form-input" step="0.01" value="0" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">✅ Qué funcionó</div>
+                    <div class="form-section-desc">Describe qué estrategias, comportamientos o decisiones dieron resultado</div>
+                    <div class="form-group">
+                        <textarea id="whatWorked" class="form-textarea" placeholder="Ej: Respeté mi plan de trading, esperé setups claros, mantuve mi risk management..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">❌ Qué no funcionó</div>
+                    <div class="form-section-desc">Identifica errores, patrones negativos o decisiones que no dieron resultado</div>
+                    <div class="form-group">
+                        <textarea id="whatDidntWork" class="form-textarea" placeholder="Ej: Forcé trades sin setup, salí antes de tiempo por miedo..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">😓 Algo que me costó</div>
+                    <div class="form-section-desc">¿Qué te resultó difícil o desafiante en este período?</div>
+                    <div class="form-group">
+                        <textarea id="struggles" class="form-textarea" placeholder="Ej: Me costó mantener la disciplina después de una pérdida, controlar la ansiedad..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">🏆 Un win (logro)</div>
+                    <div class="form-section-desc">Celebra un logro, por pequeño que sea</div>
+                    <div class="form-group">
+                        <textarea id="wins" class="form-textarea" placeholder="Ej: Logré seguir mi checklist todos los días, tuve mi mejor semana en ganancias..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">🔄 Qué cambiaría esta semana para mejorar</div>
+                    <div class="form-section-desc">Acciones específicas que tomarás para mejorar</div>
+                    <div class="form-group">
+                        <textarea id="whatChange" class="form-textarea" placeholder="Ej: Voy a reducir el tamaño de posición en días volátiles, haré más breaks..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">🎯 KPIs de Proceso</div>
+                    <div class="form-section-desc">Define objetivos de proceso (comportamientos) para el siguiente período</div>
+                    <div class="form-group">
+                        <textarea id="kpis" class="form-textarea" placeholder="Ej: Seguir mi checklist 100% de los días, hacer journaling post-trade, respetar mis horarios de trading, tomar 1 break cada 2 horas..." required></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getPatternFormHTML() {
+            return `
+                <div class="form-section">
+                    <div class="form-section-title">🧠 Diario de Patrones de Ejecución</div>
+                    <div class="form-section-desc">Identifica patrones en tu comportamiento. Límite: 100 palabras por campo</div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">📅 Cuándo ha pasado</div>
+                    <div class="form-section-desc">Describe el contexto y momento (máx 100 palabras)</div>
+                    <div class="form-group">
+                        <textarea id="when" class="form-textarea" maxlength="600" placeholder="Ej: Después de 2 pérdidas seguidas, cuando el mercado estaba muy volátil..." required></textarea>
+                        <div style="text-align: right; color: #a1a1aa; font-size: 0.85rem; margin-top: 0.25rem;">
+                            <span id="whenCount">0</span>/600 caracteres (~100 palabras)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">💭 Cómo me he sentido / Qué he pensado</div>
+                    <div class="form-section-desc">Tus emociones y pensamientos en ese momento (máx 100 palabras)</div>
+                    <div class="form-group">
+                        <textarea id="feeling" class="form-textarea" maxlength="600" placeholder="Ej: Me sentí frustrado y ansioso. Pensé que tenía que recuperar lo perdido rápido..." required></textarea>
+                        <div style="text-align: right; color: #a1a1aa; font-size: 0.85rem; margin-top: 0.25rem;">
+                            <span id="feelingCount">0</span>/600 caracteres (~100 palabras)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-section-title">⚡ Qué he hecho</div>
+                    <div class="form-section-desc">Tu acción y comportamiento (máx 100 palabras)</div>
+                    <div class="form-group">
+                        <textarea id="action" class="form-textarea" maxlength="600" placeholder="Ej: Entré en un trade sin setup claro, aumenté el tamaño de posición para recuperar..." required></textarea>
+                        <div style="text-align: right; color: #a1a1aa; font-size: 0.85rem; margin-top: 0.25rem;">
+                            <span id="actionCount">0</span>/600 caracteres (~100 palabras)
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function fillExerciseForm(exercise) {
+            if (exercise.type === 'pattern') {
+                document.getElementById('when').value = exercise.when || '';
+                document.getElementById('feeling').value = exercise.feeling || '';
+                document.getElementById('action').value = exercise.action || '';
+                
+                // Setup character counters
+                ['when', 'feeling', 'action'].forEach(field => {
+                    const textarea = document.getElementById(field);
+                    const counter = document.getElementById(`${field}Count`);
+                    counter.textContent = textarea.value.length;
+                    
+                    textarea.addEventListener('input', function() {
+                        counter.textContent = this.value.length;
+                    });
+                });
+            } else {
+                document.getElementById('tradesWon').value = exercise.tradesWon || 0;
+                document.getElementById('tradesLost').value = exercise.tradesLost || 0;
+                document.getElementById('tradesBreakeven').value = exercise.tradesBreakeven || 0;
+                document.getElementById('pnl').value = exercise.pnl || 0;
+                document.getElementById('whatWorked').value = exercise.whatWorked || '';
+                document.getElementById('whatDidntWork').value = exercise.whatDidntWork || '';
+                document.getElementById('struggles').value = exercise.struggles || '';
+                document.getElementById('wins').value = exercise.wins || '';
+                document.getElementById('whatChange').value = exercise.whatChange || '';
+                document.getElementById('kpis').value = exercise.kpis || '';
             }
         }
 
         function setupAutoSave() {
-            const fields = ['metrics', 'whatWorked', 'whatDidntWork', 'struggles', 'wins', 'whatDifferent', 'kpis'];
+            let fields = [];
+            
+            if (currentExercise.type === 'pattern') {
+                fields = ['when', 'feeling', 'action'];
+            } else {
+                fields = ['tradesWon', 'tradesLost', 'tradesBreakeven', 'pnl', 'whatWorked', 'whatDidntWork', 'struggles', 'wins', 'whatChange', 'kpis'];
+            }
             
             fields.forEach(field => {
                 const element = document.getElementById(field);
-                element.addEventListener('input', () => {
-                    clearTimeout(autoSaveTimer);
-                    updateAutoSaveIndicator('saving');
-                    
-                    autoSaveTimer = setTimeout(async () => {
-                        await saveAsDraft();
-                        updateAutoSaveIndicator('saved');
-                    }, 2000);
-                });
+                if (element) {
+                    element.addEventListener('input', () => {
+                        clearTimeout(autoSaveTimer);
+                        updateAutoSaveIndicator('saving');
+                        
+                        autoSaveTimer = setTimeout(async () => {
+                            await saveAsDraft();
+                            updateAutoSaveIndicator('saved');
+                        }, 2000);
+                    });
+                }
             });
         }
 
@@ -1610,22 +1805,34 @@
         window.saveAsDraft = async function() {
             if (!currentExercise) return;
 
-            const exerciseData = {
-                metrics: document.getElementById('metrics').value,
-                whatWorked: document.getElementById('whatWorked').value,
-                whatDidntWork: document.getElementById('whatDidntWork').value,
-                struggles: document.getElementById('struggles').value,
-                wins: document.getElementById('wins').value,
-                whatDifferent: document.getElementById('whatDifferent').value,
-                kpis: document.getElementById('kpis').value,
+            let exerciseData = {
                 status: 'draft',
                 updatedAt: Timestamp.now()
             };
 
             try {
+                if (currentExercise.type === 'pattern') {
+                    exerciseData.when = document.getElementById('when').value;
+                    exerciseData.feeling = document.getElementById('feeling').value;
+                    exerciseData.action = document.getElementById('action').value;
+                } else {
+                    exerciseData.tradesWon = parseInt(document.getElementById('tradesWon').value) || 0;
+                    exerciseData.tradesLost = parseInt(document.getElementById('tradesLost').value) || 0;
+                    exerciseData.tradesBreakeven = parseInt(document.getElementById('tradesBreakeven').value) || 0;
+                    exerciseData.pnl = parseFloat(document.getElementById('pnl').value) || 0;
+                    exerciseData.whatWorked = document.getElementById('whatWorked').value;
+                    exerciseData.whatDidntWork = document.getElementById('whatDidntWork').value;
+                    exerciseData.struggles = document.getElementById('struggles').value;
+                    exerciseData.wins = document.getElementById('wins').value;
+                    exerciseData.whatChange = document.getElementById('whatChange').value;
+                    exerciseData.kpis = document.getElementById('kpis').value;
+                }
+
                 await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
+                console.log('Draft saved successfully');
             } catch (error) {
                 console.error('Error saving draft:', error);
+                showError('Error al guardar: ' + error.message);
             }
         }
 
@@ -1638,27 +1845,39 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Enviando...';
 
-            const exerciseData = {
-                metrics: document.getElementById('metrics').value,
-                whatWorked: document.getElementById('whatWorked').value,
-                whatDidntWork: document.getElementById('whatDidntWork').value,
-                struggles: document.getElementById('struggles').value,
-                wins: document.getElementById('wins').value,
-                whatDifferent: document.getElementById('whatDifferent').value,
-                kpis: document.getElementById('kpis').value,
+            let exerciseData = {
                 status: 'pending',
-                submittedAt: Timestamp.now()
+                submittedAt: Timestamp.now(),
+                updatedAt: Timestamp.now()
             };
 
             try {
+                if (currentExercise.type === 'pattern') {
+                    exerciseData.when = document.getElementById('when').value;
+                    exerciseData.feeling = document.getElementById('feeling').value;
+                    exerciseData.action = document.getElementById('action').value;
+                } else {
+                    exerciseData.tradesWon = parseInt(document.getElementById('tradesWon').value) || 0;
+                    exerciseData.tradesLost = parseInt(document.getElementById('tradesLost').value) || 0;
+                    exerciseData.tradesBreakeven = parseInt(document.getElementById('tradesBreakeven').value) || 0;
+                    exerciseData.pnl = parseFloat(document.getElementById('pnl').value) || 0;
+                    exerciseData.whatWorked = document.getElementById('whatWorked').value;
+                    exerciseData.whatDidntWork = document.getElementById('whatDidntWork').value;
+                    exerciseData.struggles = document.getElementById('struggles').value;
+                    exerciseData.wins = document.getElementById('wins').value;
+                    exerciseData.whatChange = document.getElementById('whatChange').value;
+                    exerciseData.kpis = document.getElementById('kpis').value;
+                }
+
                 await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
                 showSuccess('¡Ejercicio enviado para revisión!');
                 setTimeout(() => {
                     navigateToPage('exercises');
+                    loadExercises();
                 }, 1500);
             } catch (error) {
                 console.error('Error submitting exercise:', error);
-                showError('Error al enviar el ejercicio');
+                showError('Error al enviar el ejercicio: ' + error.message);
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Enviar para Revisión';
             }
@@ -1765,6 +1984,7 @@
                                     <option value="weekly">Semanal</option>
                                     <option value="monthly">Mensual</option>
                                     <option value="quarterly">Trimestral</option>
+                                    <option value="pattern">Diario de Patrones</option>
                                 </select>
                                 <button class="btn btn-success btn-small" onclick="createExerciseForUser('${user.id}')">
                                     Crear
@@ -1835,16 +2055,28 @@
 
             container.innerHTML = exercises.map(exercise => {
                 const user = users.find(u => u.id === exercise.userId);
-                const typeClass = exercise.type === 'weekly' ? 'type-weekly' : 
-                                  exercise.type === 'monthly' ? 'type-monthly' : 'type-quarterly';
-                const typeLabel = exercise.type === 'weekly' ? 'Semanal' : 
-                                  exercise.type === 'monthly' ? 'Mensual' : 'Trimestral';
+                
+                let typeClass, typeLabel;
+                if (exercise.type === 'weekly') {
+                    typeClass = 'type-weekly';
+                    typeLabel = 'Semanal';
+                } else if (exercise.type === 'monthly') {
+                    typeClass = 'type-monthly';
+                    typeLabel = 'Mensual';
+                } else if (exercise.type === 'quarterly') {
+                    typeClass = 'type-quarterly';
+                    typeLabel = 'Trimestral';
+                } else if (exercise.type === 'pattern') {
+                    typeClass = 'type-weekly';
+                    typeLabel = 'Diario de Patrones';
+                }
+                
                 const date = exercise.submittedAt?.toDate ? exercise.submittedAt.toDate().toLocaleDateString('es-ES') : 'Sin fecha';
 
                 return `
                     <div class="exercise-card" onclick="openReviewModal('${exercise.id}', '${user?.name || 'Alumno'}')">
                         <div class="exercise-info">
-                            <h3>${user?.name || user?.email || 'Alumno'} - Revisión ${typeLabel}</h3>
+                            <h3>${user?.name || user?.email || 'Alumno'} - ${typeLabel}</h3>
                             <div class="exercise-meta">Enviado el ${date}</div>
                         </div>
                         <span class="exercise-type ${typeClass}">${typeLabel}</span>
@@ -1863,50 +2095,87 @@
                 const modal = document.getElementById('reviewModal');
                 const content = document.getElementById('reviewModalContent');
                 
-                content.innerHTML = `
+                let typeLabel = '';
+                if (currentReviewExercise.type === 'weekly') typeLabel = 'Semanal';
+                else if (currentReviewExercise.type === 'monthly') typeLabel = 'Mensual';
+                else if (currentReviewExercise.type === 'quarterly') typeLabel = 'Trimestral';
+                else if (currentReviewExercise.type === 'pattern') typeLabel = 'Diario de Patrones';
+
+                let contentHTML = `
                     <div class="review-exercise-header">
                         <div>
                             <h3>${userName}</h3>
-                            <p style="color: #a1a1aa;">Revisión ${currentReviewExercise.type === 'weekly' ? 'Semanal' : currentReviewExercise.type === 'monthly' ? 'Mensual' : 'Trimestral'}</p>
+                            <p style="color: #a1a1aa;">${typeLabel}</p>
                         </div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">📊 Métricas</div>
-                        <div class="review-field-content">${currentReviewExercise.metrics || 'Sin respuesta'}</div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">✅ Qué funcionó</div>
-                        <div class="review-field-content">${currentReviewExercise.whatWorked || 'Sin respuesta'}</div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">❌ Qué no funcionó</div>
-                        <div class="review-field-content">${currentReviewExercise.whatDidntWork || 'Sin respuesta'}</div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">😓 Algo que me costó</div>
-                        <div class="review-field-content">${currentReviewExercise.struggles || 'Sin respuesta'}</div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">🏆 Un win (logro)</div>
-                        <div class="review-field-content">${currentReviewExercise.wins || 'Sin respuesta'}</div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">🔄 Qué haría diferente</div>
-                        <div class="review-field-content">${currentReviewExercise.whatDifferent || 'Sin respuesta'}</div>
-                    </div>
-
-                    <div class="review-field">
-                        <div class="review-field-title">🎯 KPIs para el siguiente período</div>
-                        <div class="review-field-content">${currentReviewExercise.kpis || 'Sin respuesta'}</div>
                     </div>
                 `;
 
+                if (currentReviewExercise.type === 'pattern') {
+                    contentHTML += `
+                        <div class="review-field">
+                            <div class="review-field-title">📅 Cuándo ha pasado</div>
+                            <div class="review-field-content">${currentReviewExercise.when || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">💭 Cómo me he sentido / Qué he pensado</div>
+                            <div class="review-field-content">${currentReviewExercise.feeling || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">⚡ Qué he hecho</div>
+                            <div class="review-field-content">${currentReviewExercise.action || 'Sin respuesta'}</div>
+                        </div>
+                    `;
+                } else {
+                    const totalTrades = (currentReviewExercise.tradesWon || 0) + (currentReviewExercise.tradesLost || 0) + (currentReviewExercise.tradesBreakeven || 0);
+                    const winRate = totalTrades > 0 ? Math.round((currentReviewExercise.tradesWon / totalTrades) * 100) : 0;
+                    
+                    contentHTML += `
+                        <div class="review-field">
+                            <div class="review-field-title">📊 Métricas</div>
+                            <div class="review-field-content">
+                                <strong>Ganadas:</strong> ${currentReviewExercise.tradesWon || 0}<br>
+                                <strong>Perdidas:</strong> ${currentReviewExercise.tradesLost || 0}<br>
+                                <strong>Breakeven:</strong> ${currentReviewExercise.tradesBreakeven || 0}<br>
+                                <strong>Win Rate:</strong> ${winRate}%<br>
+                                <strong>P&L:</strong> $${currentReviewExercise.pnl || 0}
+                            </div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">✅ Qué funcionó</div>
+                            <div class="review-field-content">${currentReviewExercise.whatWorked || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">❌ Qué no funcionó</div>
+                            <div class="review-field-content">${currentReviewExercise.whatDidntWork || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">😓 Algo que me costó</div>
+                            <div class="review-field-content">${currentReviewExercise.struggles || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">🏆 Un win (logro)</div>
+                            <div class="review-field-content">${currentReviewExercise.wins || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">🔄 Qué cambiaría esta semana para mejorar</div>
+                            <div class="review-field-content">${currentReviewExercise.whatChange || 'Sin respuesta'}</div>
+                        </div>
+
+                        <div class="review-field">
+                            <div class="review-field-title">🎯 KPIs de Proceso</div>
+                            <div class="review-field-content">${currentReviewExercise.kpis || 'Sin respuesta'}</div>
+                        </div>
+                    `;
+                }
+
+                content.innerHTML = contentHTML;
                 document.getElementById('reviewFeedback').value = '';
                 modal.classList.remove('hidden');
             } catch (error) {
@@ -1995,19 +2264,36 @@
                     type: type,
                     status: 'draft',
                     createdAt: Timestamp.now(),
-                    updatedAt: Timestamp.now(),
-                    metrics: '',
-                    whatWorked: '',
-                    whatDidntWork: '',
-                    struggles: '',
-                    wins: '',
-                    whatDifferent: '',
-                    kpis: ''
+                    updatedAt: Timestamp.now()
                 };
+
+                // Add empty fields based on type
+                if (type === 'pattern') {
+                    exerciseData.when = '';
+                    exerciseData.feeling = '';
+                    exerciseData.action = '';
+                } else {
+                    exerciseData.tradesWon = 0;
+                    exerciseData.tradesLost = 0;
+                    exerciseData.tradesBreakeven = 0;
+                    exerciseData.pnl = 0;
+                    exerciseData.whatWorked = '';
+                    exerciseData.whatDidntWork = '';
+                    exerciseData.struggles = '';
+                    exerciseData.wins = '';
+                    exerciseData.whatChange = '';
+                    exerciseData.kpis = '';
+                }
 
                 await addDoc(collection(db, 'exercises'), exerciseData);
                 
-                showSuccess(`✅ Ejercicio ${type === 'weekly' ? 'semanal' : type === 'monthly' ? 'mensual' : 'trimestral'} creado!`);
+                let typeLabel = '';
+                if (type === 'weekly') typeLabel = 'semanal';
+                else if (type === 'monthly') typeLabel = 'mensual';
+                else if (type === 'quarterly') typeLabel = 'trimestral';
+                else if (type === 'pattern') typeLabel = 'diario de patrones';
+                
+                showSuccess(`✅ Ejercicio ${typeLabel} creado!`);
                 document.getElementById(`createExForm_${userId}`).style.display = 'none';
             } catch (error) {
                 console.error('Error creating exercise:', error);
@@ -2147,6 +2433,7 @@
         window.toggleCreateExerciseForm = toggleCreateExerciseForm;
         window.createExerciseForUser = createExerciseForUser;
         window.saveStageContent = saveStageContent;
+        window.createMyExercise = createMyExercise;
     </script>
 </body>
 </html>
