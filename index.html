@@ -742,6 +742,49 @@
             color: #ffffff;
         }
 
+        .create-exercise-form {
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-row > * {
+            flex: 1;
+        }
+
+        .content-management-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stage-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stage-number {
+            display: inline-block;
+            background: rgba(79, 70, 229, 0.2);
+            color: #4F46E5;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 200px;
@@ -760,6 +803,10 @@
             }
 
             .user-actions {
+                flex-direction: column;
+            }
+
+            .form-row {
                 flex-direction: column;
             }
         }
@@ -1025,6 +1072,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="admin-section">
+                    <div class="card">
+                        <h2 class="card-title">Gestión de Contenido de Etapas</h2>
+                        <p style="color: #a1a1aa; margin-bottom: 1.5rem;">Edita videos, herramientas y recursos de cada etapa</p>
+                        <div id="stagesContentManagement">
+                            <!-- Stages content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Calendar Page -->
@@ -1234,29 +1291,76 @@
             navigateToStep(currentStep);
         }
 
-        window.navigateToStep = function(stepId) {
+        window.navigateToStep = async function(stepId) {
             const step = steps.find(s => s.id === stepId);
             if (!step) return;
 
             const isUnlocked = userData?.unlockedSteps?.includes(stepId);
             if (!isUnlocked && userData?.role !== 'admin') return;
 
+            // Load stage configuration from Firestore
+            let stageConfig = {};
+            try {
+                const configDoc = await getDoc(doc(db, 'config', 'stages'));
+                if (configDoc.exists()) {
+                    const allConfig = configDoc.data();
+                    stageConfig = allConfig[`stage${stepId}`] || {};
+                }
+            } catch (error) {
+                console.log('No config found for stage');
+            }
+
             document.getElementById('stepDetailTitle').textContent = `Etapa ${stepId}: ${step.title}`;
-            document.getElementById('stepDetailSubtitle').textContent = step.description || '';
+            document.getElementById('stepDetailSubtitle').textContent = stageConfig.description || '';
 
             const videoContainer = document.getElementById('stepVideo');
-            if (step.video) {
-                videoContainer.innerHTML = `<iframe width="100%" height="400" src="${step.video}" frameborder="0" allowfullscreen></iframe>`;
+            const videoUrl = stageConfig.video || step.video;
+            
+            if (videoUrl) {
+                let embedUrl = videoUrl;
+                
+                // Convert YouTube URL to embed
+                if (videoUrl.includes('youtube.com/watch')) {
+                    const videoId = new URL(videoUrl).searchParams.get('v');
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                } else if (videoUrl.includes('youtu.be/')) {
+                    const videoId = videoUrl.split('youtu.be/')[1].split('?')[0];
+                    embedUrl = `https://www.youtube.com/embed/${videoId}`;
+                } else if (videoUrl.includes('loom.com/share/')) {
+                    const videoId = videoUrl.split('loom.com/share/')[1].split('?')[0];
+                    embedUrl = `https://www.loom.com/embed/${videoId}`;
+                } else if (videoUrl.includes('vimeo.com/')) {
+                    const videoId = videoUrl.split('vimeo.com/')[1].split('?')[0];
+                    embedUrl = `https://player.vimeo.com/video/${videoId}`;
+                }
+                
+                videoContainer.innerHTML = `<iframe width="100%" height="400" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`;
             } else {
                 videoContainer.innerHTML = '<p style="color: #a1a1aa;">Video próximamente...</p>';
             }
 
             const toolButton = document.getElementById('toolButton');
-            if (step.tool) {
-                toolButton.onclick = () => window.open(step.tool, '_blank');
+            const toolUrl = stageConfig.tool || step.tool;
+            
+            if (toolUrl) {
+                toolButton.onclick = () => window.open(toolUrl, '_blank');
                 toolButton.style.display = 'block';
             } else {
                 toolButton.style.display = 'none';
+            }
+
+            // Update resources section
+            const stepContent = document.getElementById('stepContent');
+            if (stageConfig.resources) {
+                stepContent.innerHTML = `
+                    <h2 class="card-title">Recursos Adicionales</h2>
+                    <div style="color: #e5e7eb; line-height: 1.8; white-space: pre-wrap;">${stageConfig.resources}</div>
+                `;
+            } else {
+                stepContent.innerHTML = `
+                    <h2 class="card-title">Recursos Adicionales</h2>
+                    <p style="color: #a1a1aa;">Próximamente tu mentor añadirá recursos aquí...</p>
+                `;
             }
 
             navigateToPage('stepDetail');
@@ -1603,6 +1707,9 @@
 
                 // Render pending exercises
                 renderAdminPendingExercises(pendingExercises, users);
+
+                // Load stages content management
+                await loadStagesContent();
             } catch (error) {
                 console.error('Error loading admin dashboard:', error);
             }
@@ -1651,9 +1758,26 @@
                             </button>
                         </div>
 
+                        <div class="create-exercise-form" id="createExForm_${user.id}" style="display: none;">
+                            <h4 style="margin-bottom: 1rem; color: #4F46E5;">Crear Ejercicio</h4>
+                            <div class="form-row">
+                                <select class="form-select" id="exType_${user.id}">
+                                    <option value="weekly">Semanal</option>
+                                    <option value="monthly">Mensual</option>
+                                    <option value="quarterly">Trimestral</option>
+                                </select>
+                                <button class="btn btn-success btn-small" onclick="createExerciseForUser('${user.id}')">
+                                    Crear
+                                </button>
+                            </div>
+                        </div>
+
                         <div class="user-actions">
                             <button class="btn btn-secondary btn-small" onclick="toggleCalendar('${user.id}', ${!user.calendarUnlocked})">
                                 ${user.calendarUnlocked ? '🔓 Bloquear' : '🔒 Desbloquear'} Calendario
+                            </button>
+                            <button class="btn btn-secondary btn-small" onclick="toggleCreateExerciseForm('${user.id}')">
+                                ➕ Crear Ejercicio
                             </button>
                         </div>
                     </div>
@@ -1857,6 +1981,158 @@
             return messages[code] || 'Error al iniciar sesión';
         }
 
+        window.toggleCreateExerciseForm = function(userId) {
+            const form = document.getElementById(`createExForm_${userId}`);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        window.createExerciseForUser = async function(userId) {
+            const type = document.getElementById(`exType_${userId}`).value;
+            
+            try {
+                const exerciseData = {
+                    userId: userId,
+                    type: type,
+                    status: 'draft',
+                    createdAt: Timestamp.now(),
+                    updatedAt: Timestamp.now(),
+                    metrics: '',
+                    whatWorked: '',
+                    whatDidntWork: '',
+                    struggles: '',
+                    wins: '',
+                    whatDifferent: '',
+                    kpis: ''
+                };
+
+                await addDoc(collection(db, 'exercises'), exerciseData);
+                
+                showSuccess(`✅ Ejercicio ${type === 'weekly' ? 'semanal' : type === 'monthly' ? 'mensual' : 'trimestral'} creado!`);
+                document.getElementById(`createExForm_${userId}`).style.display = 'none';
+            } catch (error) {
+                console.error('Error creating exercise:', error);
+                showError('Error al crear el ejercicio');
+            }
+        }
+
+        async function loadStagesContent() {
+            const container = document.getElementById('stagesContentManagement');
+            
+            // Load stages configuration from Firestore
+            let stagesConfig = {};
+            try {
+                const configDoc = await getDoc(doc(db, 'config', 'stages'));
+                if (configDoc.exists()) {
+                    stagesConfig = configDoc.data();
+                }
+            } catch (error) {
+                console.log('No config found, using defaults');
+            }
+
+            container.innerHTML = steps.map(step => {
+                const config = stagesConfig[`stage${step.id}`] || {};
+                
+                return `
+                    <div class="content-management-card">
+                        <div class="stage-card-header">
+                            <div>
+                                <span class="stage-number">Etapa ${step.id}</span>
+                                <h3 style="margin-top: 0.5rem;">${step.title}</h3>
+                            </div>
+                        </div>
+
+                        <form id="stageForm_${step.id}" onsubmit="saveStageContent(event, ${step.id})">
+                            <div class="form-group">
+                                <label class="form-label">Video URL (YouTube, Loom, Vimeo)</label>
+                                <input 
+                                    type="url" 
+                                    class="form-input" 
+                                    id="video_${step.id}"
+                                    value="${config.video || ''}"
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Herramienta URL</label>
+                                <input 
+                                    type="url" 
+                                    class="form-input" 
+                                    id="tool_${step.id}"
+                                    value="${config.tool || ''}"
+                                    placeholder="https://..."
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Descripción</label>
+                                <textarea 
+                                    class="form-textarea" 
+                                    id="description_${step.id}"
+                                    placeholder="Descripción de la etapa..."
+                                >${config.description || ''}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Recursos Adicionales</label>
+                                <textarea 
+                                    class="form-textarea" 
+                                    id="resources_${step.id}"
+                                    placeholder="Links, documentos, material extra..."
+                                >${config.resources || ''}</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-small">
+                                💾 Guardar Cambios
+                            </button>
+                        </form>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.saveStageContent = async function(event, stageId) {
+            event.preventDefault();
+            
+            const video = document.getElementById(`video_${stageId}`).value.trim();
+            const tool = document.getElementById(`tool_${stageId}`).value.trim();
+            const description = document.getElementById(`description_${stageId}`).value.trim();
+            const resources = document.getElementById(`resources_${stageId}`).value.trim();
+
+            try {
+                const configRef = doc(db, 'config', 'stages');
+                const configDoc = await getDoc(configRef);
+                
+                let currentConfig = {};
+                if (configDoc.exists()) {
+                    currentConfig = configDoc.data();
+                }
+
+                currentConfig[`stage${stageId}`] = {
+                    video,
+                    tool,
+                    description,
+                    resources,
+                    updatedAt: Timestamp.now()
+                };
+
+                await setDoc(configRef, currentConfig, { merge: true });
+                
+                // Update local steps array
+                const stepIndex = steps.findIndex(s => s.id === stageId);
+                if (stepIndex !== -1) {
+                    steps[stepIndex].video = video;
+                    steps[stepIndex].tool = tool;
+                    steps[stepIndex].description = description;
+                }
+
+                showSuccess(`✅ Etapa ${stageId} actualizada correctamente`);
+            } catch (error) {
+                console.error('Error saving stage content:', error);
+                showError('Error al guardar los cambios');
+            }
+        }
+
         // Make functions global
         window.navigateToPage = navigateToPage;
         window.navigateToCurrentStep = navigateToCurrentStep;
@@ -1868,6 +2144,9 @@
         window.openReviewModal = openReviewModal;
         window.closeReviewModal = closeReviewModal;
         window.submitReview = submitReview;
+        window.toggleCreateExerciseForm = toggleCreateExerciseForm;
+        window.createExerciseForUser = createExerciseForUser;
+        window.saveStageContent = saveStageContent;
     </script>
 </body>
 </html>
