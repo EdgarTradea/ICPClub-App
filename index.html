@@ -1566,6 +1566,7 @@
                 }
 
                 currentExercise = { id: exerciseId, ...exerciseDoc.data() };
+                console.log('Ejercicio cargado:', currentExercise);
                 
                 // Set title based on type
                 let titleText = '';
@@ -1604,10 +1605,88 @@
                 document.getElementById('submitExerciseBtn').disabled = isCompleted;
 
                 navigateToPage('exerciseForm');
-                setupAutoSave();
+                
+                // Setup form after navigating
+                setTimeout(() => {
+                    setupExerciseFormHandlers();
+                }, 100);
             } catch (error) {
                 console.error('Error opening exercise:', error);
-                showError('Error al abrir el ejercicio');
+                showError('Error al abrir el ejercicio: ' + error.message);
+            }
+        }
+
+        function setupExerciseFormHandlers() {
+            console.log('Setting up form handlers...');
+            
+            // Remove old submit listener
+            const form = document.getElementById('exerciseForm');
+            const newForm = form.cloneNode(true);
+            form.parentNode.replaceChild(newForm, form);
+            
+            // Add new submit listener
+            document.getElementById('exerciseForm').addEventListener('submit', handleExerciseSubmit);
+            
+            // Setup auto-save
+            setupAutoSave();
+            
+            console.log('Form handlers ready');
+        }
+
+        async function handleExerciseSubmit(e) {
+            e.preventDefault();
+            console.log('Form submitted!');
+            
+            if (!currentExercise) {
+                console.error('No current exercise');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitExerciseBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+
+            let exerciseData = {
+                status: 'pending',
+                submittedAt: Timestamp.now(),
+                updatedAt: Timestamp.now()
+            };
+
+            try {
+                if (currentExercise.type === 'pattern') {
+                    exerciseData.when = document.getElementById('when').value;
+                    exerciseData.feeling = document.getElementById('feeling').value;
+                    exerciseData.action = document.getElementById('action').value;
+                    
+                    console.log('Pattern data:', exerciseData);
+                } else {
+                    exerciseData.tradesWon = parseInt(document.getElementById('tradesWon').value) || 0;
+                    exerciseData.tradesLost = parseInt(document.getElementById('tradesLost').value) || 0;
+                    exerciseData.tradesBreakeven = parseInt(document.getElementById('tradesBreakeven').value) || 0;
+                    exerciseData.pnl = parseFloat(document.getElementById('pnl').value) || 0;
+                    exerciseData.whatWorked = document.getElementById('whatWorked').value;
+                    exerciseData.whatDidntWork = document.getElementById('whatDidntWork').value;
+                    exerciseData.struggles = document.getElementById('struggles').value;
+                    exerciseData.wins = document.getElementById('wins').value;
+                    exerciseData.whatChange = document.getElementById('whatChange').value;
+                    exerciseData.kpis = document.getElementById('kpis').value;
+                    
+                    console.log('Review data:', exerciseData);
+                }
+
+                await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
+                console.log('Exercise submitted successfully');
+                
+                showSuccess('¡Ejercicio enviado para revisión!');
+                setTimeout(() => {
+                    navigateToPage('exercises');
+                    loadExercises();
+                }, 1500);
+            } catch (error) {
+                console.error('Error submitting exercise:', error);
+                showError('Error al enviar el ejercicio: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar para Revisión';
             }
         }
 
@@ -1803,7 +1882,12 @@
         }
 
         window.saveAsDraft = async function() {
-            if (!currentExercise) return;
+            if (!currentExercise) {
+                console.error('No current exercise to save');
+                return;
+            }
+
+            console.log('Saving draft...');
 
             let exerciseData = {
                 status: 'draft',
@@ -1812,20 +1896,35 @@
 
             try {
                 if (currentExercise.type === 'pattern') {
-                    exerciseData.when = document.getElementById('when').value;
-                    exerciseData.feeling = document.getElementById('feeling').value;
-                    exerciseData.action = document.getElementById('action').value;
+                    const whenField = document.getElementById('when');
+                    const feelingField = document.getElementById('feeling');
+                    const actionField = document.getElementById('action');
+                    
+                    if (whenField) exerciseData.when = whenField.value;
+                    if (feelingField) exerciseData.feeling = feelingField.value;
+                    if (actionField) exerciseData.action = actionField.value;
                 } else {
-                    exerciseData.tradesWon = parseInt(document.getElementById('tradesWon').value) || 0;
-                    exerciseData.tradesLost = parseInt(document.getElementById('tradesLost').value) || 0;
-                    exerciseData.tradesBreakeven = parseInt(document.getElementById('tradesBreakeven').value) || 0;
-                    exerciseData.pnl = parseFloat(document.getElementById('pnl').value) || 0;
-                    exerciseData.whatWorked = document.getElementById('whatWorked').value;
-                    exerciseData.whatDidntWork = document.getElementById('whatDidntWork').value;
-                    exerciseData.struggles = document.getElementById('struggles').value;
-                    exerciseData.wins = document.getElementById('wins').value;
-                    exerciseData.whatChange = document.getElementById('whatChange').value;
-                    exerciseData.kpis = document.getElementById('kpis').value;
+                    const tradesWonField = document.getElementById('tradesWon');
+                    const tradesLostField = document.getElementById('tradesLost');
+                    const tradesBreakevenField = document.getElementById('tradesBreakeven');
+                    const pnlField = document.getElementById('pnl');
+                    const whatWorkedField = document.getElementById('whatWorked');
+                    const whatDidntWorkField = document.getElementById('whatDidntWork');
+                    const strugglesField = document.getElementById('struggles');
+                    const winsField = document.getElementById('wins');
+                    const whatChangeField = document.getElementById('whatChange');
+                    const kpisField = document.getElementById('kpis');
+                    
+                    if (tradesWonField) exerciseData.tradesWon = parseInt(tradesWonField.value) || 0;
+                    if (tradesLostField) exerciseData.tradesLost = parseInt(tradesLostField.value) || 0;
+                    if (tradesBreakevenField) exerciseData.tradesBreakeven = parseInt(tradesBreakevenField.value) || 0;
+                    if (pnlField) exerciseData.pnl = parseFloat(pnlField.value) || 0;
+                    if (whatWorkedField) exerciseData.whatWorked = whatWorkedField.value;
+                    if (whatDidntWorkField) exerciseData.whatDidntWork = whatDidntWorkField.value;
+                    if (strugglesField) exerciseData.struggles = strugglesField.value;
+                    if (winsField) exerciseData.wins = winsField.value;
+                    if (whatChangeField) exerciseData.whatChange = whatChangeField.value;
+                    if (kpisField) exerciseData.kpis = kpisField.value;
                 }
 
                 await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
@@ -2379,11 +2478,14 @@
 
         window.saveStageContent = async function(event, stageId) {
             event.preventDefault();
+            console.log('Saving stage content for stage:', stageId);
             
             const video = document.getElementById(`video_${stageId}`).value.trim();
             const tool = document.getElementById(`tool_${stageId}`).value.trim();
             const description = document.getElementById(`description_${stageId}`).value.trim();
             const resources = document.getElementById(`resources_${stageId}`).value.trim();
+
+            console.log('Stage data:', { video, tool, description, resources });
 
             try {
                 const configRef = doc(db, 'config', 'stages');
@@ -2403,6 +2505,7 @@
                 };
 
                 await setDoc(configRef, currentConfig, { merge: true });
+                console.log('Stage saved successfully');
                 
                 // Update local steps array
                 const stepIndex = steps.findIndex(s => s.id === stageId);
@@ -2415,7 +2518,7 @@
                 showSuccess(`✅ Etapa ${stageId} actualizada correctamente`);
             } catch (error) {
                 console.error('Error saving stage content:', error);
-                showError('Error al guardar los cambios');
+                showError('Error al guardar los cambios: ' + error.message);
             }
         }
 
