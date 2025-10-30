@@ -100,24 +100,23 @@
             transform: none;
         }
 
-        .error-message {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
+        .error-message, .success-message {
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
 
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
         .success-message {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
             color: #10b981;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
         }
 
         .text-center {
@@ -173,6 +172,11 @@
         .nav-item.active {
             background: rgba(79, 70, 229, 0.2);
             color: #4F46E5;
+        }
+
+        .nav-item.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
         }
 
         .nav-icon {
@@ -284,13 +288,13 @@
             transition: width 0.5s ease;
         }
 
-        .weeks-grid {
+        .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 1.5rem;
         }
 
-        .week-card {
+        .step-card {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
@@ -299,42 +303,37 @@
             transition: all 0.3s ease;
         }
 
-        .week-card:hover {
+        .step-card:hover:not(.locked) {
             transform: translateY(-5px);
             border-color: #4F46E5;
             box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
         }
 
-        .week-card.locked {
+        .step-card.locked {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        .week-number {
+        .step-number {
             font-size: 0.9rem;
             color: #4F46E5;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .week-title {
+        .step-title {
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
-        .week-description {
-            color: #a1a1aa;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .week-badge {
+        .step-badge {
             display: inline-block;
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 600;
+            margin-top: 0.5rem;
         }
 
         .badge-completed {
@@ -352,8 +351,107 @@
             color: #a1a1aa;
         }
 
+        .video-container {
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container iframe, .video-container video {
+            width: 100%;
+            height: 450px;
+            display: block;
+        }
+
+        .tool-card {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .tool-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #4F46E5;
+        }
+
+        .exercises-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            color: #a1a1aa;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #4F46E5;
+            border-bottom-color: #4F46E5;
+        }
+
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            border-color: #4F46E5;
+            box-shadow: 0 5px 20px rgba(79, 70, 229, 0.2);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .exercise-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .exercise-type {
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 8px;
+            background: rgba(79, 70, 229, 0.2);
+            color: #4F46E5;
+        }
+
+        .exercise-meta {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
         .hidden {
             display: none !important;
+        }
+
+        .locked-message {
+            text-align: center;
+            padding: 3rem;
+            color: #a1a1aa;
+        }
+
+        .locked-message h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
         }
 
         @media (max-width: 768px) {
@@ -369,7 +467,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .weeks-grid {
+            .steps-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -412,17 +510,17 @@
                     <span class="nav-icon">📊</span>
                     <span>Dashboard</span>
                 </div>
-                <div class="nav-item" data-page="weeks">
-                    <span class="nav-icon">📚</span>
-                    <span>Semanas</span>
+                <div class="nav-item" data-page="steps">
+                    <span class="nav-icon">🎯</span>
+                    <span>Etapas</span>
                 </div>
                 <div class="nav-item" data-page="exercises">
                     <span class="nav-icon">✍️</span>
                     <span>Mis Ejercicios</span>
                 </div>
-                <div class="nav-item" data-page="calendar">
+                <div class="nav-item locked" id="calendarNavItem" data-page="calendar">
                     <span class="nav-icon">📅</span>
-                    <span>Agendar Llamada</span>
+                    <span>Agendar Llamada 🔒</span>
                 </div>
                 <div class="nav-item" data-page="profile">
                     <span class="nav-icon">👤</span>
@@ -434,6 +532,7 @@
         </div>
 
         <div class="main-content">
+            <!-- Dashboard Page -->
             <div id="dashboardPage" class="page-content">
                 <div class="page-header">
                     <h1 class="page-title">¡Bienvenido, <span id="userName">Trader</span>!</h1>
@@ -442,8 +541,8 @@
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number" id="currentWeekStat">1</div>
-                        <div class="stat-label">Semana Actual</div>
+                        <div class="stat-number" id="currentStepStat">1</div>
+                        <div class="stat-label">Paso Actual</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="completedExercises">0</div>
@@ -459,8 +558,8 @@
                     <h2 class="card-title">Tu Progreso General</h2>
                     <div class="progress-container">
                         <div class="progress-label">
-                            <span>Programa de 8 semanas</span>
-                            <span id="progressText">0/8 semanas</span>
+                            <span>Programa de 5 etapas</span>
+                            <span id="progressText">0/5 etapas</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" id="progressBar" style="width: 0%"></div>
@@ -469,99 +568,90 @@
                 </div>
 
                 <div class="card">
-                    <h2 class="card-title">Semana Actual</h2>
-                    <p style="color: #a1a1aa; margin-bottom: 1rem;">Estás en la <strong style="color: #4F46E5;">Semana <span id="currentWeekText">1</span></strong></p>
-                    <button class="btn" onclick="navigateToPage('weeks')" style="width: auto;">Ver Contenido de la Semana →</button>
+                    <h2 class="card-title">Etapa Actual</h2>
+                    <p style="color: #a1a1aa; margin-bottom: 1rem;">Estás en la <strong style="color: #4F46E5;">Etapa <span id="currentStepText">1</span></strong></p>
+                    <button class="btn" onclick="navigateToCurrentStep()" style="width: auto;">Ver Contenido de la Etapa →</button>
                 </div>
             </div>
 
-            <div id="weeksPage" class="page-content hidden">
+            <!-- Steps Page -->
+            <div id="stepsPage" class="page-content hidden">
                 <div class="page-header">
-                    <h1 class="page-title">Estructura del Programa</h1>
-                    <p class="page-subtitle">8 semanas de contenido estructurado</p>
+                    <h1 class="page-title">Etapas del Programa</h1>
+                    <p class="page-subtitle">5 etapas para dominar tu trading</p>
                 </div>
 
-                <div class="weeks-grid">
-                    <div class="week-card" data-week="1">
-                        <div class="week-number">SEMANA 1</div>
-                        <h3 class="week-title">Baseline, set-up, objetivos y plan personal</h3>
-                        <p class="week-description">Establecemos tu situación actual y definimos objetivos claros</p>
-                        <span class="week-badge badge-current">Actual</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="2">
-                        <div class="week-number">SEMANA 2</div>
-                        <h3 class="week-title">Identificar errores y triggers</h3>
-                        <p class="week-description">Análisis profundo de patrones negativos</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="3">
-                        <div class="week-number">SEMANA 3</div>
-                        <h3 class="week-title">Hábitos previos y checklist en ejecución</h3>
-                        <p class="week-description">Construcción de rutinas pre-sesión</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="4">
-                        <div class="week-number">SEMANA 4</div>
-                        <h3 class="week-title">Integrar plan de trading</h3>
-                        <p class="week-description">Documentación y sistematización de tu plan</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="5">
-                        <div class="week-number">SEMANA 5</div>
-                        <h3 class="week-title">Journal y métricas clave</h3>
-                        <p class="week-description">Sistema de tracking y análisis</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="6">
-                        <div class="week-number">SEMANA 6</div>
-                        <h3 class="week-title">Gestión emocional y sesgos</h3>
-                        <p class="week-description">Psicología del trading avanzada</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="7">
-                        <div class="week-number">SEMANA 7</div>
-                        <h3 class="week-title">Auditoría final y roadmap</h3>
-                        <p class="week-description">Revisión completa de tu progreso</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
-                    
-                    <div class="week-card locked" data-week="8">
-                        <div class="week-number">SEMANA 8</div>
-                        <h3 class="week-title">Graduación</h3>
-                        <p class="week-description">Plan de continuidad y siguiente nivel</p>
-                        <span class="week-badge badge-locked">🔒 Bloqueada</span>
-                    </div>
+                <div class="steps-grid" id="stepsGrid">
+                    <!-- Steps will be loaded here -->
                 </div>
             </div>
 
+            <!-- Step Detail Page -->
+            <div id="stepDetailPage" class="page-content hidden">
+                <div class="page-header">
+                    <button onclick="navigateToPage('steps')" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; margin-bottom: 1rem;">← Volver a Etapas</button>
+                    <h1 class="page-title" id="stepDetailTitle">Etapa</h1>
+                    <p class="page-subtitle" id="stepDetailSubtitle"></p>
+                </div>
+
+                <div class="video-container" id="stepVideo">
+                    <!-- Video will be loaded here -->
+                </div>
+
+                <div class="tool-card">
+                    <h3>🛠️ Herramienta de esta Etapa</h3>
+                    <p style="color: #a1a1aa; margin-bottom: 1rem;">Accede a la herramienta específica para completar esta etapa</p>
+                    <button class="btn" id="toolButton" style="width: auto;">Acceder a la Herramienta</button>
+                </div>
+
+                <div class="card" id="stepContent">
+                    <h2 class="card-title">Recursos Adicionales</h2>
+                    <p style="color: #a1a1aa;">Contenido de la etapa...</p>
+                </div>
+            </div>
+
+            <!-- Exercises Page -->
             <div id="exercisesPage" class="page-content hidden">
                 <div class="page-header">
                     <h1 class="page-title">Mis Ejercicios</h1>
-                    <p class="page-subtitle">Revisa tus ejercicios completados y pendientes</p>
+                    <p class="page-subtitle">Revisiones semanales, mensuales y trimestrales</p>
                 </div>
-                <div class="card">
-                    <p style="color: #a1a1aa;">Esta sección se está construyendo...</p>
+
+                <div class="exercises-tabs">
+                    <div class="tab active" data-tab="pending">Pendientes</div>
+                    <div class="tab" data-tab="completed">Completados</div>
+                </div>
+
+                <div id="pendingExercises" class="exercises-list">
+                    <!-- Pending exercises will be loaded here -->
+                </div>
+
+                <div id="completedExercises" class="exercises-list hidden">
+                    <!-- Completed exercises will be loaded here -->
                 </div>
             </div>
 
+            <!-- Calendar Page -->
             <div id="calendarPage" class="page-content hidden">
-                <div class="page-header">
-                    <h1 class="page-title">Agendar Llamada</h1>
-                    <p class="page-subtitle">Reserva tu sesión 1:1 con tu mentor</p>
+                <div id="calendarLocked" class="locked-message">
+                    <h3>🔒 Llamadas Bloqueadas</h3>
+                    <p>Tu mentor desbloqueará esta sección cuando sea el momento de agendar tu llamada 1:1</p>
                 </div>
-                <div class="card">
-                    <div style="min-height: 600px;">
-                        <iframe src="https://calendly.com/edgartradea/30min" width="100%" height="600" frameborder="0"></iframe>
+
+                <div id="calendarUnlocked" class="hidden">
+                    <div class="page-header">
+                        <h1 class="page-title">Agendar Llamada</h1>
+                        <p class="page-subtitle">Reserva tu sesión 1:1 con tu mentor</p>
+                    </div>
+                    <div class="card">
+                        <div style="min-height: 600px;">
+                            <iframe src="https://calendly.com/edgartradea/30min" width="100%" height="600" frameborder="0"></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Profile Page -->
             <div id="profilePage" class="page-content hidden">
                 <div class="page-header">
                     <h1 class="page-title">Mi Perfil</h1>
@@ -577,7 +667,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyD1U_K-9vkGGnKcbAALA-pSRMTv8f0B_M4",
@@ -585,8 +675,7 @@
             projectId: "icp-club-app",
             storageBucket: "icp-club-app.firebasestorage.app",
             messagingSenderId: "684016793931",
-            appId: "1:684016793931:web:127126cbb7b133ad5290ce",
-            measurementId: "G-VLP5LKF4J8"
+            appId: "1:684016793931:web:127126cbb7b133ad5290ce"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -594,6 +683,15 @@
         const db = getFirestore(app);
 
         let currentUser = null;
+        let userData = null;
+
+        const steps = [
+            { id: 1, title: "Identificar errores", video: "", tool: "" },
+            { id: 2, title: "Sistemas y procesos", video: "", tool: "" },
+            { id: 3, title: "Hábitos", video: "", tool: "" },
+            { id: 4, title: "Integración al trading", video: "", tool: "" },
+            { id: 5, title: "Trading", video: "", tool: "" }
+        ];
 
         const loginPage = document.getElementById('loginPage');
         const dashboardApp = document.getElementById('dashboardApp');
@@ -604,16 +702,12 @@
         const successMessage = document.getElementById('successMessage');
 
         onAuthStateChanged(auth, async (user) => {
-            console.log('Auth state changed:', user ? user.uid : 'No user');
-            
             if (user) {
                 currentUser = user;
-                console.log('User logged in:', user.email);
                 await loadUserData(user);
                 showDashboard();
             } else {
                 currentUser = null;
-                console.log('No user logged in');
                 showLogin();
             }
         });
@@ -624,20 +718,14 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             
-            console.log('Attempting login with:', email);
-            
             hideMessages();
             loginBtn.disabled = true;
             loginBtn.textContent = 'Iniciando...';
             
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                console.log('Login successful:', userCredential.user.uid);
-                showSuccess('Login exitoso! Cargando dashboard...');
+                await signInWithEmailAndPassword(auth, email, password);
+                showSuccess('Login exitoso!');
             } catch (error) {
-                console.error('Login error:', error);
-                console.error('Error code:', error.code);
-                console.error('Error message:', error.message);
                 showError(getErrorMessage(error.code));
                 loginBtn.disabled = false;
                 loginBtn.textContent = 'Iniciar Sesión';
@@ -653,47 +741,127 @@
         });
 
         async function loadUserData(user) {
-            console.log('Loading user data for:', user.uid);
-            
             try {
                 const userDoc = await getDoc(doc(db, 'users', user.uid));
                 
                 if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    console.log('User data loaded:', userData);
+                    userData = userDoc.data();
                     updateDashboardUI(userData);
+                    loadSteps(userData);
+                    updateCalendarAccess(userData);
                 } else {
-                    console.log('User document not found, creating default profile...');
                     const defaultData = {
                         email: user.email,
                         displayName: user.email.split('@')[0],
                         role: 'student',
-                        currentWeek: 1,
-                        completedWeeks: [],
+                        currentStep: 1,
+                        completedSteps: [],
+                        completedExercises: 0,
+                        calendarUnlocked: false,
                         createdAt: new Date()
                     };
                     await setDoc(doc(db, 'users', user.uid), defaultData);
-                    console.log('Default profile created');
+                    userData = defaultData;
                     updateDashboardUI(defaultData);
+                    loadSteps(defaultData);
+                    updateCalendarAccess(defaultData);
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
-                showError('Error al cargar datos del usuario: ' + error.message);
+                showError('Error al cargar datos');
             }
         }
 
-        function updateDashboardUI(userData) {
-            document.getElementById('userName').textContent = userData.displayName || 'Trader';
-            document.getElementById('currentWeekStat').textContent = userData.currentWeek || 1;
-            document.getElementById('currentWeekText').textContent = userData.currentWeek || 1;
+        function updateDashboardUI(data) {
+            document.getElementById('userName').textContent = data.displayName || 'Trader';
+            document.getElementById('currentStepStat').textContent = data.currentStep || 1;
+            document.getElementById('currentStepText').textContent = data.currentStep || 1;
+            document.getElementById('completedExercises').textContent = data.completedExercises || 0;
             
-            const completedCount = userData.completedWeeks?.length || 0;
-            document.getElementById('completedExercises').textContent = completedCount;
-            
-            const progress = Math.round((completedCount / 8) * 100);
+            const completedCount = data.completedSteps?.length || 0;
+            const progress = Math.round((completedCount / 5) * 100);
             document.getElementById('progressPercentage').textContent = progress + '%';
-            document.getElementById('progressText').textContent = `${completedCount}/8 semanas`;
+            document.getElementById('progressText').textContent = `${completedCount}/5 etapas`;
             document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function loadSteps(data) {
+            const stepsGrid = document.getElementById('stepsGrid');
+            stepsGrid.innerHTML = '';
+            
+            steps.forEach((step, index) => {
+                const isCompleted = data.completedSteps?.includes(step.id);
+                const isCurrent = step.id === data.currentStep;
+                const isLocked = step.id > data.currentStep;
+                
+                const stepCard = document.createElement('div');
+                stepCard.className = 'step-card' + (isLocked ? ' locked' : '');
+                stepCard.dataset.step = step.id;
+                
+                let badge = '';
+                if (isCompleted) badge = '<span class="step-badge badge-completed">✓ Completado</span>';
+                else if (isCurrent) badge = '<span class="step-badge badge-current">Actual</span>';
+                else if (isLocked) badge = '<span class="step-badge badge-locked">🔒 Bloqueado</span>';
+                
+                stepCard.innerHTML = `
+                    <div class="step-number">ETAPA ${step.id}</div>
+                    <h3 class="step-title">${step.title}</h3>
+                    ${badge}
+                `;
+                
+                if (!isLocked) {
+                    stepCard.addEventListener('click', () => openStepDetail(step.id));
+                }
+                
+                stepsGrid.appendChild(stepCard);
+            });
+        }
+
+        function updateCalendarAccess(data) {
+            const calendarNavItem = document.getElementById('calendarNavItem');
+            const calendarLocked = document.getElementById('calendarLocked');
+            const calendarUnlocked = document.getElementById('calendarUnlocked');
+            
+            if (data.calendarUnlocked) {
+                calendarNavItem.classList.remove('locked');
+                calendarNavItem.innerHTML = '<span class="nav-icon">📅</span><span>Agendar Llamada</span>';
+                calendarLocked.classList.add('hidden');
+                calendarUnlocked.classList.remove('hidden');
+            } else {
+                calendarNavItem.classList.add('locked');
+                calendarNavItem.innerHTML = '<span class="nav-icon">📅</span><span>Agendar Llamada 🔒</span>';
+                calendarLocked.classList.remove('hidden');
+                calendarUnlocked.classList.add('hidden');
+            }
+        }
+
+        function openStepDetail(stepId) {
+            const step = steps.find(s => s.id === stepId);
+            if (!step) return;
+            
+            document.getElementById('stepDetailTitle').textContent = `Etapa ${step.id}: ${step.title}`;
+            document.getElementById('stepDetailSubtitle').textContent = `Contenido y recursos de la etapa ${step.id}`;
+            
+            const videoContainer = document.getElementById('stepVideo');
+            if (step.video) {
+                videoContainer.innerHTML = `<iframe src="${step.video}" width="100%" height="450" frameborder="0" allowfullscreen></iframe>`;
+            } else {
+                videoContainer.innerHTML = '<div style="padding: 3rem; text-align: center; color: #a1a1aa;">El video de esta etapa estará disponible pronto</div>';
+            }
+            
+            const toolButton = document.getElementById('toolButton');
+            if (step.tool) {
+                toolButton.onclick = () => window.open(step.tool, '_blank');
+            } else {
+                toolButton.onclick = () => alert('La herramienta estará disponible pronto');
+            }
+            
+            navigateToPage('stepDetail');
+        }
+
+        window.navigateToCurrentStep = function() {
+            const currentStep = userData?.currentStep || 1;
+            openStepDetail(currentStep);
         }
 
         function showLogin() {
@@ -704,6 +872,7 @@
         function showDashboard() {
             loginPage.classList.add('hidden');
             dashboardApp.classList.remove('hidden');
+            loadExercises();
         }
 
         function showError(message) {
@@ -735,13 +904,16 @@
             return messages[code] || 'Error al iniciar sesión';
         }
 
-        const navItems = document.querySelectorAll('.nav-item');
+        // Navigation
+        const navItems = document.querySelectorAll('.nav-item:not(.locked)');
         const pages = document.querySelectorAll('.page-content');
 
         navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const pageName = item.dataset.page;
-                navigateToPage(pageName);
+            item.addEventListener('click', function() {
+                if (!this.classList.contains('locked')) {
+                    const pageName = this.dataset.page;
+                    navigateToPage(pageName);
+                }
             });
         });
 
@@ -763,14 +935,50 @@
             });
         }
 
-        document.querySelectorAll('.week-card').forEach(card => {
-            card.addEventListener('click', () => {
-                if (!card.classList.contains('locked')) {
-                    const weekNumber = card.dataset.week;
-                    alert(`Abriendo semana ${weekNumber}...`);
+        // Exercise Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const tabName = this.dataset.tab;
+                if (tabName === 'pending') {
+                    document.getElementById('pendingExercises').classList.remove('hidden');
+                    document.getElementById('completedExercises').classList.add('hidden');
+                } else {
+                    document.getElementById('pendingExercises').classList.add('hidden');
+                    document.getElementById('completedExercises').classList.remove('hidden');
                 }
             });
         });
+
+        // Load Exercises
+        async function loadExercises() {
+            const pendingContainer = document.getElementById('pendingExercises');
+            const completedContainer = document.getElementById('completedExercises');
+            
+            // Example exercises - In production, these would come from Firestore
+            const exerciseTypes = ['Semanal', 'Mensual', 'Trimestral'];
+            
+            pendingContainer.innerHTML = `
+                <div class="exercise-card">
+                    <div class="exercise-header">
+                        <div class="exercise-title">Revisión Semanal #1</div>
+                        <div class="exercise-type">Semanal</div>
+                    </div>
+                    <div class="exercise-meta">Pendiente • Creado hace 2 días</div>
+                </div>
+                <p style="color: #a1a1aa; text-align: center; padding: 2rem;">
+                    Más ejercicios aparecerán aquí cuando tu mentor los active
+                </p>
+            `;
+            
+            completedContainer.innerHTML = `
+                <p style="color: #a1a1aa; text-align: center; padding: 2rem;">
+                    Aún no has completado ningún ejercicio
+                </p>
+            `;
+        }
     </script>
 </body>
 </html>
