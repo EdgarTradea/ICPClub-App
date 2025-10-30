@@ -764,6 +764,118 @@
             margin-bottom: 0;
         }
 
+        /* Stage Tools Styles */
+        .stage-tools-section {
+            margin-top: 2rem;
+        }
+
+        .tools-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tools-tab {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: #a1a1aa;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s ease;
+        }
+
+        .tools-tab:hover {
+            color: #ffffff;
+        }
+
+        .tools-tab.active {
+            color: #4F46E5;
+            border-bottom-color: #4F46E5;
+        }
+
+        .error-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .error-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .error-item-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .error-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-icon.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .image-upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload-area:hover {
+            border-color: #4F46E5;
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        .image-upload-area.dragging {
+            border-color: #4F46E5;
+            background: rgba(79, 70, 229, 0.1);
+        }
+
+        .image-preview {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
         .content-management-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -928,6 +1040,19 @@
                     <button class="btn" id="toolButton" style="width: auto;">Acceder a la Herramienta</button>
                 </div>
 
+                <!-- Stage Tools Section -->
+                <div id="stageToolsSection" class="stage-tools-section hidden">
+                    <!-- Tools will be loaded here dynamically -->
+                </div>
+
+                <!-- Submit Stage for Review -->
+                <div class="card" id="submitStageCard">
+                    <h2 class="card-title">✅ Completar Etapa</h2>
+                    <p style="color: #a1a1aa; margin-bottom: 1rem;">Cuando hayas completado todo el contenido y la herramienta de esta etapa, envíala para revisión.</p>
+                    <div id="stageSubmitStatus" style="margin-bottom: 1rem;"></div>
+                    <button class="btn" id="submitStageBtn" onclick="submitStageForReview()">📤 Enviar Etapa para Revisión</button>
+                </div>
+
                 <div class="card" id="stepContent">
                     <h2 class="card-title">Recursos Adicionales</h2>
                     <p style="color: #a1a1aa;">Contenido de la etapa...</p>
@@ -1049,6 +1174,15 @@
 
                 <div class="admin-section">
                     <div class="card">
+                        <h2 class="card-title">Etapas Pendientes de Revisión</h2>
+                        <div id="adminPendingStages">
+                            <!-- Pending stages will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <div class="card">
                         <h2 class="card-title">Gestión de Contenido de Etapas</h2>
                         <p style="color: #a1a1aa; margin-bottom: 1.5rem;">Edita videos, herramientas y recursos de cada etapa</p>
                         <div id="stagesContentManagement">
@@ -1115,6 +1249,31 @@
         </div>
     </div>
 
+    <!-- Stage Review Modal -->
+    <div id="stageReviewModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Revisar Etapa</h2>
+                <button class="modal-close" onclick="closeStageReviewModal()">×</button>
+            </div>
+            
+            <div id="stageReviewModalContent">
+                <!-- Stage content will be loaded here -->
+            </div>
+
+            <div class="form-group" style="margin-top: 2rem;">
+                <label class="form-label" for="stageFeedback">Feedback para el alumno</label>
+                <textarea id="stageFeedback" class="form-textarea" placeholder="Escribe aquí tu feedback..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="closeStageReviewModal()">Cancelar</button>
+                <button class="btn btn-danger" onclick="rejectStage()">Rechazar</button>
+                <button class="btn btn-success" onclick="approveStage()">Aprobar Etapa</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
@@ -1137,6 +1296,8 @@
         let userData = null;
         let currentExercise = null;
         let currentReviewExercise = null;
+        let currentStageWork = null;
+        let currentReviewStage = null;
         let autoSaveTimer = null;
 
         const steps = [
@@ -1338,6 +1499,13 @@
             }
 
             navigateToPage('stepDetail');
+            
+            // Load stage submission status (only for students)
+            if (userData?.role !== 'admin') {
+                await updateStageSubmitStatus(stepId);
+            } else {
+                document.getElementById('submitStageCard').style.display = 'none';
+            }
         }
 
         // Load functions
@@ -2026,6 +2194,9 @@
                 // Render pending exercises
                 renderAdminPendingExercises(pendingExercises, users);
 
+                // Load pending stages
+                await loadPendingStages();
+
                 // Load stages content management
                 await loadStagesContent();
             } catch (error) {
@@ -2320,6 +2491,234 @@
             }
         }
 
+        // Stage Review System
+        let currentStageSubmission = null;
+
+        window.submitStageForReview = async function() {
+            const currentStepId = parseInt(document.getElementById('stepDetailTitle').textContent.match(/\d+/)[0]);
+            
+            console.log('Submitting stage:', currentStepId, 'for user:', currentUser.uid);
+
+            try {
+                const stageSubmission = {
+                    userId: currentUser.uid,
+                    stageId: currentStepId,
+                    status: 'pending',
+                    submittedAt: Timestamp.now(),
+                    createdAt: Timestamp.now()
+                };
+
+                await addDoc(collection(db, 'stageSubmissions'), stageSubmission);
+                
+                showSuccess('¡Etapa enviada para revisión!');
+                updateStageSubmitStatus(currentStepId);
+            } catch (error) {
+                console.error('Error submitting stage:', error);
+                showError('Error al enviar la etapa: ' + error.message);
+            }
+        }
+
+        async function updateStageSubmitStatus(stageId) {
+            try {
+                const q = query(
+                    collection(db, 'stageSubmissions'),
+                    where('userId', '==', currentUser.uid),
+                    where('stageId', '==', stageId)
+                );
+                
+                const snapshot = await getDocs(q);
+                const submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Sort by submittedAt descending to get latest
+                submissions.sort((a, b) => {
+                    const aTime = a.submittedAt?.toMillis ? a.submittedAt.toMillis() : 0;
+                    const bTime = b.submittedAt?.toMillis ? b.submittedAt.toMillis() : 0;
+                    return bTime - aTime;
+                });
+
+                const latestSubmission = submissions[0];
+                const statusDiv = document.getElementById('stageSubmitStatus');
+                const submitBtn = document.getElementById('submitStageBtn');
+
+                if (!latestSubmission) {
+                    statusDiv.innerHTML = '';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '📤 Enviar Etapa para Revisión';
+                } else if (latestSubmission.status === 'pending') {
+                    statusDiv.innerHTML = '<div class="success-message">⏳ Etapa enviada - Esperando revisión del mentor</div>';
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'En Revisión...';
+                } else if (latestSubmission.status === 'approved') {
+                    statusDiv.innerHTML = `<div class="success-message">✅ Etapa Aprobada${latestSubmission.mentorFeedback ? '<br><strong>Feedback:</strong> ' + latestSubmission.mentorFeedback : ''}</div>`;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = '✓ Aprobada';
+                } else if (latestSubmission.status === 'rejected') {
+                    statusDiv.innerHTML = `<div class="error-message">❌ Etapa Rechazada - Revisa el feedback<br><strong>Feedback:</strong> ${latestSubmission.mentorFeedback || 'Sin feedback'}</div>`;
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🔄 Reenviar para Revisión';
+                }
+            } catch (error) {
+                console.error('Error loading stage status:', error);
+            }
+        }
+
+        async function loadPendingStages() {
+            try {
+                const q = query(
+                    collection(db, 'stageSubmissions'),
+                    where('status', '==', 'pending')
+                );
+                
+                const snapshot = await getDocs(q);
+                const submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Load all users
+                const usersSnapshot = await getDocs(collection(db, 'users'));
+                const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                renderPendingStages(submissions, users);
+            } catch (error) {
+                console.error('Error loading pending stages:', error);
+            }
+        }
+
+        function renderPendingStages(submissions, users) {
+            const container = document.getElementById('adminPendingStages');
+            
+            if (submissions.length === 0) {
+                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay etapas pendientes de revisión</p>';
+                return;
+            }
+
+            container.innerHTML = submissions.map(submission => {
+                const user = users.find(u => u.id === submission.userId);
+                const stage = steps.find(s => s.id === submission.stageId);
+                const date = submission.submittedAt?.toDate ? submission.submittedAt.toDate().toLocaleDateString('es-ES') : 'Sin fecha';
+
+                return `
+                    <div class="exercise-card" onclick="openStageReviewModal('${submission.id}', '${user?.name || 'Alumno'}', ${submission.stageId})">
+                        <div class="exercise-info">
+                            <h3>${user?.name || user?.email || 'Alumno'} - Etapa ${submission.stageId}: ${stage?.title || ''}</h3>
+                            <div class="exercise-meta">Enviado el ${date}</div>
+                        </div>
+                        <span class="exercise-type type-weekly">Etapa ${submission.stageId}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.openStageReviewModal = async function(submissionId, userName, stageId) {
+            try {
+                const submissionDoc = await getDoc(doc(db, 'stageSubmissions', submissionId));
+                if (!submissionDoc.exists()) return;
+
+                currentStageSubmission = { id: submissionId, ...submissionDoc.data() };
+                
+                const stage = steps.find(s => s.id === stageId);
+                const modal = document.getElementById('stageReviewModal');
+                const content = document.getElementById('stageReviewModalContent');
+                
+                content.innerHTML = `
+                    <div class="review-exercise-header">
+                        <div>
+                            <h3>${userName}</h3>
+                            <p style="color: #a1a1aa;">Etapa ${stageId}: ${stage?.title || ''}</p>
+                        </div>
+                    </div>
+
+                    <div class="review-field">
+                        <div class="review-field-title">📝 Revisión de Etapa</div>
+                        <div class="review-field-content">
+                            El alumno ha marcado esta etapa como completada.<br>
+                            <strong>Próximamente:</strong> Aquí verás el contenido de las herramientas completadas.
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('stageFeedback').value = '';
+                modal.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error opening stage review modal:', error);
+            }
+        }
+
+        window.closeStageReviewModal = function() {
+            document.getElementById('stageReviewModal').classList.add('hidden');
+            currentStageSubmission = null;
+        }
+
+        window.approveStage = async function() {
+            if (!currentStageSubmission) return;
+
+            const feedback = document.getElementById('stageFeedback').value.trim();
+
+            try {
+                await updateDoc(doc(db, 'stageSubmissions', currentStageSubmission.id), {
+                    status: 'approved',
+                    mentorFeedback: feedback,
+                    reviewedAt: Timestamp.now()
+                });
+
+                // Unlock next stage for user
+                const nextStageId = currentStageSubmission.stageId + 1;
+                if (nextStageId <= 5) {
+                    const userRef = doc(db, 'users', currentStageSubmission.userId);
+                    const userDoc = await getDoc(userRef);
+                    const userData = userDoc.data();
+                    
+                    const unlockedSteps = userData.unlockedSteps || [1];
+                    if (!unlockedSteps.includes(nextStageId)) {
+                        unlockedSteps.push(nextStageId);
+                        unlockedSteps.sort((a, b) => a - b);
+                    }
+
+                    await updateDoc(userRef, {
+                        currentStep: nextStageId,
+                        unlockedSteps: unlockedSteps
+                    });
+
+                    // If approving stage 4, unlock calendar
+                    if (currentStageSubmission.stageId === 4) {
+                        await updateDoc(userRef, {
+                            calendarUnlocked: true
+                        });
+                    }
+                }
+
+                showSuccess('✅ Etapa aprobada! ' + (nextStageId <= 5 ? `Etapa ${nextStageId} desbloqueada` : 'Programa completado'));
+                closeStageReviewModal();
+                loadAdminDashboard();
+            } catch (error) {
+                console.error('Error approving stage:', error);
+                showError('Error al aprobar la etapa: ' + error.message);
+            }
+        }
+
+        window.rejectStage = async function() {
+            if (!currentStageSubmission) return;
+
+            const feedback = document.getElementById('stageFeedback').value.trim();
+            if (!feedback) {
+                showError('Por favor, escribe un feedback explicando por qué rechazas la etapa');
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'stageSubmissions', currentStageSubmission.id), {
+                    status: 'rejected',
+                    mentorFeedback: feedback,
+                    reviewedAt: Timestamp.now()
+                });
+
+                showSuccess('Etapa rechazada. El alumno recibirá tu feedback.');
+                closeStageReviewModal();
+                loadAdminDashboard();
+            } catch (error) {
+                console.error('Error rejecting stage:', error);
+                showError('Error al rechazar la etapa');
+            }
+        }
+
         // Utility functions
         function showError(message) {
             errorMessage.textContent = message;
@@ -2537,6 +2936,11 @@
         window.createExerciseForUser = createExerciseForUser;
         window.saveStageContent = saveStageContent;
         window.createMyExercise = createMyExercise;
+        window.submitStageForReview = submitStageForReview;
+        window.openStageReviewModal = openStageReviewModal;
+        window.closeStageReviewModal = closeStageReviewModal;
+        window.approveStage = approveStage;
+        window.rejectStage = rejectStage;
     </script>
 </body>
 </html>
