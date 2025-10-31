@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -395,6 +395,464 @@
             color: #a1a1aa;
         }
 
+        /* Stage 0: Self-Assessment Styles */
+        .assessment-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .assessment-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .assessment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .assessment-label {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .assessment-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4F46E5;
+        }
+
+        .slider-container {
+            position: relative;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: #a1a1aa;
+        }
+
+        .average-score {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(124, 58, 237, 0.2));
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .average-score-number {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4F46E5, #7C3AED);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .average-score-label {
+            font-size: 1.2rem;
+            color: #a1a1aa;
+            margin-top: 0.5rem;
+        }
+
+        /* Collapsible Tool Card Styles */
+        .tool-card-compact {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tool-card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tool-card-icon {
+            font-size: 1.5rem;
+        }
+
+        .tool-card-title-group h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-card-subtitle {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
+
+        .tool-card-expand-icon {
+            font-size: 1.5rem;
+            color: #4F46E5;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card-compact.expanded .tool-card-expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .tool-card-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .tool-card-compact.expanded .tool-card-body {
+            max-height: 10000px;
+        }
+
+        .tool-card-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        /* Expandable Section Styles */
+        .expandable-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .expandable-section-header {
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .expandable-section-header:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .expandable-section-title {
+            font-weight: 600;
+            color: #4F46E5;
+            font-size: 1rem;
+        }
+
+        .expandable-section-icon {
+            color: #4F46E5;
+            transition: transform 0.3s ease;
+        }
+
+        .expandable-section.expanded .expandable-section-icon {
+            transform: rotate(180deg);
+        }
+
+        .expandable-section-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .expandable-section.expanded .expandable-section-body {
+            max-height: 5000px;
+        }
+
+        .expandable-section-content {
+            padding: 1rem 1.25rem;
+        }
+
+        .subsection-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .subsection-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .subsection-item-label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #e5e7eb;
+        }
+
+        .subsection-item button {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .subsection-item button:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .add-item-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(79, 70, 229, 0.1);
+            border: 1px dashed rgba(79, 70, 229, 0.3);
+            border-radius: 8px;
+            color: #4F46E5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.75rem;
+        }
+
+        .add-item-btn:hover {
+            background: rgba(79, 70, 229, 0.15);
+            border-style: solid;
+        }
+
+        /* Error/RED Item Styles */
+        .items-list-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .items-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .items-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .items-list {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .item-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .item-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(79, 70, 229, 0.3);
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: #ffffff;
+        }
+
+        .item-status {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: none;
+        }
+
+        .btn-icon:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-icon.edit:hover {
+            background: rgba(79, 70, 229, 0.2);
+            color: #4F46E5;
+        }
+
+        .btn-icon.delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .item-editor {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .item-editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .item-editor-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .question-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: rgba(79, 70, 229, 0.2);
+            color: #4F46E5;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+
+        .question-help {
+            font-size: 0.9rem;
+            color: #a1a1aa;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #a1a1aa;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .empty-state-text {
+            font-size: 0.95rem;
+        }
+
+        .save-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #a1a1aa;
+        }
+
+        .save-indicator.saving {
+            color: #3b82f6;
+        }
+
+        .save-indicator.saved {
+            color: #10b981;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
         .video-container {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -406,14 +864,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .tool-card {
-            background: rgba(79, 70, 229, 0.1);
-            border: 1px solid rgba(79, 70, 229, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
         }
 
         .exercises-tabs {
@@ -549,12 +999,6 @@
 
         .auto-save-indicator.saved {
             color: #10b981;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
         }
 
         .review-section {
@@ -764,118 +1208,6 @@
             margin-bottom: 0;
         }
 
-        /* Stage Tools Styles */
-        .stage-tools-section {
-            margin-top: 2rem;
-        }
-
-        .tools-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .tools-tab {
-            padding: 12px 20px;
-            background: transparent;
-            border: none;
-            color: #a1a1aa;
-            cursor: pointer;
-            font-weight: 500;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.3s ease;
-        }
-
-        .tools-tab:hover {
-            color: #ffffff;
-        }
-
-        .tools-tab.active {
-            color: #4F46E5;
-            border-bottom-color: #4F46E5;
-        }
-
-        .error-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .error-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .error-item-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .error-item-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-icon {
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-icon:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-icon.delete:hover {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: #ef4444;
-            color: #ef4444;
-        }
-
-        .image-upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 3rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .image-upload-area:hover {
-            border-color: #4F46E5;
-            background: rgba(79, 70, 229, 0.05);
-        }
-
-        .image-upload-area.dragging {
-            border-color: #4F46E5;
-            background: rgba(79, 70, 229, 0.1);
-        }
-
-        .image-preview {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .export-buttons {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
         .content-management-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -899,357 +1231,6 @@
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 600;
-        }
-
-        /* Stage 1: Errors Management Styles */
-        .errors-list-container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .errors-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .errors-header h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .errors-list {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .error-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .error-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(79, 70, 229, 0.3);
-        }
-
-        .error-item-info {
-            flex: 1;
-        }
-
-        .error-item-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-            color: #ffffff;
-        }
-
-        .error-item-status {
-            font-size: 0.85rem;
-            color: #a1a1aa;
-        }
-
-        .error-item-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-icon {
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            border: none;
-        }
-
-        .btn-icon:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .btn-icon.edit:hover {
-            background: rgba(79, 70, 229, 0.2);
-            color: #4F46E5;
-        }
-
-        .btn-icon.delete:hover {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-
-        .error-editor {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .error-editor-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .error-editor-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .error-question {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .error-question-number {
-            display: inline-block;
-            background: rgba(79, 70, 229, 0.2);
-            color: #4F46E5;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-
-        .error-question-text {
-            font-weight: 500;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-            color: #ffffff;
-        }
-
-        .error-question-help {
-            font-size: 0.9rem;
-            color: #a1a1aa;
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: #a1a1aa;
-        }
-
-        .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #ffffff;
-        }
-
-        .empty-state-text {
-            font-size: 0.95rem;
-        }
-
-        .save-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            color: #a1a1aa;
-        }
-
-        .save-indicator.saving {
-            color: #3b82f6;
-        }
-
-        .save-indicator.saved {
-            color: #10b981;
-        }
-
-        /* Stage 2: Tools Management Styles */
-        .stage2-tools-container {
-            display: grid;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stage2-tool-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .stage2-tool-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(79, 70, 229, 0.3);
-        }
-
-        .stage2-tool-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stage2-tool-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .stage2-tool-subtitle {
-            color: #a1a1aa;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .stage2-tool-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: #a1a1aa;
-        }
-
-        .stage2-tool-status.complete {
-            color: #10b981;
-        }
-
-        .stage2-section {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stage2-section-title {
-            font-weight: 600;
-            color: #4F46E5;
-            margin-bottom: 0.75rem;
-            font-size: 1rem;
-        }
-
-        .stage2-section-desc {
-            color: #a1a1aa;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            font-style: italic;
-        }
-
-        .habits-list {
-            display: grid;
-            gap: 0.75rem;
-            margin-top: 1rem;
-        }
-
-        .habit-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .habit-item input[type="text"] {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 0.95rem;
-            padding: 0.25rem 0;
-        }
-
-        .habit-item input[type="text"]:focus {
-            outline: none;
-        }
-
-        .habit-item button {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .habit-item button:hover {
-            background: rgba(239, 68, 68, 0.2);
-        }
-
-        .add-habit-btn {
-            width: 100%;
-            padding: 0.75rem;
-            background: rgba(79, 70, 229, 0.1);
-            border: 1px dashed rgba(79, 70, 229, 0.3);
-            border-radius: 8px;
-            color: #4F46E5;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 0.75rem;
-        }
-
-        .add-habit-btn:hover {
-            background: rgba(79, 70, 229, 0.15);
-            border-style: solid;
-        }
-
-        .stage2-progress-indicator {
-            background: rgba(79, 70, 229, 0.1);
-            border: 1px solid rgba(79, 70, 229, 0.3);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .stage2-progress-text {
-            font-weight: 500;
-        }
-
-        .stage2-progress-bar-container {
-            flex: 1;
-            max-width: 300px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 0 1rem;
-        }
-
-        .stage2-progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(135deg, #4F46E5, #7C3AED);
-            transition: width 0.3s ease;
         }
 
         @media (max-width: 768px) {
@@ -1365,7 +1346,7 @@
             <div id="stepsPage" class="page-content hidden">
                 <div class="page-header">
                     <h1 class="page-title">Etapas del Programa</h1>
-                    <p class="page-subtitle">5 etapas para dominar tu trading</p>
+                    <p class="page-subtitle">5 etapas para dominar tu trading + Auto-evaluación</p>
                 </div>
 
                 <div class="steps-grid" id="stepsGrid">
@@ -1385,14 +1366,8 @@
                     <!-- Video will be loaded here -->
                 </div>
 
-                <div class="tool-card">
-                    <h3>🛠️ Herramienta de esta Etapa</h3>
-                    <p style="color: #a1a1aa; margin-bottom: 1rem;">Accede a la herramienta específica para completar esta etapa</p>
-                    <button class="btn" id="toolButton" style="width: auto;">Acceder a la Herramienta</button>
-                </div>
-
                 <!-- Stage Tools Section -->
-                <div id="stageToolsSection" class="stage-tools-section hidden">
+                <div id="stageToolsSection" class="stage-tools-section">
                     <!-- Tools will be loaded here dynamically -->
                 </div>
 
@@ -1628,7 +1603,7 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, updateDoc, addDoc, orderBy, Timestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, updateDoc, addDoc, orderBy, Timestamp, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyD1U_K-9vkGGnKcbAALA-pSRMTv8f0B_M4",
@@ -1655,15 +1630,22 @@
         let currentErrorId = null;
         let currentErrors = [];
         let errorAutoSaveTimer = null;
+        
         // Stage 2 variables
-        let stage2ToolsData = {
-            red: null,
-            systems: null,
-            habits: null
-        };
-        let stage2AutoSaveTimer = null;
+        let currentREDItems = [];
+        let currentREDId = null;
+        let redAutoSaveTimer = null;
+        let stage2SystemsData = null;
+        let systemsAutoSaveTimer = null;
+        let stage2HabitsData = null;
+        let habitsAutoSaveTimer = null;
+
+        // Stage 0 variables
+        let stage0Data = null;
+        let stage0AutoSaveTimer = null;
 
         const steps = [
+            { id: 0, title: "Auto-evaluación", video: "", tool: "" },
             { id: 1, title: "Identificar errores", video: "", tool: "" },
             { id: 2, title: "Sistemas y procesos", video: "", tool: "" },
             { id: 3, title: "Hábitos", video: "", tool: "" },
@@ -1793,7 +1775,7 @@
             const step = steps.find(s => s.id === stepId);
             if (!step) return;
 
-            const isUnlocked = userData?.unlockedSteps?.includes(stepId);
+            const isUnlocked = userData?.unlockedSteps?.includes(stepId) || stepId === 0;
             if (!isUnlocked && userData?.role !== 'admin') return;
 
             // Load stage configuration from Firestore
@@ -1837,16 +1819,6 @@
                 videoContainer.innerHTML = '<p style="color: #a1a1aa;">Video próximamente...</p>';
             }
 
-            const toolButton = document.getElementById('toolButton');
-            const toolUrl = stageConfig.tool || step.tool;
-            
-            if (toolUrl) {
-                toolButton.onclick = () => window.open(toolUrl, '_blank');
-                toolButton.style.display = 'block';
-            } else {
-                toolButton.style.display = 'none';
-            }
-
             // Update resources section
             const stepContent = document.getElementById('stepContent');
             if (stageConfig.resources) {
@@ -1867,7 +1839,11 @@
             currentStageId = stepId;
             const toolsSection = document.getElementById('stageToolsSection');
             
-            if (stepId === 1 && userData?.role !== 'admin') {
+            if (stepId === 0 && userData?.role !== 'admin') {
+                // Stage 0: Self-Assessment
+                toolsSection.classList.remove('hidden');
+                await loadStage0Assessment();
+            } else if (stepId === 1 && userData?.role !== 'admin') {
                 // Stage 1: Load errors management system
                 toolsSection.classList.remove('hidden');
                 await loadStage1Errors();
@@ -1880,8 +1856,8 @@
                 toolsSection.classList.add('hidden');
             }
             
-            // Load stage submission status (only for students)
-            if (userData?.role !== 'admin') {
+            // Load stage submission status (only for students and not for stage 0)
+            if (userData?.role !== 'admin' && stepId !== 0) {
                 await updateStageSubmitStatus(stepId);
             } else {
                 document.getElementById('submitStageCard').style.display = 'none';
@@ -1900,12 +1876,20 @@
                         email: user.email,
                         name: user.email.split('@')[0],
                         currentStep: 1,
-                        unlockedSteps: [1],
+                        unlockedSteps: [0, 1], // Stage 0 always unlocked
                         calendarUnlocked: false,
                         completedExercises: 0,
                         role: 'student'
                     };
                     await setDoc(doc(db, 'users', user.uid), userData);
+                }
+                
+                // Ensure Stage 0 is always unlocked
+                if (!userData.unlockedSteps.includes(0)) {
+                    userData.unlockedSteps.unshift(0);
+                    await updateDoc(doc(db, 'users', user.uid), {
+                        unlockedSteps: userData.unlockedSteps
+                    });
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
@@ -1918,7 +1902,7 @@
             document.getElementById('currentStepText').textContent = userData?.currentStep || 1;
             document.getElementById('completedExercisesCount').textContent = userData?.completedExercises || 0;
 
-            const completedSteps = (userData?.unlockedSteps?.length || 1) - 1;
+            const completedSteps = (userData?.unlockedSteps?.length || 1) - 2; // Subtract Stage 0 and current
             const progressPercent = Math.round((completedSteps / 5) * 100);
             document.getElementById('progressPercentage').textContent = `${progressPercent}%`;
             document.getElementById('progressText').textContent = `${completedSteps}/5 etapas`;
@@ -1927,18 +1911,24 @@
 
         async function loadSteps() {
             const stepsGrid = document.getElementById('stepsGrid');
-            const unlockedSteps = userData?.unlockedSteps || [1];
+            const unlockedSteps = userData?.unlockedSteps || [0, 1];
             const currentStep = userData?.currentStep || 1;
 
             stepsGrid.innerHTML = steps.map(step => {
-                const isUnlocked = unlockedSteps.includes(step.id);
+                const isUnlocked = unlockedSteps.includes(step.id) || step.id === 0;
                 const isCurrent = step.id === currentStep;
                 const isCompleted = step.id < currentStep;
                 
                 let badge = '';
-                if (isCompleted) badge = '<span class="step-badge badge-completed">✓ Completado</span>';
-                else if (isCurrent) badge = '<span class="step-badge badge-current">Actual</span>';
-                else badge = '<span class="step-badge badge-locked">🔒 Bloqueado</span>';
+                if (step.id === 0) {
+                    badge = '<span class="step-badge badge-current">Siempre Disponible</span>';
+                } else if (isCompleted) {
+                    badge = '<span class="step-badge badge-completed">✓ Completado</span>';
+                } else if (isCurrent) {
+                    badge = '<span class="step-badge badge-current">Actual</span>';
+                } else {
+                    badge = '<span class="step-badge badge-locked">🔒 Bloqueado</span>';
+                }
 
                 return `
                     <div class="step-card ${!isUnlocked ? 'locked' : ''}" onclick="${isUnlocked ? `navigateToStep(${step.id})` : ''}">
@@ -1956,7 +1946,6 @@
             // Setup tabs first (remove old listeners)
             const tabs = document.querySelectorAll('.exercises-tabs .tab');
             tabs.forEach(tab => {
-                // Remove old listeners by cloning
                 const newTab = tab.cloneNode(true);
                 tab.parentNode.replaceChild(newTab, tab);
             });
@@ -1994,7 +1983,7 @@
                     return bTime - aTime;
                 });
 
-                console.log('Ejercicios cargados:', exercises); // Debug
+                console.log('Ejercicios cargados:', exercises);
 
                 const pending = exercises.filter(e => e.status === 'draft' || e.status === 'pending');
                 const completed = exercises.filter(e => e.status === 'completed');
@@ -2010,8 +1999,6 @@
 
         function renderExercisesList(containerId, exercises) {
             const container = document.getElementById(containerId);
-            
-            console.log(`Renderizando ${exercises.length} ejercicios en ${containerId}`); // Debug
             
             if (exercises.length === 0) {
                 container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay ejercicios aquí</p>';
@@ -2483,53 +2470,6 @@
             }
         }
 
-        document.getElementById('exerciseForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            if (!currentExercise) return;
-
-            const submitBtn = document.getElementById('submitExerciseBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando...';
-
-            let exerciseData = {
-                status: 'pending',
-                submittedAt: Timestamp.now(),
-                updatedAt: Timestamp.now()
-            };
-
-            try {
-                if (currentExercise.type === 'pattern') {
-                    exerciseData.when = document.getElementById('when').value;
-                    exerciseData.feeling = document.getElementById('feeling').value;
-                    exerciseData.action = document.getElementById('action').value;
-                } else {
-                    exerciseData.tradesWon = parseInt(document.getElementById('tradesWon').value) || 0;
-                    exerciseData.tradesLost = parseInt(document.getElementById('tradesLost').value) || 0;
-                    exerciseData.tradesBreakeven = parseInt(document.getElementById('tradesBreakeven').value) || 0;
-                    exerciseData.pnl = parseFloat(document.getElementById('pnl').value) || 0;
-                    exerciseData.whatWorked = document.getElementById('whatWorked').value;
-                    exerciseData.whatDidntWork = document.getElementById('whatDidntWork').value;
-                    exerciseData.struggles = document.getElementById('struggles').value;
-                    exerciseData.wins = document.getElementById('wins').value;
-                    exerciseData.whatChange = document.getElementById('whatChange').value;
-                    exerciseData.kpis = document.getElementById('kpis').value;
-                }
-
-                await updateDoc(doc(db, 'exercises', currentExercise.id), exerciseData);
-                showSuccess('¡Ejercicio enviado para revisión!');
-                setTimeout(() => {
-                    navigateToPage('exercises');
-                    loadExercises();
-                }, 1500);
-            } catch (error) {
-                console.error('Error submitting exercise:', error);
-                showError('Error al enviar el ejercicio: ' + error.message);
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Enviar para Revisión';
-            }
-        });
-
         async function loadCalendar() {
             const locked = document.getElementById('calendarLocked');
             const unlocked = document.getElementById('calendarUnlocked');
@@ -2543,6 +2483,1718 @@
             }
         }
 
+        // ========================================
+        // STAGE 0: SELF-ASSESSMENT FUNCTIONS
+        // ========================================
+
+        const assessmentAreas = [
+            { id: 'relationships', label: '❤️ Relaciones', icon: '❤️' },
+            { id: 'money', label: '💰 Dinero', icon: '💰' },
+            { id: 'health', label: '🏃 Salud', icon: '🏃' },
+            { id: 'spirituality', label: '🙏 Espiritualidad', icon: '🙏' },
+            { id: 'growth', label: '🌱 Crecimiento Personal', icon: '🌱' },
+            { id: 'contribution', label: '🌍 Contribución al mundo', icon: '🌍' },
+            { id: 'leisure', label: '🎮 Ocio', icon: '🎮' },
+            { id: 'family', label: '👨‍👩‍👧‍👦 Familia y Amigos', icon: '👨‍👩‍👧‍👦' },
+            { id: 'work', label: '💼 Trabajo', icon: '💼' },
+            { id: 'trading', label: '📈 Trading', icon: '📈' }
+        ];
+
+        async function loadStage0Assessment() {
+            if (!currentUser) return;
+
+            try {
+                // Load existing assessment
+                const assessmentQuery = query(
+                    collection(db, 'stage0Assessment'),
+                    where('userId', '==', currentUser.uid)
+                );
+                const assessmentSnapshot = await getDocs(assessmentQuery);
+                
+                if (!assessmentSnapshot.empty) {
+                    stage0Data = { id: assessmentSnapshot.docs[0].id, ...assessmentSnapshot.docs[0].data() };
+                } else {
+                    // Initialize with default values
+                    stage0Data = {
+                        userId: currentUser.uid,
+                        areas: {}
+                    };
+                    assessmentAreas.forEach(area => {
+                        stage0Data.areas[area.id] = 5; // Default value
+                    });
+                }
+
+                renderStage0Assessment();
+            } catch (error) {
+                console.error('Error loading Stage 0 assessment:', error);
+                showError('Error al cargar la auto-evaluación');
+            }
+        }
+
+        function renderStage0Assessment() {
+            const container = document.getElementById('stageToolsSection');
+            
+            // Calculate average
+            let total = 0;
+            let count = 0;
+            if (stage0Data?.areas) {
+                Object.values(stage0Data.areas).forEach(value => {
+                    total += value;
+                    count++;
+                });
+            }
+            const average = count > 0 ? (total / count).toFixed(1) : 5.0;
+            
+            const html = `
+                <div class="card">
+                    <h2 class="card-title">🎯 Auto-evaluación de Áreas de Vida</h2>
+                    <p style="color: #a1a1aa; margin-bottom: 2rem;">
+                        Evalúa del 1 al 10 dónde te encuentras en cada área de tu vida. Esta herramienta te ayudará a identificar las áreas que necesitan más atención.
+                    </p>
+
+                    <div class="assessment-grid">
+                        ${assessmentAreas.map(area => `
+                            <div class="assessment-item">
+                                <div class="assessment-header">
+                                    <div class="assessment-label">
+                                        ${area.icon} ${area.label.split(' ').slice(1).join(' ')}
+                                    </div>
+                                    <div class="assessment-value" id="value_${area.id}">
+                                        ${stage0Data?.areas?.[area.id] || 5}
+                                    </div>
+                                </div>
+                                <div class="slider-container">
+                                    <input 
+                                        type="range" 
+                                        min="1" 
+                                        max="10" 
+                                        value="${stage0Data?.areas?.[area.id] || 5}"
+                                        class="slider"
+                                        id="slider_${area.id}"
+                                        oninput="updateAssessmentValue('${area.id}', this.value)"
+                                    >
+                                    <div class="slider-labels">
+                                        <span>1</span>
+                                        <span>5</span>
+                                        <span>10</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="average-score">
+                        <div class="average-score-number" id="averageScore">${average}</div>
+                        <div class="average-score-label">Promedio General</div>
+                    </div>
+
+                    <div class="save-indicator" id="stage0SaveIndicator" style="margin-top: 1rem;">
+                        <span id="stage0SaveText">Sin cambios</span>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            container.classList.remove('hidden');
+        }
+
+        window.updateAssessmentValue = function(areaId, value) {
+            // Update display
+            document.getElementById(`value_${areaId}`).textContent = value;
+            
+            // Update data
+            if (!stage0Data.areas) stage0Data.areas = {};
+            stage0Data.areas[areaId] = parseInt(value);
+            
+            // Recalculate average
+            let total = 0;
+            let count = 0;
+            Object.values(stage0Data.areas).forEach(val => {
+                total += val;
+                count++;
+            });
+            const average = count > 0 ? (total / count).toFixed(1) : 5.0;
+            document.getElementById('averageScore').textContent = average;
+            
+            // Schedule auto-save
+            scheduleStage0AutoSave();
+        }
+
+        function scheduleStage0AutoSave() {
+            const indicator = document.getElementById('stage0SaveIndicator');
+            const text = document.getElementById('stage0SaveText');
+            
+            if (indicator && text) {
+                indicator.classList.remove('saved');
+                indicator.classList.add('saving');
+                text.textContent = 'Guardando...';
+            }
+
+            if (stage0AutoSaveTimer) {
+                clearTimeout(stage0AutoSaveTimer);
+            }
+
+            stage0AutoSaveTimer = setTimeout(async () => {
+                await saveStage0Assessment(true);
+            }, 2000);
+        }
+
+        async function saveStage0Assessment(isAutoSave = false) {
+            if (!currentUser || !stage0Data) return;
+
+            try {
+                const assessmentData = {
+                    userId: currentUser.uid,
+                    areas: stage0Data.areas,
+                    updatedAt: Timestamp.now()
+                };
+
+                if (stage0Data.id) {
+                    // Update existing
+                    await updateDoc(doc(db, 'stage0Assessment', stage0Data.id), assessmentData);
+                } else {
+                    // Create new
+                    assessmentData.createdAt = Timestamp.now();
+                    const docRef = await addDoc(collection(db, 'stage0Assessment'), assessmentData);
+                    stage0Data.id = docRef.id;
+                }
+
+                const indicator = document.getElementById('stage0SaveIndicator');
+                const text = document.getElementById('stage0SaveText');
+                
+                if (indicator && text) {
+                    indicator.classList.remove('saving');
+                    indicator.classList.add('saved');
+                    text.textContent = '✓ Guardado';
+                }
+
+                if (!isAutoSave) {
+                    showSuccess('✅ Auto-evaluación guardada correctamente');
+                }
+            } catch (error) {
+                console.error('Error saving Stage 0 assessment:', error);
+                if (!isAutoSave) {
+                    showError('Error al guardar: ' + error.message);
+                }
+            }
+        }
+
+        // ========================================
+        // END OF STAGE 0 FUNCTIONS
+        // ========================================
+
+        // ========================================
+        // STAGE 1: ERRORS MANAGEMENT FUNCTIONS
+        // ========================================
+
+        // Framework questions for Stage 1
+        const errorQuestions = [
+            {
+                number: 1,
+                text: "Describe el error en detalle",
+                help: "Incluye ejemplos del comportamiento, descripciones de tus emociones y mentalidad"
+            },
+            {
+                number: 2,
+                text: "¿Qué suele pasar justo antes de empezar a participar en este error/comportamiento?",
+                help: "Explica las condiciones que lo desencadenan, así como cualquier respuesta emocional que parezca impulsar este comportamiento"
+            },
+            {
+                number: 3,
+                text: "¿Cuál es la intención positiva que este comportamiento tiene para ti?",
+                help: "Aunque sea irracional, explica la lógica o la justificación detrás del comportamiento"
+            },
+            {
+                number: 4,
+                text: "¿Qué en tus circunstancias personales contribuyen a este patrón de comportamiento?",
+                help: "¿Qué hay sobre ti o sobre tu experiencia pasada que podría ser una razón por la que tienes esta tendencia?"
+            },
+            {
+                number: 5,
+                text: "¿Cómo sabotea este comportamiento tu trading?",
+                help: "Describe cómo este comportamiento afecta negativamente tus operaciones a pesar de cualquier intención positiva"
+            },
+            {
+                number: 6,
+                text: "¿Cuál es la mejor manera de lograr las intenciones positivas de la Pregunta 3? (TU TOP LEVEL)",
+                help: "¿Qué hábitos o comportamientos puedes hacer para reemplazar los patrones descritos en el punto 3?"
+            },
+            {
+                number: 7,
+                text: "¿Cómo aplicarás este Top Level específicamente a tu proceso de trading?",
+                help: "Describe en detalle las formas en que te asegurarás de que puedes aplicar esto"
+            }
+        ];
+
+        // Load errors for Stage 1
+        async function loadStage1Errors() {
+            if (!currentUser) return;
+
+            try {
+                const errorsQuery = query(
+                    collection(db, 'stageErrors'),
+                    where('userId', '==', currentUser.uid),
+                    where('stageId', '==', 1),
+                    where('deleted', '==', false),
+                    orderBy('createdAt', 'desc')
+                );
+
+                const snapshot = await getDocs(errorsQuery);
+                currentErrors = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                renderErrorsList();
+            } catch (error) {
+                console.error('Error loading errors:', error);
+                
+                // If error is due to missing index, try without orderBy
+                try {
+                    const errorsQuerySimple = query(
+                        collection(db, 'stageErrors'),
+                        where('userId', '==', currentUser.uid),
+                        where('stageId', '==', 1),
+                        where('deleted', '==', false)
+                    );
+
+                    const snapshot = await getDocs(errorsQuerySimple);
+                    currentErrors = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+
+                    // Sort manually
+                    currentErrors.sort((a, b) => {
+                        const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+                        const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+                        return bTime - aTime;
+                    });
+
+                    renderErrorsList();
+                } catch (innerError) {
+                    console.error('Error loading errors (simple query):', innerError);
+                    showError('Error al cargar tus errores');
+                }
+            }
+        }
+
+        // Render errors list
+        function renderErrorsList() {
+            const container = document.getElementById('stageToolsSection');
+            
+            const errorsListHTML = `
+                <div class="items-list-container">
+                    <div class="items-header">
+                        <h3>❌ Mis Errores Identificados</h3>
+                        <button class="btn btn-small" onclick="showErrorEditor(null)">
+                            ➕ Añadir Nuevo Error
+                        </button>
+                    </div>
+
+                    ${currentErrors.length === 0 ? `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🎯</div>
+                            <div class="empty-state-title">Aún no has identificado errores</div>
+                            <div class="empty-state-text">
+                                Haz clic en "Añadir Nuevo Error" para comenzar a identificar los patrones que quieres mejorar en tu trading.
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="items-list">
+                            ${currentErrors.map(error => `
+                                <div class="item-card" onclick="showErrorEditor('${error.id}')">
+                                    <div class="item-info">
+                                        <div class="item-title">❌ ${error.title || 'Error sin título'}</div>
+                                        <div class="item-status">
+                                            ${error.completedQuestions || 0}/7 preguntas completadas
+                                        </div>
+                                    </div>
+                                    <div class="item-actions" onclick="event.stopPropagation()">
+                                        <button class="btn-icon edit" onclick="showErrorEditor('${error.id}')">
+                                            ✏️ Editar
+                                        </button>
+                                        <button class="btn-icon delete" onclick="deleteError('${error.id}')">
+                                            🗑️ Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `}
+                </div>
+            `;
+
+            container.innerHTML = errorsListHTML;
+            container.classList.remove('hidden');
+        }
+
+        // Show error editor
+        window.showErrorEditor = async function(errorId) {
+            currentErrorId = errorId;
+            let errorData = null;
+
+            // If editing existing error, load it
+            if (errorId) {
+                errorData = currentErrors.find(e => e.id === errorId);
+            }
+
+            const container = document.getElementById('stageToolsSection');
+            
+            const editorHTML = `
+                <div class="item-editor">
+                    <div class="item-editor-header">
+                        <div>
+                            <button onclick="cancelErrorEditor()" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; font-size: 1rem; margin-bottom: 0.5rem;">
+                                ← Volver a la lista
+                            </button>
+                            <h2 class="item-editor-title">
+                                ${errorId ? '✏️ Editar Error' : '➕ Nuevo Error'}
+                            </h2>
+                        </div>
+                        <div class="save-indicator" id="errorSaveIndicator">
+                            <span id="errorSaveText">Sin cambios</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 2rem;">
+                        <label class="form-label">Nombre del error *</label>
+                        <input 
+                            type="text" 
+                            id="errorTitle" 
+                            class="form-input" 
+                            placeholder="Ej: Overtrading, FOMO, Revenge trading..."
+                            value="${errorData?.title || ''}"
+                            oninput="scheduleErrorAutoSave()"
+                        >
+                    </div>
+
+                    ${errorQuestions.map((q, index) => `
+                        <div class="question-block">
+                            <div class="question-number">Pregunta ${q.number}</div>
+                            <div class="question-text">${q.text}</div>
+                            <div class="question-help">${q.help}</div>
+                            <textarea 
+                                id="errorAnswer${q.number}" 
+                                class="form-textarea" 
+                                placeholder="Escribe tu respuesta aquí..."
+                                oninput="scheduleErrorAutoSave()"
+                                style="min-height: 150px;"
+                            >${errorData?.answers?.[index] || ''}</textarea>
+                        </div>
+                    `).join('')}
+
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="cancelErrorEditor()">
+                            Cancelar
+                        </button>
+                        <button class="btn" onclick="saveError()">
+                            💾 Guardar Error
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = editorHTML;
+        }
+
+        // Schedule auto-save for errors
+        window.scheduleErrorAutoSave = function() {
+            const indicator = document.getElementById('errorSaveIndicator');
+            const text = document.getElementById('errorSaveText');
+            
+            if (indicator && text) {
+                indicator.classList.remove('saved');
+                indicator.classList.add('saving');
+                text.textContent = 'Guardando...';
+            }
+
+            if (errorAutoSaveTimer) {
+                clearTimeout(errorAutoSaveTimer);
+            }
+
+            errorAutoSaveTimer = setTimeout(async () => {
+                await saveError(true);
+            }, 2000);
+        }
+
+        // Save error - FIXED VERSION
+        window.saveError = async function(isAutoSave = false) {
+            const titleElement = document.getElementById('errorTitle');
+            const title = titleElement?.value?.trim();
+            
+            if (!title && !isAutoSave) {
+                showError('Por favor ingresa un nombre para el error');
+                return;
+            }
+
+            if (!currentUser) return;
+
+            try {
+                const answers = [];
+                let completedQuestions = 0;
+
+                for (let i = 1; i <= 7; i++) {
+                    const answerElement = document.getElementById(`errorAnswer${i}`);
+                    const answer = answerElement?.value?.trim() || '';
+                    answers.push(answer);
+                    if (answer) completedQuestions++;
+                }
+
+                const errorData = {
+                    userId: currentUser.uid,
+                    stageId: 1,
+                    title: title || 'Error sin título',
+                    answers: answers,
+                    completedQuestions: completedQuestions,
+                    deleted: false,
+                    updatedAt: Timestamp.now()
+                };
+
+                if (currentErrorId) {
+                    // Update existing error
+                    await updateDoc(doc(db, 'stageErrors', currentErrorId), errorData);
+                    console.log('Error updated:', currentErrorId);
+                } else {
+                    // Create new error
+                    errorData.createdAt = Timestamp.now();
+                    const docRef = await addDoc(collection(db, 'stageErrors'), errorData);
+                    currentErrorId = docRef.id;
+                    console.log('Error created:', docRef.id);
+                }
+
+                const indicator = document.getElementById('errorSaveIndicator');
+                const text = document.getElementById('errorSaveText');
+                
+                if (indicator && text) {
+                    indicator.classList.remove('saving');
+                    indicator.classList.add('saved');
+                    text.textContent = '✓ Guardado';
+                }
+
+                if (!isAutoSave) {
+                    showSuccess('✅ Error guardado correctamente');
+                    await loadStage1Errors();
+                }
+            } catch (error) {
+                console.error('Error saving:', error);
+                if (!isAutoSave) {
+                    showError('Error al guardar: ' + error.message);
+                }
+            }
+        }
+
+        // Cancel error editor
+        window.cancelErrorEditor = function() {
+            currentErrorId = null;
+            if (errorAutoSaveTimer) {
+                clearTimeout(errorAutoSaveTimer);
+            }
+            renderErrorsList();
+        }
+
+        // Delete error
+        window.deleteError = async function(errorId) {
+            if (!confirm('¿Estás seguro de que quieres eliminar este error? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'stageErrors', errorId), {
+                    deleted: true,
+                    deletedAt: Timestamp.now()
+                });
+
+                showSuccess('✅ Error eliminado');
+                await loadStage1Errors();
+            } catch (error) {
+                console.error('Error deleting:', error);
+                showError('Error al eliminar el error');
+            }
+        }
+
+        // ========================================
+        // END OF STAGE 1 FUNCTIONS
+        // ========================================
+
+        // ========================================
+        // STAGE 2: TOOLS MANAGEMENT FUNCTIONS
+        // ========================================
+
+        // RED tool types
+        const redToolTypes = [
+            { id: 'daily', label: 'Diaria', icon: '📅' },
+            { id: 'weekly', label: 'Semanal', icon: '📆' },
+            { id: 'monthly', label: 'Mensual', icon: '📊' }
+        ];
+
+        // Load all Stage 2 tools
+        async function loadStage2Tools() {
+            if (!currentUser) return;
+
+            const container = document.getElementById('stageToolsSection');
+            
+            // Create collapsible cards for each tool
+            const html = `
+                <div class="tool-card-compact" id="redToolCard">
+                    <div class="tool-card-header" onclick="toggleToolCard('redToolCard')">
+                        <div class="tool-card-header-left">
+                            <div class="tool-card-icon">🔄</div>
+                            <div class="tool-card-title-group">
+                                <h3>RED: Reinicio-Evaluación-Dirección</h3>
+                                <div class="tool-card-subtitle">Proceso de 3 pasos para redirigir tu enfoque</div>
+                            </div>
+                        </div>
+                        <div class="tool-card-expand-icon">▼</div>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-content" id="redToolContent">
+                            <!-- Content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-card-compact" id="systemsToolCard">
+                    <div class="tool-card-header" onclick="toggleToolCard('systemsToolCard')">
+                        <div class="tool-card-header-left">
+                            <div class="tool-card-icon">⚙️</div>
+                            <div class="tool-card-title-group">
+                                <h3>Sistemas y Procesos</h3>
+                                <div class="tool-card-subtitle">Define tus reglas, límites y procesos de trading</div>
+                            </div>
+                        </div>
+                        <div class="tool-card-expand-icon">▼</div>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-content" id="systemsToolContent">
+                            <!-- Content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-card-compact" id="habitsToolCard">
+                    <div class="tool-card-header" onclick="toggleToolCard('habitsToolCard')">
+                        <div class="tool-card-header-left">
+                            <div class="tool-card-icon">🎯</div>
+                            <div class="tool-card-title-group">
+                                <h3>Hábitos y Rutinas</h3>
+                                <div class="tool-card-subtitle">Define hábitos claros y repetibles</div>
+                            </div>
+                        </div>
+                        <div class="tool-card-expand-icon">▼</div>
+                    </div>
+                    <div class="tool-card-body">
+                        <div class="tool-card-content" id="habitsToolContent">
+                            <!-- Content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            container.classList.remove('hidden');
+
+            // Load each tool's content
+            await loadREDTool();
+            await loadSystemsTool();
+            await loadHabitsTool();
+        }
+
+        window.toggleToolCard = function(cardId) {
+            const card = document.getElementById(cardId);
+            card.classList.toggle('expanded');
+        }
+
+        // ========================================
+        // RED TOOL (Duplicable)
+        // ========================================
+
+        async function loadREDTool() {
+            if (!currentUser) return;
+
+            try {
+                const redQuery = query(
+                    collection(db, 'stage2RED'),
+                    where('userId', '==', currentUser.uid),
+                    where('deleted', '==', false),
+                    orderBy('createdAt', 'desc')
+                );
+
+                const snapshot = await getDocs(redQuery);
+                currentREDItems = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+
+                renderREDList();
+            } catch (error) {
+                console.error('Error loading RED items:', error);
+                
+                // Try without orderBy
+                try {
+                    const redQuerySimple = query(
+                        collection(db, 'stage2RED'),
+                        where('userId', '==', currentUser.uid),
+                        where('deleted', '==', false)
+                    );
+
+                    const snapshot = await getDocs(redQuerySimple);
+                    currentREDItems = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+
+                    // Sort manually
+                    currentREDItems.sort((a, b) => {
+                        const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+                        const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+                        return bTime - aTime;
+                    });
+
+                    renderREDList();
+                } catch (innerError) {
+                    console.error('Error loading RED items (simple query):', innerError);
+                    document.getElementById('redToolContent').innerHTML = 
+                        '<p style="color: #ef4444; padding: 1rem;">Error al cargar herramientas RED</p>';
+                }
+            }
+        }
+
+        function renderREDList() {
+            const container = document.getElementById('redToolContent');
+            
+            const html = `
+                <div class="items-list-container" style="padding: 0;">
+                    <div class="items-header">
+                        <div>
+                            <p style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">
+                                Crea diferentes versiones de RED para distintas situaciones (diaria, semanal, después de errores, etc.)
+                            </p>
+                        </div>
+                        <button class="btn btn-small" onclick="showREDEditor(null)">
+                            ➕ Nueva RED
+                        </button>
+                    </div>
+
+                    ${currentREDItems.length === 0 ? `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔄</div>
+                            <div class="empty-state-title">Aún no has creado ninguna RED</div>
+                            <div class="empty-state-text">
+                                Haz clic en "Nueva RED" para crear tu primer proceso de Reinicio-Evaluación-Dirección.
+                            </div>
+                        </div>
+                    ` : `
+                        <div class="items-list">
+                            ${currentREDItems.map(item => {
+                                const typeLabel = redToolTypes.find(t => t.id === item.type)?.label || item.customType || 'Personalizada';
+                                const isComplete = item.step1 && item.step2 && item.step3;
+                                return `
+                                    <div class="item-card" onclick="showREDEditor('${item.id}')">
+                                        <div class="item-info">
+                                            <div class="item-title">🔄 RED ${typeLabel}</div>
+                                            <div class="item-status">
+                                                ${isComplete ? '✓ Completada' : '○ Incompleta'}
+                                            </div>
+                                        </div>
+                                        <div class="item-actions" onclick="event.stopPropagation()">
+                                            <button class="btn-icon edit" onclick="showREDEditor('${item.id}')">
+                                                ✏️ Editar
+                                            </button>
+                                            <button class="btn-icon delete" onclick="deleteREDItem('${item.id}')">
+                                                🗑️ Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `}
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        window.showREDEditor = function(redId) {
+            currentREDId = redId;
+            let redData = null;
+
+            if (redId) {
+                redData = currentREDItems.find(r => r.id === redId);
+            }
+
+            const container = document.getElementById('redToolContent');
+            
+            const editorHTML = `
+                <div class="item-editor" style="padding: 0;">
+                    <div class="item-editor-header">
+                        <div>
+                            <button onclick="cancelREDEditor()" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; font-size: 1rem; margin-bottom: 0.5rem;">
+                                ← Volver a la lista
+                            </button>
+                            <h3 class="item-editor-title">
+                                ${redId ? '✏️ Editar RED' : '➕ Nueva RED'}
+                            </h3>
+                        </div>
+                        <div class="save-indicator" id="redSaveIndicator">
+                            <span id="redSaveText">Sin cambios</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <label class="form-label">Tipo de RED *</label>
+                        <select id="redType" class="form-select" onchange="toggleCustomREDType()">
+                            <option value="">Selecciona un tipo...</option>
+                            ${redToolTypes.map(type => `
+                                <option value="${type.id}" ${redData?.type === type.id ? 'selected' : ''}>
+                                    ${type.icon} ${type.label}
+                                </option>
+                            `).join('')}
+                            <option value="custom" ${redData?.type === 'custom' ? 'selected' : ''}>
+                                ✨ Personalizada (Otra)
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group ${redData?.type === 'custom' ? '' : 'hidden'}" id="customTypeGroup" style="margin-bottom: 2rem;">
+                        <label class="form-label">Nombre personalizado *</label>
+                        <input 
+                            type="text" 
+                            id="redCustomType" 
+                            class="form-input" 
+                            placeholder="Ej: Después de errores, Post-pérdida, etc."
+                            value="${redData?.customType || ''}"
+                            oninput="scheduleREDAutoSave()"
+                        >
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-number">Paso 1</div>
+                        <div class="question-text">Reinicio</div>
+                        <div class="question-help">¿Cómo te reinicias cuando estás frustrado o fuera de balance?</div>
+                        <textarea 
+                            id="redStep1" 
+                            class="form-textarea" 
+                            placeholder="Describe tu proceso de reinicio..."
+                            oninput="scheduleREDAutoSave()"
+                            style="min-height: 120px;"
+                        >${redData?.step1 || ''}</textarea>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-number">Paso 2</div>
+                        <div class="question-text">Evaluación</div>
+                        <div class="question-help">¿Cómo evalúas tu estado actual y tus operaciones?</div>
+                        <textarea 
+                            id="redStep2" 
+                            class="form-textarea" 
+                            placeholder="Describe tu proceso de evaluación..."
+                            oninput="scheduleREDAutoSave()"
+                            style="min-height: 120px;"
+                        >${redData?.step2 || ''}</textarea>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-number">Paso 3</div>
+                        <div class="question-text">Dirección</div>
+                        <div class="question-help">¿Hacia dónde diriges tu atención y esfuerzo después?</div>
+                        <textarea 
+                            id="redStep3" 
+                            class="form-textarea" 
+                            placeholder="Describe tu proceso de dirección..."
+                            oninput="scheduleREDAutoSave()"
+                            style="min-height: 120px;"
+                        >${redData?.step3 || ''}</textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="cancelREDEditor()">
+                            Cancelar
+                        </button>
+                        <button class="btn" onclick="saveREDItem()">
+                            💾 Guardar RED
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = editorHTML;
+        }
+
+        window.toggleCustomREDType = function() {
+            const typeSelect = document.getElementById('redType');
+            const customGroup = document.getElementById('customTypeGroup');
+            
+            if (typeSelect.value === 'custom') {
+                customGroup.classList.remove('hidden');
+            } else {
+                customGroup.classList.add('hidden');
+            }
+        }
+
+        window.scheduleREDAutoSave = function() {
+            const indicator = document.getElementById('redSaveIndicator');
+            const text = document.getElementById('redSaveText');
+            
+            if (indicator && text) {
+                indicator.classList.remove('saved');
+                indicator.classList.add('saving');
+                text.textContent = 'Guardando...';
+            }
+
+            if (redAutoSaveTimer) {
+                clearTimeout(redAutoSaveTimer);
+            }
+
+            redAutoSaveTimer = setTimeout(async () => {
+                await saveREDItem(true);
+            }, 2000);
+        }
+
+        window.saveREDItem = async function(isAutoSave = false) {
+            const type = document.getElementById('redType')?.value;
+            const customType = document.getElementById('redCustomType')?.value?.trim();
+            const step1 = document.getElementById('redStep1')?.value?.trim();
+            const step2 = document.getElementById('redStep2')?.value?.trim();
+            const step3 = document.getElementById('redStep3')?.value?.trim();
+            
+            if (!type && !isAutoSave) {
+                showError('Por favor selecciona un tipo de RED');
+                return;
+            }
+
+            if (type === 'custom' && !customType && !isAutoSave) {
+                showError('Por favor ingresa un nombre personalizado');
+                return;
+            }
+
+            if (!currentUser) return;
+
+            try {
+                const redData = {
+                    userId: currentUser.uid,
+                    type: type || 'custom',
+                    customType: type === 'custom' ? customType : '',
+                    step1: step1 || '',
+                    step2: step2 || '',
+                    step3: step3 || '',
+                    deleted: false,
+                    updatedAt: Timestamp.now()
+                };
+
+                if (currentREDId) {
+                    await updateDoc(doc(db, 'stage2RED', currentREDId), redData);
+                } else {
+                    redData.createdAt = Timestamp.now();
+                    const docRef = await addDoc(collection(db, 'stage2RED'), redData);
+                    currentREDId = docRef.id;
+                }
+
+                const indicator = document.getElementById('redSaveIndicator');
+                const text = document.getElementById('redSaveText');
+                
+                if (indicator && text) {
+                    indicator.classList.remove('saving');
+                    indicator.classList.add('saved');
+                    text.textContent = '✓ Guardado';
+                }
+
+                if (!isAutoSave) {
+                    showSuccess('✅ RED guardada correctamente');
+                    await loadREDTool();
+                }
+            } catch (error) {
+                console.error('Error saving RED:', error);
+                if (!isAutoSave) {
+                    showError('Error al guardar: ' + error.message);
+                }
+            }
+        }
+
+        window.cancelREDEditor = function() {
+            currentREDId = null;
+            if (redAutoSaveTimer) {
+                clearTimeout(redAutoSaveTimer);
+            }
+            renderREDList();
+        }
+
+        window.deleteREDItem = async function(redId) {
+            if (!confirm('¿Estás seguro de que quieres eliminar esta RED?')) {
+                return;
+            }
+
+            try {
+                await updateDoc(doc(db, 'stage2RED', redId), {
+                    deleted: true,
+                    deletedAt: Timestamp.now()
+                });
+
+                showSuccess('✅ RED eliminada');
+                await loadREDTool();
+            } catch (error) {
+                console.error('Error deleting RED:', error);
+                showError('Error al eliminar la RED');
+            }
+        }
+
+        // ========================================
+        // SYSTEMS TOOL (Expandable sections with multiple items)
+        // ========================================
+
+        async function loadSystemsTool() {
+            if (!currentUser) return;
+
+            try {
+                const systemsQuery = query(
+                    collection(db, 'stage2Systems'),
+                    where('userId', '==', currentUser.uid)
+                );
+
+                const snapshot = await getDocs(systemsQuery);
+                
+                if (!snapshot.empty) {
+                    stage2SystemsData = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+                } else {
+                    stage2SystemsData = {
+                        userId: currentUser.uid,
+                        markets: [],
+                        riskParams: [],
+                        tradingLimits: {},
+                        positionManagement: {},
+                        preMarketPrep: [],
+                        prohibitedConditions: [],
+                        successBehaviors: {},
+                        professionalGuidelines: {}
+                    };
+                }
+
+                renderSystemsTool();
+            } catch (error) {
+                console.error('Error loading Systems tool:', error);
+                document.getElementById('systemsToolContent').innerHTML = 
+                    '<p style="color: #ef4444; padding: 1rem;">Error al cargar Sistemas</p>';
+            }
+        }
+
+        function renderSystemsTool() {
+            const container = document.getElementById('systemsToolContent');
+            const data = stage2SystemsData;
+            
+            const html = `
+                <div style="padding: 0;">
+                    <!-- Markets & Schedule -->
+                    <div class="expandable-section" id="marketsSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('marketsSection')">
+                            <div class="expandable-section-title">📊 Mercados y Horarios</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                ${(data.markets || []).map((item, index) => `
+                                    <div class="subsection-item">
+                                        <div class="subsection-item-header">
+                                            <div class="subsection-item-label">Sesión ${index + 1}</div>
+                                            <button onclick="removeSystemsItem('markets', ${index})">🗑️ Eliminar</button>
+                                        </div>
+                                        <textarea 
+                                            class="form-textarea" 
+                                            placeholder="Ej: Forex EUR/USD, Lunes a Viernes 9:00-17:00"
+                                            onchange="updateSystemsItem('markets', ${index}, this.value)"
+                                            style="min-height: 80px;"
+                                        >${item}</textarea>
+                                    </div>
+                                `).join('')}
+                                <button class="add-item-btn" onclick="addSystemsItem('markets')">
+                                    ➕ Añadir Sesión
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Parameters -->
+                    <div class="expandable-section" id="riskSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('riskSection')">
+                            <div class="expandable-section-title">⚠️ Parámetros de Riesgo</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                ${(data.riskParams || []).map((item, index) => `
+                                    <div class="subsection-item">
+                                        <div class="subsection-item-header">
+                                            <div class="subsection-item-label">Parámetro ${index + 1}</div>
+                                            <button onclick="removeSystemsItem('riskParams', ${index})">🗑️ Eliminar</button>
+                                        </div>
+                                        <textarea 
+                                            class="form-textarea" 
+                                            placeholder="Ej: Riesgo por posición: 1% del capital"
+                                            onchange="updateSystemsItem('riskParams', ${index}, this.value)"
+                                            style="min-height: 80px;"
+                                        >${item}</textarea>
+                                    </div>
+                                `).join('')}
+                                <button class="add-item-btn" onclick="addSystemsItem('riskParams')">
+                                    ➕ Añadir Parámetro de Riesgo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trading Limits -->
+                    <div class="expandable-section" id="limitsSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('limitsSection')">
+                            <div class="expandable-section-title">🚦 Limitaciones de Trading</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Max # trades por día</div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input" 
+                                        placeholder="Ej: 3 trades máximo"
+                                        value="${data.tradingLimits?.maxTrades || ''}"
+                                        onchange="updateSystemsObject('tradingLimits', 'maxTrades', this.value)"
+                                    >
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Max # posiciones abiertas</div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input" 
+                                        placeholder="Ej: 2 posiciones simultáneas"
+                                        value="${data.tradingLimits?.maxPositions || ''}"
+                                        onchange="updateSystemsObject('tradingLimits', 'maxPositions', this.value)"
+                                    >
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Max # pérdidas por día</div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input" 
+                                        placeholder="Ej: Parar después de 2 pérdidas"
+                                        value="${data.tradingLimits?.maxLosses || ''}"
+                                        onchange="updateSystemsObject('tradingLimits', 'maxLosses', this.value)"
+                                    >
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Max # ganancias por día</div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input" 
+                                        placeholder="Ej: Parar después de alcanzar objetivo diario"
+                                        value="${data.tradingLimits?.maxWins || ''}"
+                                        onchange="updateSystemsObject('tradingLimits', 'maxWins', this.value)"
+                                    >
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Riesgo total máximo</div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input" 
+                                        placeholder="Ej: 3% del capital total por día"
+                                        value="${data.tradingLimits?.maxRisk || ''}"
+                                        onchange="updateSystemsObject('tradingLimits', 'maxRisk', this.value)"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Position Management -->
+                    <div class="expandable-section" id="positionSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('positionSection')">
+                            <div class="expandable-section-title">📈 Gestión de Posiciones</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Ejecución</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="Describe tu proceso de ejecución de trades..."
+                                        onchange="updateSystemsObject('positionManagement', 'execution', this.value)"
+                                    >${data.positionManagement?.execution || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Stop Loss</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo defines y gestionas tus stop loss?"
+                                        onchange="updateSystemsObject('positionManagement', 'stopLoss', this.value)"
+                                    >${data.positionManagement?.stopLoss || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Break Even y Parciales</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cuándo y cómo mueves a BE y tomas parciales?"
+                                        onchange="updateSystemsObject('positionManagement', 'breakEven', this.value)"
+                                    >${data.positionManagement?.breakEven || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Optimización TP y RRR</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo optimizas tus take profit y ratio riesgo/beneficio?"
+                                        onchange="updateSystemsObject('positionManagement', 'takeProfit', this.value)"
+                                    >${data.positionManagement?.takeProfit || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Otras Reglas</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="Otras reglas de gestión de posiciones..."
+                                        onchange="updateSystemsObject('positionManagement', 'otherRules', this.value)"
+                                    >${data.positionManagement?.otherRules || ''}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pre-Market Preparation -->
+                    <div class="expandable-section" id="prepSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('prepSection')">
+                            <div class="expandable-section-title">☀️ Preparación Pre-Mercado</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                ${(data.preMarketPrep || []).map((item, index) => `
+                                    <div class="subsection-item">
+                                        <div class="subsection-item-header">
+                                            <div class="subsection-item-label">Rutina ${index + 1}</div>
+                                            <button onclick="removeSystemsItem('preMarketPrep', ${index})">🗑️ Eliminar</button>
+                                        </div>
+                                        <textarea 
+                                            class="form-textarea" 
+                                            placeholder="Ej: Revisar noticias económicas, análisis técnico, plan del día..."
+                                            onchange="updateSystemsItem('preMarketPrep', ${index}, this.value)"
+                                        >${item}</textarea>
+                                    </div>
+                                `).join('')}
+                                <button class="add-item-btn" onclick="addSystemsItem('preMarketPrep')">
+                                    ➕ Añadir Rutina
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prohibited Conditions -->
+                    <div class="expandable-section" id="prohibitedSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('prohibitedSection')">
+                            <div class="expandable-section-title">🚫 Conductas Prohibidas</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                ${(data.prohibitedConditions || []).map((item, index) => `
+                                    <div class="subsection-item">
+                                        <div class="subsection-item-header">
+                                            <div class="subsection-item-label">Prohibición ${index + 1}</div>
+                                            <button onclick="removeSystemsItem('prohibitedConditions', ${index})">🗑️ Eliminar</button>
+                                        </div>
+                                        <textarea 
+                                            class="form-textarea" 
+                                            placeholder="Ej: No operar si dormí menos de 6 horas, no operar después de 2 pérdidas..."
+                                            onchange="updateSystemsItem('prohibitedConditions', ${index}, this.value)"
+                                        >${item}</textarea>
+                                    </div>
+                                `).join('')}
+                                <button class="add-item-btn" onclick="addSystemsItem('prohibitedConditions')">
+                                    ➕ Añadir Prohibición
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Success Behaviors -->
+                    <div class="expandable-section" id="successSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('successSection')">
+                            <div class="expandable-section-title">✨ Comportamiento para asegurar el éxito</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Planes de responsabilidad</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo te mantienes responsable de tus reglas?"
+                                        onchange="updateSystemsObject('successBehaviors', 'accountability', this.value)"
+                                    >${data.successBehaviors?.accountability || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Proceso para corregir errores</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Qué haces cuando cometes un error?"
+                                        onchange="updateSystemsObject('successBehaviors', 'errorCorrection', this.value)"
+                                    >${data.successBehaviors?.errorCorrection || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Recompensa por seguir reglas</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo te recompensas por seguir tus reglas?"
+                                        onchange="updateSystemsObject('successBehaviors', 'rewards', this.value)"
+                                    >${data.successBehaviors?.rewards || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Estrategias para asegurar el máximo rendimiento</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Qué estrategias usas para rendir al máximo?"
+                                        onchange="updateSystemsObject('successBehaviors', 'performance', this.value)"
+                                    >${data.successBehaviors?.performance || ''}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Professional Guidelines -->
+                    <div class="expandable-section" id="guidelinesSection">
+                        <div class="expandable-section-header" onclick="toggleExpandableSection('guidelinesSection')">
+                            <div class="expandable-section-title">🎓 Directrices Generales para el comportamiento profesional</div>
+                            <div class="expandable-section-icon">▼</div>
+                        </div>
+                        <div class="expandable-section-body">
+                            <div class="expandable-section-content">
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Responsabilidad financiera diaria</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo gestionas tu responsabilidad financiera?"
+                                        onchange="updateSystemsObject('professionalGuidelines', 'financial', this.value)"
+                                    >${data.professionalGuidelines?.financial || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Gestión del riesgo</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="Principios generales de gestión del riesgo..."
+                                        onchange="updateSystemsObject('professionalGuidelines', 'riskManagement', this.value)"
+                                    >${data.professionalGuidelines?.riskManagement || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Disciplina emocional</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo mantienes disciplina emocional?"
+                                        onchange="updateSystemsObject('professionalGuidelines', 'emotional', this.value)"
+                                    >${data.professionalGuidelines?.emotional || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Comunicación, recolección de datos y revisión del desempeño</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo documentas y revisas tu desempeño?"
+                                        onchange="updateSystemsObject('professionalGuidelines', 'review', this.value)"
+                                    >${data.professionalGuidelines?.review || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Conducta profesional y cumplimiento de reglas</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="Directrices sobre conducta profesional..."
+                                        onchange="updateSystemsObject('professionalGuidelines', 'conduct', this.value)"
+                                    >${data.professionalGuidelines?.conduct || ''}</textarea>
+                                </div>
+                                <div class="subsection-item">
+                                    <div class="subsection-item-label">Equilibrio Vida-Trabajo</div>
+                                    <textarea 
+                                        class="form-textarea" 
+                                        placeholder="¿Cómo mantienes equilibrio entre trading y vida personal?"
+                                        onchange="updateSystemsObject('professionalGuidelines', 'balance', this.value)"
+                                    >${data.professionalGuidelines?.balance || ''}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="save-indicator" id="systemsSaveIndicator" style="margin-top: 1rem;">
+                        <span id="systemsSaveText">Sin cambios</span>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        window.toggleExpandableSection = function(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('expanded');
+        }
+
+        window.addSystemsItem = function(field) {
+            if (!stage2SystemsData[field]) {
+                stage2SystemsData[field] = [];
+            }
+            stage2SystemsData[field].push('');
+            renderSystemsTool();
+        }
+
+        window.removeSystemsItem = function(field, index) {
+            stage2SystemsData[field].splice(index, 1);
+            renderSystemsTool();
+            scheduleSystemsAutoSave();
+        }
+
+        window.updateSystemsItem = function(field, index, value) {
+            if (!stage2SystemsData[field]) {
+                stage2SystemsData[field] = [];
+            }
+            stage2SystemsData[field][index] = value;
+            scheduleSystemsAutoSave();
+        }
+
+        window.updateSystemsObject = function(field, subfield, value) {
+            if (!stage2SystemsData[field]) {
+                stage2SystemsData[field] = {};
+            }
+            stage2SystemsData[field][subfield] = value;
+            scheduleSystemsAutoSave();
+        }
+
+        function scheduleSystemsAutoSave() {
+            const indicator = document.getElementById('systemsSaveIndicator');
+            const text = document.getElementById('systemsSaveText');
+            
+            if (indicator && text) {
+                indicator.classList.remove('saved');
+                indicator.classList.add('saving');
+                text.textContent = 'Guardando...';
+            }
+
+            if (systemsAutoSaveTimer) {
+                clearTimeout(systemsAutoSaveTimer);
+            }
+
+            systemsAutoSaveTimer = setTimeout(async () => {
+                await saveSystemsTool(true);
+            }, 2000);
+        }
+
+        async function saveSystemsTool(isAutoSave = false) {
+            if (!currentUser || !stage2SystemsData) return;
+
+            try {
+                const systemsData = {
+                    userId: currentUser.uid,
+                    ...stage2SystemsData,
+                    updatedAt: Timestamp.now()
+                };
+
+                if (stage2SystemsData.id) {
+                    await updateDoc(doc(db, 'stage2Systems', stage2SystemsData.id), systemsData);
+                } else {
+                    systemsData.createdAt = Timestamp.now();
+                    const docRef = await addDoc(collection(db, 'stage2Systems'), systemsData);
+                    stage2SystemsData.id = docRef.id;
+                }
+
+                const indicator = document.getElementById('systemsSaveIndicator');
+                const text = document.getElementById('systemsSaveText');
+                
+                if (indicator && text) {
+                    indicator.classList.remove('saving');
+                    indicator.classList.add('saved');
+                    text.textContent = '✓ Guardado';
+                }
+
+                if (!isAutoSave) {
+                    showSuccess('✅ Sistemas guardados correctamente');
+                }
+            } catch (error) {
+                console.error('Error saving Systems:', error);
+                if (!isAutoSave) {
+                    showError('Error al guardar: ' + error.message);
+                }
+            }
+        }
+
+        // ========================================
+        // HABITS TOOL (Same as before)
+        // ========================================
+
+        async function loadHabitsTool() {
+            if (!currentUser) return;
+
+            try {
+                const habitsQuery = query(
+                    collection(db, 'stage2Habits'),
+                    where('userId', '==', currentUser.uid)
+                );
+
+                const snapshot = await getDocs(habitsQuery);
+                
+                if (!snapshot.empty) {
+                    stage2HabitsData = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() };
+                } else {
+                    stage2HabitsData = {
+                        userId: currentUser.uid,
+                        reflection: '',
+                        habits: []
+                    };
+                }
+
+                renderHabitsTool();
+            } catch (error) {
+                console.error('Error loading Habits tool:', error);
+                document.getElementById('habitsToolContent').innerHTML = 
+                    '<p style="color: #ef4444; padding: 1rem;">Error al cargar Hábitos</p>';
+            }
+        }
+
+        function renderHabitsTool() {
+            const container = document.getElementById('habitsToolContent');
+            const data = stage2HabitsData;
+            
+            const html = `
+                <div style="padding: 0;">
+                    <div class="question-block">
+                        <div class="question-number">Reflexión</div>
+                        <div class="question-text">Reflexiona sobre tus Rutinas</div>
+                        <div class="question-help">
+                            ¿Qué te prepara bien para el día? ¿Qué es clave para rendir al máximo? ¿Dónde hay ineficiencias que roban tiempo?
+                        </div>
+                        <textarea 
+                            id="habitsReflection" 
+                            class="form-textarea" 
+                            placeholder="Reflexiona sobre tus rutinas actuales..."
+                            oninput="scheduleHabitsAutoSave()"
+                            style="min-height: 150px;"
+                        >${data.reflection || ''}</textarea>
+                    </div>
+
+                    <div class="question-block">
+                        <div class="question-number">Hábitos</div>
+                        <div class="question-text">Mis Hábitos Diarios</div>
+                        <div class="question-help">
+                            Lista hábitos específicos y accionables que seguirás con constancia
+                        </div>
+                        <div id="habitsList" style="margin-top: 1rem;">
+                            ${(data.habits || []).map((habit, index) => `
+                                <div class="subsection-item">
+                                    <div class="subsection-item-header">
+                                        <span style="color: #4F46E5; font-weight: 600;">${index + 1}.</span>
+                                        <button onclick="removeHabit(${index})">🗑️ Eliminar</button>
+                                    </div>
+                                    <input 
+                                        type="text" 
+                                        class="form-input"
+                                        value="${habit}"
+                                        onchange="updateHabit(${index}, this.value)"
+                                        placeholder="Escribe un hábito..."
+                                    />
+                                </div>
+                            `).join('')}
+                        </div>
+                        <button class="add-item-btn" onclick="addHabit()">
+                            ➕ Añadir Hábito
+                        </button>
+                    </div>
+
+                    <div class="save-indicator" id="habitsSaveIndicator" style="margin-top: 1rem;">
+                        <span id="habitsSaveText">Sin cambios</span>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        window.addHabit = function() {
+            if (!stage2HabitsData.habits) {
+                stage2HabitsData.habits = [];
+            }
+            stage2HabitsData.habits.push('');
+            renderHabitsTool();
+        }
+
+        window.updateHabit = function(index, value) {
+            if (!stage2HabitsData?.habits) return;
+            stage2HabitsData.habits[index] = value;
+            scheduleHabitsAutoSave();
+        }
+
+        window.removeHabit = function(index) {
+            if (!stage2HabitsData?.habits) return;
+            stage2HabitsData.habits.splice(index, 1);
+            renderHabitsTool();
+            scheduleHabitsAutoSave();
+        }
+
+        function scheduleHabitsAutoSave() {
+            const indicator = document.getElementById('habitsSaveIndicator');
+            const text = document.getElementById('habitsSaveText');
+            
+            if (indicator && text) {
+                indicator.classList.remove('saved');
+                indicator.classList.add('saving');
+                text.textContent = 'Guardando...';
+            }
+
+            if (habitsAutoSaveTimer) {
+                clearTimeout(habitsAutoSaveTimer);
+            }
+
+            habitsAutoSaveTimer = setTimeout(async () => {
+                await saveHabitsTool(true);
+            }, 2000);
+        }
+
+        async function saveHabitsTool(isAutoSave = false) {
+            if (!currentUser || !stage2HabitsData) return;
+
+            try {
+                const reflection = document.getElementById('habitsReflection')?.value || stage2HabitsData.reflection;
+                
+                const habitsData = {
+                    userId: currentUser.uid,
+                    reflection: reflection,
+                    habits: stage2HabitsData.habits || [],
+                    updatedAt: Timestamp.now()
+                };
+
+                if (stage2HabitsData.id) {
+                    await updateDoc(doc(db, 'stage2Habits', stage2HabitsData.id), habitsData);
+                } else {
+                    habitsData.createdAt = Timestamp.now();
+                    const docRef = await addDoc(collection(db, 'stage2Habits'), habitsData);
+                    stage2HabitsData.id = docRef.id;
+                }
+
+                const indicator = document.getElementById('habitsSaveIndicator');
+                const text = document.getElementById('habitsSaveText');
+                
+                if (indicator && text) {
+                    indicator.classList.remove('saving');
+                    indicator.classList.add('saved');
+                    text.textContent = '✓ Guardado';
+                }
+
+                if (!isAutoSave) {
+                    showSuccess('✅ Hábitos guardados correctamente');
+                }
+            } catch (error) {
+                console.error('Error saving Habits:', error);
+                if (!isAutoSave) {
+                    showError('Error al guardar: ' + error.message);
+                }
+            }
+        }
+
+        // ========================================
+        // END OF STAGE 2 FUNCTIONS
+        // ========================================
+
+        // Stage submission and review
+        window.submitStageForReview = async function() {
+            const currentStepId = parseInt(document.getElementById('stepDetailTitle').textContent.match(/\d+/)[0]);
+            
+            if (currentStepId === 0) {
+                showError('La auto-evaluación no requiere revisión');
+                return;
+            }
+
+            // Validation for Stage 1
+            if (currentStepId === 1) {
+                if (currentErrors.length === 0) {
+                    showError('Debes identificar al menos un error antes de enviar la etapa');
+                    return;
+                }
+                
+                const hasCompleteError = currentErrors.some(error => error.completedQuestions === 7);
+                if (!hasCompleteError) {
+                    showError('Debes completar las 7 preguntas de al menos un error antes de enviar');
+                    return;
+                }
+            }
+
+            // Validation for Stage 2
+            if (currentStepId === 2) {
+                const hasREDItems = currentREDItems && currentREDItems.length > 0;
+                const hasCompleteSystems = stage2SystemsData && stage2SystemsData.id;
+                const hasHabits = stage2HabitsData && stage2HabitsData.habits && stage2HabitsData.habits.length >= 3;
+
+                if (!hasREDItems || !hasCompleteSystems || !hasHabits) {
+                    const missing = [];
+                    if (!hasREDItems) missing.push('al menos una RED');
+                    if (!hasCompleteSystems) missing.push('Sistemas y Procesos');
+                    if (!hasHabits) missing.push('al menos 3 Hábitos');
+                    
+                    showError(`Debes completar: ${missing.join(', ')}`);
+                    return;
+                }
+            }
+
+            try {
+                const stageSubmission = {
+                    userId: currentUser.uid,
+                    stageId: currentStepId,
+                    status: 'pending',
+                    submittedAt: Timestamp.now(),
+                    createdAt: Timestamp.now()
+                };
+
+                await addDoc(collection(db, 'stageSubmissions'), stageSubmission);
+                
+                showSuccess('¡Etapa enviada para revisión!');
+                updateStageSubmitStatus(currentStepId);
+            } catch (error) {
+                console.error('Error submitting stage:', error);
+                showError('Error al enviar la etapa: ' + error.message);
+            }
+        }
+
+        async function updateStageSubmitStatus(stageId) {
+            try {
+                const q = query(
+                    collection(db, 'stageSubmissions'),
+                    where('userId', '==', currentUser.uid),
+                    where('stageId', '==', stageId)
+                );
+                
+                const snapshot = await getDocs(q);
+                const submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                submissions.sort((a, b) => {
+                    const aTime = a.submittedAt?.toMillis ? a.submittedAt.toMillis() : 0;
+                    const bTime = b.submittedAt?.toMillis ? b.submittedAt.toMillis() : 0;
+                    return bTime - aTime;
+                });
+
+                const latestSubmission = submissions[0];
+                const statusDiv = document.getElementById('stageSubmitStatus');
+                const submitBtn = document.getElementById('submitStageBtn');
+
+                if (!latestSubmission) {
+                    statusDiv.innerHTML = '';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '📤 Enviar Etapa para Revisión';
+                } else if (latestSubmission.status === 'pending') {
+                    statusDiv.innerHTML = '<div class="success-message">⏳ Etapa enviada - Esperando revisión del mentor</div>';
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'En Revisión...';
+                } else if (latestSubmission.status === 'approved') {
+                    statusDiv.innerHTML = `<div class="success-message">✅ Etapa Aprobada${latestSubmission.mentorFeedback ? '<br><strong>Feedback:</strong> ' + latestSubmission.mentorFeedback : ''}</div>`;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = '✓ Aprobada';
+                } else if (latestSubmission.status === 'rejected') {
+                    statusDiv.innerHTML = `<div class="error-message">❌ Etapa Rechazada - Revisa el feedback<br><strong>Feedback:</strong> ${latestSubmission.mentorFeedback || 'Sin feedback'}</div>`;
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = '🔄 Reenviar para Revisión';
+                }
+            } catch (error) {
+                console.error('Error loading stage status:', error);
+            }
+        }
+
         // Admin functions
         async function loadAdminDashboard() {
             if (userData?.role !== 'admin') {
@@ -2551,33 +4203,23 @@
             }
 
             try {
-                // Load all users
                 const usersSnapshot = await getDocs(collection(db, 'users'));
                 const users = usersSnapshot.docs
                     .map(doc => ({ id: doc.id, ...doc.data() }))
                     .filter(u => u.role !== 'admin');
 
-                // Load pending exercises
                 const exercisesSnapshot = await getDocs(
                     query(collection(db, 'exercises'), where('status', '==', 'pending'))
                 );
                 const pendingExercises = exercisesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                // Update stats
                 document.getElementById('adminTotalStudents').textContent = users.length;
                 document.getElementById('adminPendingReviews').textContent = pendingExercises.length;
                 document.getElementById('adminActiveStudents').textContent = users.filter(u => u.currentStep > 1).length;
 
-                // Render users list
                 renderAdminUsersList(users);
-
-                // Render pending exercises
                 renderAdminPendingExercises(pendingExercises, users);
-
-                // Load pending stages
                 await loadPendingStages();
-
-                // Load stages content management
                 await loadStagesContent();
             } catch (error) {
                 console.error('Error loading admin dashboard:', error);
@@ -2588,7 +4230,7 @@
             const container = document.getElementById('adminUsersList');
             
             container.innerHTML = users.map(user => {
-                const completedSteps = (user.unlockedSteps?.length || 1) - 1;
+                const completedSteps = (user.unlockedSteps?.length || 1) - 2;
                 
                 return `
                     <div class="user-card">
@@ -2616,7 +4258,7 @@
 
                         <div class="step-unlock-controls">
                             <select class="form-select" id="stepSelect_${user.id}" style="flex: 1;">
-                                ${steps.map(step => `
+                                ${steps.filter(s => s.id > 0).map(step => `
                                     <option value="${step.id}" ${user.currentStep === step.id ? 'selected' : ''}>
                                         Etapa ${step.id}: ${step.title}
                                     </option>
@@ -2627,27 +4269,9 @@
                             </button>
                         </div>
 
-                        <div class="create-exercise-form" id="createExForm_${user.id}" style="display: none;">
-                            <h4 style="margin-bottom: 1rem; color: #4F46E5;">Crear Ejercicio</h4>
-                            <div class="form-row">
-                                <select class="form-select" id="exType_${user.id}">
-                                    <option value="weekly">Semanal</option>
-                                    <option value="monthly">Mensual</option>
-                                    <option value="quarterly">Trimestral</option>
-                                    <option value="pattern">Diario de Patrones</option>
-                                </select>
-                                <button class="btn btn-success btn-small" onclick="createExerciseForUser('${user.id}')">
-                                    Crear
-                                </button>
-                            </div>
-                        </div>
-
                         <div class="user-actions">
                             <button class="btn btn-secondary btn-small" onclick="toggleCalendar('${user.id}', ${!user.calendarUnlocked})">
                                 ${user.calendarUnlocked ? '🔓 Bloquear' : '🔒 Desbloquear'} Calendario
-                            </button>
-                            <button class="btn btn-secondary btn-small" onclick="toggleCreateExerciseForm('${user.id}')">
-                                ➕ Crear Ejercicio
                             </button>
                         </div>
                     </div>
@@ -2662,7 +4286,7 @@
                 const userDoc = await getDoc(userRef);
                 const userData = userDoc.data();
                 
-                const unlockedSteps = userData.unlockedSteps || [1];
+                const unlockedSteps = userData.unlockedSteps || [0, 1];
                 if (!unlockedSteps.includes(selectedStep)) {
                     unlockedSteps.push(selectedStep);
                     unlockedSteps.sort((a, b) => a - b);
@@ -2699,7 +4323,7 @@
             const container = document.getElementById('adminPendingExercises');
             
             if (exercises.length === 0) {
-                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay ejercicios pendientes de revisión</p>';
+                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay ejercicios pendientes</p>';
                 return;
             }
 
@@ -2843,7 +4467,7 @@
 
             const feedback = document.getElementById('reviewFeedback').value.trim();
             if (!feedback) {
-                showError('Por favor, escribe un feedback para el alumno');
+                showError('Por favor, escribe un feedback');
                 return;
             }
 
@@ -2854,7 +4478,6 @@
                     reviewedAt: Timestamp.now()
                 });
 
-                // Update user's completed exercises count
                 const userRef = doc(db, 'users', currentReviewExercise.userId);
                 const userDoc = await getDoc(userRef);
                 const currentCount = userDoc.data().completedExercises || 0;
@@ -2862,115 +4485,12 @@
                     completedExercises: currentCount + 1
                 });
 
-                showSuccess('¡Ejercicio revisado y feedback enviado!');
+                showSuccess('¡Ejercicio revisado!');
                 closeReviewModal();
                 loadAdminDashboard();
             } catch (error) {
                 console.error('Error submitting review:', error);
                 showError('Error al enviar la revisión');
-            }
-        }
-
-        // Stage Review System
-        let currentStageSubmission = null;
-
-        window.submitStageForReview = async function() {
-            const currentStepId = parseInt(document.getElementById('stepDetailTitle').textContent.match(/\d+/)[0]);
-            
-            console.log('Submitting stage:', currentStepId, 'for user:', currentUser.uid);
-
-            // Validation for Stage 1: must have at least one error
-            if (currentStepId === 1) {
-                if (currentErrors.length === 0) {
-                    showError('Debes identificar al menos un error antes de enviar la etapa para revisión');
-                    return;
-                }
-                
-                // Check if at least one error has all questions answered
-                const hasCompleteError = currentErrors.some(error => error.completedQuestions === 7);
-                if (!hasCompleteError) {
-                    showError('Debes completar las 7 preguntas de al menos un error antes de enviar');
-                    return;
-                }
-            }
-
-            // Validation for Stage 2: all 3 tools must be completed
-            if (currentStepId === 2) {
-                const redComplete = stage2ToolsData.red?.completed || false;
-                const systemsComplete = stage2ToolsData.systems?.completed || false;
-                const habitsComplete = stage2ToolsData.habits?.completed || false;
-
-                if (!redComplete || !systemsComplete || !habitsComplete) {
-                    const missing = [];
-                    if (!redComplete) missing.push('RED (Reinicio-Evaluación-Dirección)');
-                    if (!systemsComplete) missing.push('Sistemas y Procesos');
-                    if (!habitsComplete) missing.push('Hábitos y Rutinas');
-                    
-                    showError(`Debes completar todas las herramientas antes de enviar. Faltan: ${missing.join(', ')}`);
-                    return;
-                }
-            }
-
-            try {
-                const stageSubmission = {
-                    userId: currentUser.uid,
-                    stageId: currentStepId,
-                    status: 'pending',
-                    submittedAt: Timestamp.now(),
-                    createdAt: Timestamp.now()
-                };
-
-                await addDoc(collection(db, 'stageSubmissions'), stageSubmission);
-                
-                showSuccess('¡Etapa enviada para revisión!');
-                updateStageSubmitStatus(currentStepId);
-            } catch (error) {
-                console.error('Error submitting stage:', error);
-                showError('Error al enviar la etapa: ' + error.message);
-            }
-        }
-
-        async function updateStageSubmitStatus(stageId) {
-            try {
-                const q = query(
-                    collection(db, 'stageSubmissions'),
-                    where('userId', '==', currentUser.uid),
-                    where('stageId', '==', stageId)
-                );
-                
-                const snapshot = await getDocs(q);
-                const submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
-                // Sort by submittedAt descending to get latest
-                submissions.sort((a, b) => {
-                    const aTime = a.submittedAt?.toMillis ? a.submittedAt.toMillis() : 0;
-                    const bTime = b.submittedAt?.toMillis ? b.submittedAt.toMillis() : 0;
-                    return bTime - aTime;
-                });
-
-                const latestSubmission = submissions[0];
-                const statusDiv = document.getElementById('stageSubmitStatus');
-                const submitBtn = document.getElementById('submitStageBtn');
-
-                if (!latestSubmission) {
-                    statusDiv.innerHTML = '';
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '📤 Enviar Etapa para Revisión';
-                } else if (latestSubmission.status === 'pending') {
-                    statusDiv.innerHTML = '<div class="success-message">⏳ Etapa enviada - Esperando revisión del mentor</div>';
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'En Revisión...';
-                } else if (latestSubmission.status === 'approved') {
-                    statusDiv.innerHTML = `<div class="success-message">✅ Etapa Aprobada${latestSubmission.mentorFeedback ? '<br><strong>Feedback:</strong> ' + latestSubmission.mentorFeedback : ''}</div>`;
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = '✓ Aprobada';
-                } else if (latestSubmission.status === 'rejected') {
-                    statusDiv.innerHTML = `<div class="error-message">❌ Etapa Rechazada - Revisa el feedback<br><strong>Feedback:</strong> ${latestSubmission.mentorFeedback || 'Sin feedback'}</div>`;
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '🔄 Reenviar para Revisión';
-                }
-            } catch (error) {
-                console.error('Error loading stage status:', error);
             }
         }
 
@@ -2984,7 +4504,6 @@
                 const snapshot = await getDocs(q);
                 const submissions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-                // Load all users
                 const usersSnapshot = await getDocs(collection(db, 'users'));
                 const users = usersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
@@ -2998,7 +4517,7 @@
             const container = document.getElementById('adminPendingStages');
             
             if (submissions.length === 0) {
-                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay etapas pendientes de revisión</p>';
+                container.innerHTML = '<p style="color: #a1a1aa; text-align: center; padding: 2rem;">No hay etapas pendientes</p>';
                 return;
             }
 
@@ -3030,205 +4549,8 @@
                 const modal = document.getElementById('stageReviewModal');
                 const content = document.getElementById('stageReviewModalContent');
                 
-                let stageContent = '';
+                let stageContent = '<p style="color: #a1a1aa;">Revisión de etapa completada</p>';
 
-                // For Stage 1, load and display all errors
-                if (stageId === 1) {
-                    const errorsQuery = query(
-                        collection(db, 'stageErrors'),
-                        where('userId', '==', currentStageSubmission.userId),
-                        where('stageId', '==', 1),
-                        orderBy('createdAt', 'desc')
-                    );
-                    
-                    const errorsSnapshot = await getDocs(errorsQuery);
-                    const errors = errorsSnapshot.docs
-                        .map(doc => ({ id: doc.id, ...doc.data() }))
-                        .filter(error => !error.deleted); // Exclude deleted errors
-
-                    if (errors.length === 0) {
-                        stageContent = `
-                            <div class="review-field">
-                                <div class="review-field-title">❌ Errores Identificados</div>
-                                <div class="review-field-content">
-                                    <em style="color: #a1a1aa;">El alumno no ha identificado ningún error todavía.</em>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        stageContent = `
-                            <div class="review-field">
-                                <div class="review-field-title">❌ Errores Identificados (${errors.length})</div>
-                            </div>
-                            ${errors.map(error => `
-                                <div class="review-field" style="background: rgba(255, 255, 255, 0.02); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
-                                    <h4 style="color: #4F46E5; margin-bottom: 1.5rem; font-size: 1.2rem;">
-                                        ❌ ${error.title || 'Error sin título'}
-                                    </h4>
-                                    <div style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">
-                                        ${error.completedQuestions}/7 preguntas completadas
-                                    </div>
-                                    
-                                    ${errorQuestions.map((q, index) => {
-                                        const answer = error.answers?.[index] || '';
-                                        return answer ? `
-                                            <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">
-                                                    Pregunta ${q.number}: ${q.text}
-                                                </div>
-                                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">
-                                                    ${answer}
-                                                </div>
-                                            </div>
-                                        ` : '';
-                                    }).join('')}
-                                </div>
-                            `).join('')}
-                        `;
-                    }
-                } else if (stageId === 2) {
-                    // For Stage 2, load and display all 3 tools
-                    const toolsQuery = query(
-                        collection(db, 'stage2Tools'),
-                        where('userId', '==', currentStageSubmission.userId),
-                        where('stageId', '==', 2)
-                    );
-                    
-                    const toolsSnapshot = await getDocs(toolsQuery);
-                    const tools = {};
-                    toolsSnapshot.docs.forEach(doc => {
-                        const data = doc.data();
-                        tools[data.toolType] = data;
-                    });
-
-                    const redTool = tools.red;
-                    const systemsTool = tools.systems;
-                    const habitsTool = tools.habits;
-
-                    stageContent = `
-                        <!-- RED Tool -->
-                        <div class="review-field" style="background: rgba(255, 255, 255, 0.02); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                            <h4 style="color: #4F46E5; margin-bottom: 1.5rem; font-size: 1.2rem;">
-                                🔄 RED: Reinicio-Evaluación-Dirección
-                            </h4>
-                            <div style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">
-                                ${redTool?.completed ? '✓ Completado' : '○ Incompleto'}
-                            </div>
-                            
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">
-                                    Paso 1: Reinicio
-                                </div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">
-                                    ${redTool?.step1 || '<em style="color: #a1a1aa;">Sin contenido</em>'}
-                                </div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">
-                                    Paso 2: Evaluación
-                                </div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">
-                                    ${redTool?.step2 || '<em style="color: #a1a1aa;">Sin contenido</em>'}
-                                </div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">
-                                    Paso 3: Dirección
-                                </div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">
-                                    ${redTool?.step3 || '<em style="color: #a1a1aa;">Sin contenido</em>'}
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Systems Tool -->
-                        <div class="review-field" style="background: rgba(255, 255, 255, 0.02); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                            <h4 style="color: #4F46E5; margin-bottom: 1.5rem; font-size: 1.2rem;">
-                                ⚙️ Sistemas y Procesos
-                            </h4>
-                            <div style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">
-                                ${systemsTool?.completed ? '✓ Completado' : '○ Incompleto'}
-                            </div>
-                            
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Mercados y Horarios</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.markets || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Parámetros de Riesgo</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.risk || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Limitaciones de Trading</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.limits || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Gestión de Operaciones</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.management || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Preparación Física y Mental</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.preparation || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Prohibido Trading Bajo Estas Condiciones</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.prohibited || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Estrategias de Comportamiento</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.behavior || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Guías para el Comportamiento Profesional</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${systemsTool?.guidelines || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-                        </div>
-
-                        <!-- Habits Tool -->
-                        <div class="review-field" style="background: rgba(255, 255, 255, 0.02); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                            <h4 style="color: #4F46E5; margin-bottom: 1.5rem; font-size: 1.2rem;">
-                                🎯 Hábitos y Rutinas
-                            </h4>
-                            <div style="color: #a1a1aa; margin-bottom: 1rem; font-size: 0.9rem;">
-                                ${habitsTool?.completed ? '✓ Completado' : '○ Incompleto'}
-                            </div>
-                            
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Reflexión sobre Rutinas</div>
-                                <div style="color: #e5e7eb; line-height: 1.6; white-space: pre-wrap;">${habitsTool?.reflection || '<em style="color: #a1a1aa;">Sin contenido</em>'}</div>
-                            </div>
-
-                            <div style="margin-bottom: 1.5rem;">
-                                <div style="color: #4F46E5; font-weight: 600; margin-bottom: 0.5rem;">Hábitos Diarios</div>
-                                ${habitsTool?.habits && habitsTool.habits.length > 0 ? `
-                                    <ol style="color: #e5e7eb; line-height: 1.8; padding-left: 1.5rem;">
-                                        ${habitsTool.habits.map(habit => `<li>${habit}</li>`).join('')}
-                                    </ol>
-                                ` : '<em style="color: #a1a1aa;">Sin hábitos definidos</em>'}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    stageContent = `
-                        <div class="review-field">
-                            <div class="review-field-title">📝 Revisión de Etapa</div>
-                            <div class="review-field-content">
-                                El alumno ha marcado esta etapa como completada.<br>
-                                <strong>Próximamente:</strong> Aquí verás el contenido de las herramientas completadas.
-                            </div>
-                        </div>
-                    `;
-                }
-                
                 content.innerHTML = `
                     <div class="review-exercise-header">
                         <div>
@@ -3236,7 +4558,6 @@
                             <p style="color: #a1a1aa;">Etapa ${stageId}: ${stage?.title || ''}</p>
                         </div>
                     </div>
-
                     ${stageContent}
                 `;
 
@@ -3244,7 +4565,6 @@
                 modal.classList.remove('hidden');
             } catch (error) {
                 console.error('Error opening stage review modal:', error);
-                showError('Error al cargar la revisión: ' + error.message);
             }
         }
 
@@ -3265,14 +4585,13 @@
                     reviewedAt: Timestamp.now()
                 });
 
-                // Unlock next stage for user
                 const nextStageId = currentStageSubmission.stageId + 1;
                 if (nextStageId <= 5) {
                     const userRef = doc(db, 'users', currentStageSubmission.userId);
                     const userDoc = await getDoc(userRef);
                     const userData = userDoc.data();
                     
-                    const unlockedSteps = userData.unlockedSteps || [1];
+                    const unlockedSteps = userData.unlockedSteps || [0, 1];
                     if (!unlockedSteps.includes(nextStageId)) {
                         unlockedSteps.push(nextStageId);
                         unlockedSteps.sort((a, b) => a - b);
@@ -3283,7 +4602,6 @@
                         unlockedSteps: unlockedSteps
                     });
 
-                    // If approving stage 4, unlock calendar
                     if (currentStageSubmission.stageId === 4) {
                         await updateDoc(userRef, {
                             calendarUnlocked: true
@@ -3291,12 +4609,12 @@
                     }
                 }
 
-                showSuccess('✅ Etapa aprobada! ' + (nextStageId <= 5 ? `Etapa ${nextStageId} desbloqueada` : 'Programa completado'));
+                showSuccess('✅ Etapa aprobada!');
                 closeStageReviewModal();
                 loadAdminDashboard();
             } catch (error) {
                 console.error('Error approving stage:', error);
-                showError('Error al aprobar la etapa: ' + error.message);
+                showError('Error al aprobar la etapa');
             }
         }
 
@@ -3305,7 +4623,7 @@
 
             const feedback = document.getElementById('stageFeedback').value.trim();
             if (!feedback) {
-                showError('Por favor, escribe un feedback explicando por qué rechazas la etapa');
+                showError('Por favor, escribe un feedback');
                 return;
             }
 
@@ -3316,7 +4634,7 @@
                     reviewedAt: Timestamp.now()
                 });
 
-                showSuccess('Etapa rechazada. El alumno recibirá tu feedback.');
+                showSuccess('Etapa rechazada');
                 closeStageReviewModal();
                 loadAdminDashboard();
             } catch (error) {
@@ -3325,90 +4643,9 @@
             }
         }
 
-        // Utility functions
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.remove('hidden');
-            successMessage.classList.add('hidden');
-        }
-
-        function showSuccess(message) {
-            successMessage.textContent = message;
-            successMessage.classList.remove('hidden');
-            errorMessage.classList.add('hidden');
-        }
-
-        function hideMessages() {
-            errorMessage.classList.add('hidden');
-            successMessage.classList.add('hidden');
-        }
-
-        function getErrorMessage(code) {
-            const messages = {
-                'auth/invalid-email': 'Email inválido',
-                'auth/user-disabled': 'Usuario deshabilitado',
-                'auth/user-not-found': 'Usuario no encontrado',
-                'auth/wrong-password': 'Contraseña incorrecta',
-                'auth/invalid-credential': 'Credenciales inválidas'
-            };
-            return messages[code] || 'Error al iniciar sesión';
-        }
-
-        window.toggleCreateExerciseForm = function(userId) {
-            const form = document.getElementById(`createExForm_${userId}`);
-            form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-
-        window.createExerciseForUser = async function(userId) {
-            const type = document.getElementById(`exType_${userId}`).value;
-            
-            try {
-                const exerciseData = {
-                    userId: userId,
-                    type: type,
-                    status: 'draft',
-                    createdAt: Timestamp.now(),
-                    updatedAt: Timestamp.now()
-                };
-
-                // Add empty fields based on type
-                if (type === 'pattern') {
-                    exerciseData.when = '';
-                    exerciseData.feeling = '';
-                    exerciseData.action = '';
-                } else {
-                    exerciseData.tradesWon = 0;
-                    exerciseData.tradesLost = 0;
-                    exerciseData.tradesBreakeven = 0;
-                    exerciseData.pnl = 0;
-                    exerciseData.whatWorked = '';
-                    exerciseData.whatDidntWork = '';
-                    exerciseData.struggles = '';
-                    exerciseData.wins = '';
-                    exerciseData.whatChange = '';
-                    exerciseData.kpis = '';
-                }
-
-                await addDoc(collection(db, 'exercises'), exerciseData);
-                
-                let typeLabel = '';
-                if (type === 'weekly') typeLabel = 'semanal';
-                else if (type === 'monthly') typeLabel = 'mensual';
-                else if (type === 'quarterly') typeLabel = 'trimestral';
-                else if (type === 'pattern') typeLabel = 'diario de patrones';
-                
-                showSuccess(`✅ Ejercicio ${typeLabel} creado!`);
-                document.getElementById(`createExForm_${userId}`).style.display = 'none';
-            } catch (error) {
-                console.error('Error creating exercise:', error);
-                showError('Error al crear el ejercicio');
-            }
-        }
-
         async function loadStagesContent() {
             const container = document.getElementById('stagesContentManagement');
             
-            // Load stages configuration from Firestore
             let stagesConfig = {};
             try {
                 const configDoc = await getDoc(doc(db, 'config', 'stages'));
@@ -3416,10 +4653,10 @@
                     stagesConfig = configDoc.data();
                 }
             } catch (error) {
-                console.log('No config found, using defaults');
+                console.log('No config found');
             }
 
-            container.innerHTML = steps.map(step => {
+            container.innerHTML = steps.filter(s => s.id > 0).map(step => {
                 const config = stagesConfig[`stage${step.id}`] || {};
                 
                 return `
@@ -3433,23 +4670,12 @@
 
                         <form id="stageForm_${step.id}" onsubmit="saveStageContent(event, ${step.id})">
                             <div class="form-group">
-                                <label class="form-label">Video URL (YouTube, Loom, Vimeo)</label>
+                                <label class="form-label">Video URL</label>
                                 <input 
                                     type="url" 
                                     class="form-input" 
                                     id="video_${step.id}"
                                     value="${config.video || ''}"
-                                    placeholder="https://www.youtube.com/watch?v=..."
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-label">Herramienta URL</label>
-                                <input 
-                                    type="url" 
-                                    class="form-input" 
-                                    id="tool_${step.id}"
-                                    value="${config.tool || ''}"
                                     placeholder="https://..."
                                 >
                             </div>
@@ -3483,14 +4709,10 @@
 
         window.saveStageContent = async function(event, stageId) {
             event.preventDefault();
-            console.log('Saving stage content for stage:', stageId);
             
             const video = document.getElementById(`video_${stageId}`).value.trim();
-            const tool = document.getElementById(`tool_${stageId}`).value.trim();
             const description = document.getElementById(`description_${stageId}`).value.trim();
             const resources = document.getElementById(`resources_${stageId}`).value.trim();
-
-            console.log('Stage data:', { video, tool, description, resources });
 
             try {
                 const configRef = doc(db, 'config', 'stages');
@@ -3503,806 +4725,55 @@
 
                 currentConfig[`stage${stageId}`] = {
                     video,
-                    tool,
                     description,
                     resources,
                     updatedAt: Timestamp.now()
                 };
 
                 await setDoc(configRef, currentConfig, { merge: true });
-                console.log('Stage saved successfully');
                 
-                // Update local steps array
                 const stepIndex = steps.findIndex(s => s.id === stageId);
                 if (stepIndex !== -1) {
                     steps[stepIndex].video = video;
-                    steps[stepIndex].tool = tool;
-                    steps[stepIndex].description = description;
                 }
 
-                showSuccess(`✅ Etapa ${stageId} actualizada correctamente`);
+                showSuccess(`✅ Etapa ${stageId} actualizada`);
             } catch (error) {
                 console.error('Error saving stage content:', error);
-                showError('Error al guardar los cambios: ' + error.message);
+                showError('Error al guardar: ' + error.message);
             }
         }
 
-        // ========================================
-        // STAGE 1: ERRORS MANAGEMENT FUNCTIONS
-        // ========================================
-
-        // Framework questions for Stage 1
-        const errorQuestions = [
-            {
-                number: 1,
-                text: "Describe el error en detalle",
-                help: "Incluye ejemplos del comportamiento, descripciones de tus emociones y mentalidad"
-            },
-            {
-                number: 2,
-                text: "¿Qué suele pasar justo antes de empezar a participar en este error/comportamiento?",
-                help: "Explica las condiciones que lo desencadenan, así como cualquier respuesta emocional que parezca impulsar este comportamiento"
-            },
-            {
-                number: 3,
-                text: "¿Cuál es la intención positiva que este comportamiento tiene para ti?",
-                help: "Aunque sea irracional, explica la lógica o la justificación detrás del comportamiento"
-            },
-            {
-                number: 4,
-                text: "¿Qué en tus circunstancias personales contribuyen a este patrón de comportamiento?",
-                help: "¿Qué hay sobre ti o sobre tu experiencia pasada que podría ser una razón por la que tienes esta tendencia?"
-            },
-            {
-                number: 5,
-                text: "¿Cómo sabotea este comportamiento tu trading?",
-                help: "Describe cómo este comportamiento afecta negativamente tus operaciones a pesar de cualquier intención positiva"
-            },
-            {
-                number: 6,
-                text: "¿Cuál es la mejor manera de lograr las intenciones positivas de la Pregunta 3? (TU TOP LEVEL)",
-                help: "¿Qué hábitos o comportamientos puedes hacer para reemplazar los patrones descritos en el punto 3?"
-            },
-            {
-                number: 7,
-                text: "¿Cómo aplicarás este Top Level específicamente a tu proceso de trading?",
-                help: "Describe en detalle las formas en que te asegurarás de que puedes aplicar esto"
-            }
-        ];
-
-        // Load errors for Stage 1
-        async function loadStage1Errors() {
-            if (!currentUser) return;
-
-            try {
-                const errorsQuery = query(
-                    collection(db, 'stageErrors'),
-                    where('userId', '==', currentUser.uid),
-                    where('stageId', '==', 1),
-                    orderBy('createdAt', 'desc')
-                );
-
-                const snapshot = await getDocs(errorsQuery);
-                currentErrors = snapshot.docs
-                    .map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }))
-                    .filter(error => !error.deleted); // Exclude deleted errors
-
-                renderErrorsList();
-            } catch (error) {
-                console.error('Error loading errors:', error);
-                showError('Error al cargar tus errores');
-            }
+        // Utility functions
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            successMessage.classList.add('hidden');
         }
 
-        // Render errors list
-        function renderErrorsList() {
-            const container = document.getElementById('stageToolsSection');
-            
-            const errorsListHTML = `
-                <div class="errors-list-container">
-                    <div class="errors-header">
-                        <h3>❌ Mis Errores Identificados</h3>
-                        <button class="btn btn-small" onclick="showErrorEditor(null)">
-                            ➕ Añadir Nuevo Error
-                        </button>
-                    </div>
-
-                    ${currentErrors.length === 0 ? `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">🎯</div>
-                            <div class="empty-state-title">Aún no has identificado errores</div>
-                            <div class="empty-state-text">
-                                Haz clic en "Añadir Nuevo Error" para comenzar a identificar los patrones que quieres mejorar en tu trading.
-                            </div>
-                        </div>
-                    ` : `
-                        <div class="errors-list">
-                            ${currentErrors.map(error => `
-                                <div class="error-item" onclick="showErrorEditor('${error.id}')">
-                                    <div class="error-item-info">
-                                        <div class="error-item-title">❌ ${error.title || 'Error sin título'}</div>
-                                        <div class="error-item-status">
-                                            ${error.completedQuestions || 0}/7 preguntas completadas
-                                        </div>
-                                    </div>
-                                    <div class="error-item-actions" onclick="event.stopPropagation()">
-                                        <button class="btn-icon edit" onclick="showErrorEditor('${error.id}')">
-                                            ✏️ Editar
-                                        </button>
-                                        <button class="btn-icon delete" onclick="deleteError('${error.id}')">
-                                            🗑️ Eliminar
-                                        </button>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `}
-                </div>
-            `;
-
-            container.innerHTML = errorsListHTML;
-            container.classList.remove('hidden');
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
         }
 
-        // Show error editor
-        window.showErrorEditor = async function(errorId) {
-            currentErrorId = errorId;
-            let errorData = null;
-
-            // If editing existing error, load it
-            if (errorId) {
-                errorData = currentErrors.find(e => e.id === errorId);
-            }
-
-            const container = document.getElementById('stageToolsSection');
-            
-            const editorHTML = `
-                <div class="error-editor">
-                    <div class="error-editor-header">
-                        <div>
-                            <button onclick="cancelErrorEditor()" style="background: transparent; border: none; color: #4F46E5; cursor: pointer; font-size: 1rem; margin-bottom: 0.5rem;">
-                                ← Volver a la lista
-                            </button>
-                            <h2 class="error-editor-title">
-                                ${errorId ? '✏️ Editar Error' : '➕ Nuevo Error'}
-                            </h2>
-                        </div>
-                        <div class="save-indicator" id="errorSaveIndicator">
-                            <span id="errorSaveText">Sin cambios</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group" style="margin-bottom: 2rem;">
-                        <label class="form-label">Nombre del error *</label>
-                        <input 
-                            type="text" 
-                            id="errorTitle" 
-                            class="form-input" 
-                            placeholder="Ej: Overtrading, FOMO, Revenge trading..."
-                            value="${errorData?.title || ''}"
-                            oninput="scheduleErrorAutoSave()"
-                        >
-                    </div>
-
-                    ${errorQuestions.map((q, index) => `
-                        <div class="error-question">
-                            <div class="error-question-number">Pregunta ${q.number}</div>
-                            <div class="error-question-text">${q.text}</div>
-                            <div class="error-question-help">${q.help}</div>
-                            <textarea 
-                                id="errorAnswer${q.number}" 
-                                class="form-textarea" 
-                                placeholder="Escribe tu respuesta aquí..."
-                                oninput="scheduleErrorAutoSave()"
-                                style="min-height: 150px;"
-                            >${errorData?.answers?.[index] || ''}</textarea>
-                        </div>
-                    `).join('')}
-
-                    <div class="button-group">
-                        <button class="btn btn-secondary" onclick="cancelErrorEditor()">
-                            Cancelar
-                        </button>
-                        <button class="btn" onclick="saveError()">
-                            💾 Guardar Error
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            container.innerHTML = editorHTML;
+        function hideMessages() {
+            errorMessage.classList.add('hidden');
+            successMessage.classList.add('hidden');
         }
 
-        // Schedule auto-save for errors
-        window.scheduleErrorAutoSave = function() {
-            const indicator = document.getElementById('errorSaveIndicator');
-            const text = document.getElementById('errorSaveText');
-            
-            if (indicator && text) {
-                indicator.classList.remove('saved');
-                indicator.classList.add('saving');
-                text.textContent = 'Guardando...';
-            }
-
-            if (errorAutoSaveTimer) {
-                clearTimeout(errorAutoSaveTimer);
-            }
-
-            errorAutoSaveTimer = setTimeout(async () => {
-                await saveError(true);
-            }, 2000);
+        function getErrorMessage(code) {
+            const messages = {
+                'auth/invalid-email': 'Email inválido',
+                'auth/user-disabled': 'Usuario deshabilitado',
+                'auth/user-not-found': 'Usuario no encontrado',
+                'auth/wrong-password': 'Contraseña incorrecta',
+                'auth/invalid-credential': 'Credenciales inválidas'
+            };
+            return messages[code] || 'Error al iniciar sesión';
         }
 
-        // Save error
-        window.saveError = async function(isAutoSave = false) {
-            const title = document.getElementById('errorTitle')?.value?.trim();
-            
-            if (!title && !isAutoSave) {
-                showError('Por favor ingresa un nombre para el error');
-                return;
-            }
-
-            if (!currentUser) return;
-
-            try {
-                const answers = [];
-                let completedQuestions = 0;
-
-                for (let i = 1; i <= 7; i++) {
-                    const answer = document.getElementById(`errorAnswer${i}`)?.value?.trim() || '';
-                    answers.push(answer);
-                    if (answer) completedQuestions++;
-                }
-
-                const errorData = {
-                    userId: currentUser.uid,
-                    stageId: 1,
-                    title: title || 'Error sin título',
-                    answers: answers,
-                    completedQuestions: completedQuestions,
-                    updatedAt: Timestamp.now()
-                };
-
-                if (currentErrorId) {
-                    // Update existing error
-                    await updateDoc(doc(db, 'stageErrors', currentErrorId), errorData);
-                } else {
-                    // Create new error
-                    errorData.createdAt = Timestamp.now();
-                    const docRef = await addDoc(collection(db, 'stageErrors'), errorData);
-                    currentErrorId = docRef.id;
-                }
-
-                const indicator = document.getElementById('errorSaveIndicator');
-                const text = document.getElementById('errorSaveText');
-                
-                if (indicator && text) {
-                    indicator.classList.remove('saving');
-                    indicator.classList.add('saved');
-                    text.textContent = '✓ Guardado';
-                }
-
-                if (!isAutoSave) {
-                    showSuccess('✅ Error guardado correctamente');
-                    await loadStage1Errors();
-                }
-            } catch (error) {
-                console.error('Error saving:', error);
-                if (!isAutoSave) {
-                    showError('Error al guardar: ' + error.message);
-                }
-            }
-        }
-
-        // Cancel error editor
-        window.cancelErrorEditor = function() {
-            currentErrorId = null;
-            if (errorAutoSaveTimer) {
-                clearTimeout(errorAutoSaveTimer);
-            }
-            renderErrorsList();
-        }
-
-        // Delete error
-        window.deleteError = async function(errorId) {
-            if (!confirm('¿Estás seguro de que quieres eliminar este error? Esta acción no se puede deshacer.')) {
-                return;
-            }
-
-            try {
-                await updateDoc(doc(db, 'stageErrors', errorId), {
-                    deleted: true,
-                    deletedAt: Timestamp.now()
-                });
-
-                showSuccess('✅ Error eliminado');
-                await loadStage1Errors();
-            } catch (error) {
-                console.error('Error deleting:', error);
-                showError('Error al eliminar el error');
-            }
-        }
-
-        // ========================================
-        // END OF STAGE 1 FUNCTIONS
-        // ========================================
-
-        // ========================================
-        // STAGE 2: TOOLS MANAGEMENT FUNCTIONS
-        // ========================================
-
-        // Load all Stage 2 tools
-        async function loadStage2Tools() {
-            if (!currentUser) return;
-
-            try {
-                // Load RED tool
-                const redQuery = query(
-                    collection(db, 'stage2Tools'),
-                    where('userId', '==', currentUser.uid),
-                    where('stageId', '==', 2),
-                    where('toolType', '==', 'red')
-                );
-                const redSnapshot = await getDocs(redQuery);
-                if (!redSnapshot.empty) {
-                    stage2ToolsData.red = { id: redSnapshot.docs[0].id, ...redSnapshot.docs[0].data() };
-                }
-
-                // Load Systems tool
-                const systemsQuery = query(
-                    collection(db, 'stage2Tools'),
-                    where('userId', '==', currentUser.uid),
-                    where('stageId', '==', 2),
-                    where('toolType', '==', 'systems')
-                );
-                const systemsSnapshot = await getDocs(systemsQuery);
-                if (!systemsSnapshot.empty) {
-                    stage2ToolsData.systems = { id: systemsSnapshot.docs[0].id, ...systemsSnapshot.docs[0].data() };
-                }
-
-                // Load Habits tool
-                const habitsQuery = query(
-                    collection(db, 'stage2Tools'),
-                    where('userId', '==', currentUser.uid),
-                    where('stageId', '==', 2),
-                    where('toolType', '==', 'habits')
-                );
-                const habitsSnapshot = await getDocs(habitsQuery);
-                if (!habitsSnapshot.empty) {
-                    stage2ToolsData.habits = { id: habitsSnapshot.docs[0].id, ...habitsSnapshot.docs[0].data() };
-                }
-
-                renderStage2Tools();
-            } catch (error) {
-                console.error('Error loading Stage 2 tools:', error);
-                showError('Error al cargar las herramientas');
-            }
-        }
-
-        // Render all Stage 2 tools
-        function renderStage2Tools() {
-            const container = document.getElementById('stageToolsSection');
-            
-            // Calculate completion
-            const completedTools = [
-                stage2ToolsData.red?.completed,
-                stage2ToolsData.systems?.completed,
-                stage2ToolsData.habits?.completed
-            ].filter(Boolean).length;
-
-            const html = `
-                <div class="stage2-progress-indicator">
-                    <div class="stage2-progress-text">
-                        Progreso de la Etapa 2
-                    </div>
-                    <div class="stage2-progress-bar-container">
-                        <div class="stage2-progress-bar-fill" style="width: ${(completedTools / 3) * 100}%"></div>
-                    </div>
-                    <div class="stage2-progress-text">
-                        ${completedTools}/3 herramientas completadas
-                    </div>
-                </div>
-
-                <div class="stage2-tools-container">
-                    ${renderREDTool()}
-                    ${renderSystemsTool()}
-                    ${renderHabitsTool()}
-                </div>
-            `;
-
-            container.innerHTML = html;
-            container.classList.remove('hidden');
-        }
-
-        // Render RED tool
-        function renderREDTool() {
-            const data = stage2ToolsData.red;
-            const isComplete = data?.completed || false;
-            
-            return `
-                <div class="stage2-tool-card" id="redToolCard">
-                    <div class="stage2-tool-header">
-                        <div>
-                            <div class="stage2-tool-title">🔄 RED: Reinicio-Evaluación-Dirección</div>
-                            <div class="stage2-tool-subtitle">
-                                Proceso de 3 pasos para redirigir tu enfoque, restaurar el equilibrio y mantener una mentalidad profesional
-                            </div>
-                        </div>
-                        <div class="stage2-tool-status ${isComplete ? 'complete' : ''}">
-                            ${isComplete ? '✓ Completado' : '○ Pendiente'}
-                        </div>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Paso 1: Reinicio</div>
-                        <div class="stage2-section-desc">¿Cómo te reinicias cuando estás frustrado o fuera de balance?</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="redStep1"
-                            placeholder="Describe tu proceso de reinicio..."
-                            oninput="scheduleStage2AutoSave('red')"
-                            style="min-height: 120px;"
-                        >${data?.step1 || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Paso 2: Evaluación</div>
-                        <div class="stage2-section-desc">¿Cómo evalúas tu estado actual y tus operaciones?</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="redStep2"
-                            placeholder="Describe tu proceso de evaluación..."
-                            oninput="scheduleStage2AutoSave('red')"
-                            style="min-height: 120px;"
-                        >${data?.step2 || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Paso 3: Dirección</div>
-                        <div class="stage2-section-desc">¿Hacia dónde diriges tu atención y esfuerzo después?</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="redStep3"
-                            placeholder="Describe tu proceso de dirección..."
-                            oninput="scheduleStage2AutoSave('red')"
-                            style="min-height: 120px;"
-                        >${data?.step3 || ''}</textarea>
-                    </div>
-
-                    <div class="save-indicator" id="redSaveIndicator">
-                        <span id="redSaveText">Sin cambios</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Render Systems tool
-        function renderSystemsTool() {
-            const data = stage2ToolsData.systems;
-            const isComplete = data?.completed || false;
-            
-            return `
-                <div class="stage2-tool-card" id="systemsToolCard">
-                    <div class="stage2-tool-header">
-                        <div>
-                            <div class="stage2-tool-title">⚙️ Sistemas y Procesos</div>
-                            <div class="stage2-tool-subtitle">
-                                Define tus reglas, límites y procesos de trading para mantener la consistencia
-                            </div>
-                        </div>
-                        <div class="stage2-tool-status ${isComplete ? 'complete' : ''}">
-                            ${isComplete ? '✓ Completado' : '○ Pendiente'}
-                        </div>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Mercados y Horarios</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsMarkets"
-                            placeholder="¿Qué mercados operas y en qué horarios/sesiones?"
-                            oninput="scheduleStage2AutoSave('systems')"
-                        >${data?.markets || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Parámetros de Riesgo</div>
-                        <div class="stage2-section-desc">Define: riesgo por posición, por idea, exposición máxima, límite diario y semanal de pérdida</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsRisk"
-                            placeholder="Escribe tus parámetros de riesgo..."
-                            oninput="scheduleStage2AutoSave('systems')"
-                            style="min-height: 150px;"
-                        >${data?.risk || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Limitaciones de Trading</div>
-                        <div class="stage2-section-desc">Define: número de trades por día, posiciones abiertas, pérdidas/ganancias máximas por día, riesgo total máximo</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsLimits"
-                            placeholder="Escribe tus limitaciones..."
-                            oninput="scheduleStage2AutoSave('systems')"
-                            style="min-height: 150px;"
-                        >${data?.limits || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Gestión de Operaciones</div>
-                        <div class="stage2-section-desc">Define: ejecución, stop loss, break even, parciales, optimización de TP y R:R</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsManagement"
-                            placeholder="Describe tu gestión de operaciones..."
-                            oninput="scheduleStage2AutoSave('systems')"
-                            style="min-height: 150px;"
-                        >${data?.management || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Preparación Física y Mental</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsPreparation"
-                            placeholder="¿Cómo te preparas física y mentalmente para trading?"
-                            oninput="scheduleStage2AutoSave('systems')"
-                        >${data?.preparation || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Prohibido Trading Bajo Estas Condiciones</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsProhibited"
-                            placeholder="¿En qué condiciones NO debes operar?"
-                            oninput="scheduleStage2AutoSave('systems')"
-                        >${data?.prohibited || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Estrategias de Comportamiento</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsBehavior"
-                            placeholder="¿Qué estrategias sigues para mantener un comportamiento profesional?"
-                            oninput="scheduleStage2AutoSave('systems')"
-                            style="min-height: 120px;"
-                        >${data?.behavior || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Guías para el Comportamiento Profesional</div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="systemsGuidelines"
-                            placeholder="¿Qué guías seguirás para mantener profesionalismo?"
-                            oninput="scheduleStage2AutoSave('systems')"
-                            style="min-height: 120px;"
-                        >${data?.guidelines || ''}</textarea>
-                    </div>
-
-                    <div class="save-indicator" id="systemsSaveIndicator">
-                        <span id="systemsSaveText">Sin cambios</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Render Habits tool
-        function renderHabitsTool() {
-            const data = stage2ToolsData.habits;
-            const isComplete = data?.completed || false;
-            const habits = data?.habits || [];
-            
-            return `
-                <div class="stage2-tool-card" id="habitsToolCard">
-                    <div class="stage2-tool-header">
-                        <div>
-                            <div class="stage2-tool-title">🎯 Hábitos y Rutinas</div>
-                            <div class="stage2-tool-subtitle">
-                                Define hábitos claros, simples y repetibles que mantengan tu enfoque y alto rendimiento
-                            </div>
-                        </div>
-                        <div class="stage2-tool-status ${isComplete ? 'complete' : ''}">
-                            ${isComplete ? '✓ Completado' : '○ Pendiente'}
-                        </div>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Reflexión sobre tus Rutinas</div>
-                        <div class="stage2-section-desc">
-                            ¿Qué te prepara bien para el día? ¿Qué es clave para rendir al máximo? ¿Dónde hay ineficiencias que roban tiempo?
-                        </div>
-                        <textarea 
-                            class="form-textarea" 
-                            id="habitsReflection"
-                            placeholder="Reflexiona sobre tus rutinas actuales..."
-                            oninput="scheduleStage2AutoSave('habits')"
-                            style="min-height: 150px;"
-                        >${data?.reflection || ''}</textarea>
-                    </div>
-
-                    <div class="stage2-section">
-                        <div class="stage2-section-title">Mis Hábitos Diarios</div>
-                        <div class="stage2-section-desc">
-                            Lista hábitos específicos y accionables que seguirás con constancia
-                        </div>
-                        <div class="habits-list" id="habitsList">
-                            ${habits.map((habit, index) => `
-                                <div class="habit-item">
-                                    <span style="color: #4F46E5; font-weight: 600;">${index + 1}.</span>
-                                    <input 
-                                        type="text" 
-                                        value="${habit}"
-                                        onchange="updateHabit(${index}, this.value)"
-                                        placeholder="Escribe un hábito..."
-                                    />
-                                    <button onclick="removeHabit(${index})">🗑️</button>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <button class="add-habit-btn" onclick="addHabit()">
-                            ➕ Añadir Hábito
-                        </button>
-                    </div>
-
-                    <div class="save-indicator" id="habitsSaveIndicator">
-                        <span id="habitsSaveText">Sin cambios</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Schedule auto-save for Stage 2 tools
-        window.scheduleStage2AutoSave = function(toolType) {
-            const indicator = document.getElementById(`${toolType}SaveIndicator`);
-            const text = document.getElementById(`${toolType}SaveText`);
-            
-            if (indicator && text) {
-                indicator.classList.remove('saved');
-                indicator.classList.add('saving');
-                text.textContent = 'Guardando...';
-            }
-
-            if (stage2AutoSaveTimer) {
-                clearTimeout(stage2AutoSaveTimer);
-            }
-
-            stage2AutoSaveTimer = setTimeout(async () => {
-                await saveStage2Tool(toolType, true);
-            }, 2000);
-        }
-
-        // Save Stage 2 tool
-        async function saveStage2Tool(toolType, isAutoSave = false) {
-            if (!currentUser) return;
-
-            try {
-                let toolData = {
-                    userId: currentUser.uid,
-                    stageId: 2,
-                    toolType: toolType,
-                    updatedAt: Timestamp.now()
-                };
-
-                let isComplete = false;
-
-                if (toolType === 'red') {
-                    const step1 = document.getElementById('redStep1')?.value?.trim() || '';
-                    const step2 = document.getElementById('redStep2')?.value?.trim() || '';
-                    const step3 = document.getElementById('redStep3')?.value?.trim() || '';
-                    
-                    toolData.step1 = step1;
-                    toolData.step2 = step2;
-                    toolData.step3 = step3;
-                    isComplete = step1 && step2 && step3;
-                } else if (toolType === 'systems') {
-                    const markets = document.getElementById('systemsMarkets')?.value?.trim() || '';
-                    const risk = document.getElementById('systemsRisk')?.value?.trim() || '';
-                    const limits = document.getElementById('systemsLimits')?.value?.trim() || '';
-                    const management = document.getElementById('systemsManagement')?.value?.trim() || '';
-                    const preparation = document.getElementById('systemsPreparation')?.value?.trim() || '';
-                    const prohibited = document.getElementById('systemsProhibited')?.value?.trim() || '';
-                    const behavior = document.getElementById('systemsBehavior')?.value?.trim() || '';
-                    const guidelines = document.getElementById('systemsGuidelines')?.value?.trim() || '';
-                    
-                    toolData.markets = markets;
-                    toolData.risk = risk;
-                    toolData.limits = limits;
-                    toolData.management = management;
-                    toolData.preparation = preparation;
-                    toolData.prohibited = prohibited;
-                    toolData.behavior = behavior;
-                    toolData.guidelines = guidelines;
-                    isComplete = markets && risk && limits && management && preparation && prohibited && behavior && guidelines;
-                } else if (toolType === 'habits') {
-                    const reflection = document.getElementById('habitsReflection')?.value?.trim() || '';
-                    const habits = stage2ToolsData.habits?.habits || [];
-                    
-                    toolData.reflection = reflection;
-                    toolData.habits = habits;
-                    isComplete = reflection && habits.length >= 3; // At least 3 habits
-                }
-
-                toolData.completed = isComplete;
-
-                if (stage2ToolsData[toolType]?.id) {
-                    // Update existing
-                    await updateDoc(doc(db, 'stage2Tools', stage2ToolsData[toolType].id), toolData);
-                } else {
-                    // Create new
-                    toolData.createdAt = Timestamp.now();
-                    const docRef = await addDoc(collection(db, 'stage2Tools'), toolData);
-                    stage2ToolsData[toolType] = { id: docRef.id, ...toolData };
-                }
-
-                const indicator = document.getElementById(`${toolType}SaveIndicator`);
-                const text = document.getElementById(`${toolType}SaveText`);
-                
-                if (indicator && text) {
-                    indicator.classList.remove('saving');
-                    indicator.classList.add('saved');
-                    text.textContent = '✓ Guardado';
-                }
-
-                if (!isAutoSave) {
-                    showSuccess('✅ Herramienta guardada correctamente');
-                    // Reload to update completion status
-                    await loadStage2Tools();
-                }
-            } catch (error) {
-                console.error('Error saving Stage 2 tool:', error);
-                if (!isAutoSave) {
-                    showError('Error al guardar: ' + error.message);
-                }
-            }
-        }
-
-        // Habits functions
-        window.addHabit = async function() {
-            if (!stage2ToolsData.habits) {
-                stage2ToolsData.habits = { habits: [] };
-            }
-            if (!stage2ToolsData.habits.habits) {
-                stage2ToolsData.habits.habits = [];
-            }
-            
-            stage2ToolsData.habits.habits.push('');
-            renderStage2Tools();
-            
-            // Focus on the new input
-            setTimeout(() => {
-                const inputs = document.querySelectorAll('#habitsList input');
-                if (inputs.length > 0) {
-                    inputs[inputs.length - 1].focus();
-                }
-            }, 100);
-        }
-
-        window.updateHabit = async function(index, value) {
-            if (!stage2ToolsData.habits?.habits) return;
-            
-            stage2ToolsData.habits.habits[index] = value;
-            await saveStage2Tool('habits', false);
-        }
-
-        window.removeHabit = async function(index) {
-            if (!stage2ToolsData.habits?.habits) return;
-            
-            stage2ToolsData.habits.habits.splice(index, 1);
-            await saveStage2Tool('habits', false);
-        }
-
-        // ========================================
-        // END OF STAGE 2 FUNCTIONS
-        // ========================================
-
-        // Make functions global
+        // Make all functions global
         window.navigateToPage = navigateToPage;
         window.navigateToCurrentStep = navigateToCurrentStep;
         window.navigateToStep = navigateToStep;
@@ -4313,8 +4784,6 @@
         window.openReviewModal = openReviewModal;
         window.closeReviewModal = closeReviewModal;
         window.submitReview = submitReview;
-        window.toggleCreateExerciseForm = toggleCreateExerciseForm;
-        window.createExerciseForUser = createExerciseForUser;
         window.saveStageContent = saveStageContent;
         window.createMyExercise = createMyExercise;
         window.submitStageForReview = submitStageForReview;
@@ -4322,17 +4791,6 @@
         window.closeStageReviewModal = closeStageReviewModal;
         window.approveStage = approveStage;
         window.rejectStage = rejectStage;
-        // Stage 1 functions
-        window.showErrorEditor = showErrorEditor;
-        window.cancelErrorEditor = cancelErrorEditor;
-        window.saveError = saveError;
-        window.deleteError = deleteError;
-        window.scheduleErrorAutoSave = scheduleErrorAutoSave;
-        // Stage 2 functions
-        window.scheduleStage2AutoSave = scheduleStage2AutoSave;
-        window.addHabit = addHabit;
-        window.updateHabit = updateHabit;
-        window.removeHabit = removeHabit;
     </script>
 </body>
 </html>
