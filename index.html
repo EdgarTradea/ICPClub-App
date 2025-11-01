@@ -4528,7 +4528,7 @@
             }).join('');
         }
 
-        window.openStageReviewModal = async function(submissionId, userName, stageId) {
+   window.openStageReviewModal = async function(submissionId, userName, stageId) {
             try {
                 const submissionDoc = await getDoc(doc(db, 'stageSubmissions', submissionId));
                 if (!submissionDoc.exists()) return;
@@ -4539,7 +4539,186 @@
                 const modal = document.getElementById('stageReviewModal');
                 const content = document.getElementById('stageReviewModalContent');
                 
-                let stageContent = '<p style="color: #a1a1aa;">Revisión de etapa completada</p>';
+                let stageContent = '';
+
+                // Load content based on stage
+                if (stageId === 1) {
+                    // Stage 1: Load errors
+                    const errorsQuery = query(
+                        collection(db, 'stageErrors'),
+                        where('userId', '==', currentStageSubmission.userId),
+                        where('stageId', '==', 1)
+                    );
+                    const errorsSnapshot = await getDocs(errorsQuery);
+                    const errors = errorsSnapshot.docs
+                        .map(doc => ({ id: doc.id, ...doc.data() }))
+                        .filter(error => !error.deleted);
+
+                    if (errors.length > 0) {
+                        stageContent = '<div style="margin-top: 1.5rem;">';
+                        errors.forEach((error, index) => {
+                            const questions = [
+                                'Describe el error en detalle',
+                                '¿Qué suele pasar justo antes?',
+                                '¿Cuál es la intención positiva?',
+                                '¿Qué circunstancias personales contribuyen?',
+                                '¿Cómo sabotea este comportamiento tu trading?',
+                                '¿Cuál es la mejor manera de lograr las intenciones positivas?',
+                                '¿Cómo aplicarás este Top Level específicamente?'
+                            ];
+
+                            stageContent += `
+                                <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                                    <h4 style="color: #fff; margin-bottom: 1rem;">❌ Error ${index + 1}: ${error.title || 'Sin título'}</h4>
+                                    ${error.answers.map((answer, i) => `
+                                        <div style="margin-bottom: 1rem;">
+                                            <strong style="color: #7C3AED;">${i + 1}. ${questions[i]}</strong>
+                                            <p style="color: #a1a1aa; margin-top: 0.5rem; white-space: pre-wrap;">${answer || 'Sin respuesta'}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `;
+                        });
+                        stageContent += '</div>';
+                    } else {
+                        stageContent = '<p style="color: #a1a1aa;">No se encontraron errores registrados.</p>';
+                    }
+
+                } else if (stageId === 2) {
+                    // Stage 2: Load RED, Systems, and Habits
+                    stageContent = '<div style="margin-top: 1.5rem;">';
+                    
+                    // Load RED
+                    const redQuery = query(
+                        collection(db, 'stage2RED'),
+                        where('userId', '==', currentStageSubmission.userId)
+                    );
+                    const redSnapshot = await getDocs(redQuery);
+                    const redItems = redSnapshot.docs
+                        .map(doc => ({ id: doc.id, ...doc.data() }))
+                        .filter(item => !item.deleted);
+
+                    if (redItems.length > 0) {
+                        stageContent += `
+                            <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <h4 style="color: #fff; margin-bottom: 1rem;">🔄 RED: Reinicio-Evaluación-Dirección</h4>
+                        `;
+                        redItems.forEach((red, index) => {
+                            const typeLabels = {
+                                'daily': '📅 Diaria',
+                                'weekly': '📆 Semanal',
+                                'monthly': '📊 Mensual',
+                                'custom': '✨ ' + (red.customType || 'Personalizada')
+                            };
+                            stageContent += `
+                                <div style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <div style="color: #7C3AED; margin-bottom: 0.5rem;">${typeLabels[red.type] || red.type}</div>
+                                    <div style="margin-bottom: 0.5rem;">
+                                        <strong style="color: #4F46E5;">Paso 1: Reinicio</strong>
+                                        <p style="color: #a1a1aa; margin-top: 0.25rem; white-space: pre-wrap;">${red.step1 || 'Sin contenido'}</p>
+                                    </div>
+                                    <div style="margin-bottom: 0.5rem;">
+                                        <strong style="color: #4F46E5;">Paso 2: Evaluación</strong>
+                                        <p style="color: #a1a1aa; margin-top: 0.25rem; white-space: pre-wrap;">${red.step2 || 'Sin contenido'}</p>
+                                    </div>
+                                    <div>
+                                        <strong style="color: #4F46E5;">Paso 3: Dirección</strong>
+                                        <p style="color: #a1a1aa; margin-top: 0.25rem; white-space: pre-wrap;">${red.step3 || 'Sin contenido'}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        stageContent += '</div>';
+                    }
+
+                    // Load Systems
+                    const systemsQuery = query(
+                        collection(db, 'stage2Systems'),
+                        where('userId', '==', currentStageSubmission.userId)
+                    );
+                    const systemsSnapshot = await getDocs(systemsQuery);
+                    if (!systemsSnapshot.empty) {
+                        const systemsData = systemsSnapshot.docs[0].data();
+                        stageContent += `
+                            <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <h4 style="color: #fff; margin-bottom: 1rem;">⚙️ Sistemas y Procesos</h4>
+                                
+                                ${systemsData.markets && systemsData.markets.length > 0 ? `
+                                    <div style="margin-bottom: 1rem;">
+                                        <strong style="color: #7C3AED;">📊 Mercados y Horarios</strong>
+                                        <ul style="color: #a1a1aa; margin-top: 0.5rem;">
+                                            ${systemsData.markets.map(m => `<li style="margin-bottom: 0.25rem;">${m}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                                
+                                ${systemsData.riskParams && systemsData.riskParams.length > 0 ? `
+                                    <div style="margin-bottom: 1rem;">
+                                        <strong style="color: #7C3AED;">⚠️ Parámetros de Riesgo</strong>
+                                        <ul style="color: #a1a1aa; margin-top: 0.5rem;">
+                                            ${systemsData.riskParams.map(r => `<li style="margin-bottom: 0.25rem;">${r}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                                
+                                ${systemsData.tradingLimits ? `
+                                    <div style="margin-bottom: 1rem;">
+                                        <strong style="color: #7C3AED;">🚦 Limitaciones de Trading</strong>
+                                        <div style="color: #a1a1aa; margin-top: 0.5rem;">
+                                            ${systemsData.tradingLimits.maxTrades ? `<div>• Max trades/día: ${systemsData.tradingLimits.maxTrades}</div>` : ''}
+                                            ${systemsData.tradingLimits.maxPositions ? `<div>• Max posiciones: ${systemsData.tradingLimits.maxPositions}</div>` : ''}
+                                            ${systemsData.tradingLimits.maxLosses ? `<div>• Max pérdidas/día: ${systemsData.tradingLimits.maxLosses}</div>` : ''}
+                                            ${systemsData.tradingLimits.maxWins ? `<div>• Max ganancias/día: ${systemsData.tradingLimits.maxWins}</div>` : ''}
+                                            ${systemsData.tradingLimits.maxRisk ? `<div>• Riesgo total máximo: ${systemsData.tradingLimits.maxRisk}</div>` : ''}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+
+                    // Load Habits
+                    const habitsQuery = query(
+                        collection(db, 'stage2Habits'),
+                        where('userId', '==', currentStageSubmission.userId)
+                    );
+                    const habitsSnapshot = await getDocs(habitsQuery);
+                    if (!habitsSnapshot.empty) {
+                        const habitsData = habitsSnapshot.docs[0].data();
+                        stageContent += `
+                            <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <h4 style="color: #fff; margin-bottom: 1rem;">🎯 Hábitos y Rutinas</h4>
+                                
+                                ${habitsData.reflection ? `
+                                    <div style="margin-bottom: 1rem;">
+                                        <strong style="color: #7C3AED;">💭 Reflexión sobre Rutinas</strong>
+                                        <p style="color: #a1a1aa; margin-top: 0.5rem; white-space: pre-wrap;">${habitsData.reflection}</p>
+                                    </div>
+                                ` : ''}
+                                
+                                ${habitsData.habits && habitsData.habits.length > 0 ? `
+                                    <div>
+                                        <strong style="color: #7C3AED;">✅ Mis Hábitos Diarios</strong>
+                                        <ul style="color: #a1a1aa; margin-top: 0.5rem;">
+                                            ${habitsData.habits.map(h => `<li style="margin-bottom: 0.25rem;">${h}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+
+                    stageContent += '</div>';
+
+                } else if (stageId === 3) {
+                    stageContent = '<p style="color: #a1a1aa;">Etapa 3: Flowchart de Estrategia<br>(Funcionalidad de imagen pendiente de implementación)</p>';
+                
+                } else if (stageId === 4) {
+                    stageContent = '<p style="color: #a1a1aa;">Etapa 4: Integración - Llamada 1-a-1 con el Mentor<br>Esta etapa se completa mediante una llamada programada.</p>';
+                
+                } else {
+                    stageContent = '<p style="color: #a1a1aa;">Revisión de etapa completada</p>';
+                }
 
                 content.innerHTML = `
                     <div class="review-exercise-header">
