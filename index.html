@@ -3298,6 +3298,9 @@
             } else {
                 customGroup.classList.add('hidden');
             }
+            
+            // Trigger auto-save when type changes
+            scheduleREDAutoSave();
         }
 
         window.scheduleREDAutoSave = function() {
