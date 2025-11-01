@@ -1871,6 +1871,18 @@
                 if (userDoc.exists()) {
                     userData = userDoc.data();
                     console.log('User data loaded:', userData);
+                    
+                    // Ensure Stage 0 is always unlocked
+                    if (!userData.unlockedSteps || !userData.unlockedSteps.includes(0)) {
+                        const unlockedSteps = userData.unlockedSteps || [1];
+                        if (!unlockedSteps.includes(0)) {
+                            unlockedSteps.unshift(0);
+                        }
+                        userData.unlockedSteps = unlockedSteps;
+                        await updateDoc(doc(db, 'users', user.uid), {
+                            unlockedSteps: unlockedSteps
+                        });
+                    }
                 } else {
                     userData = {
                         email: user.email,
@@ -1882,14 +1894,6 @@
                         role: 'student'
                     };
                     await setDoc(doc(db, 'users', user.uid), userData);
-                }
-                
-                // Ensure Stage 0 is always unlocked
-                if (!userData.unlockedSteps.includes(0)) {
-                    userData.unlockedSteps.unshift(0);
-                    await updateDoc(doc(db, 'users', user.uid), {
-                        unlockedSteps: userData.unlockedSteps
-                    });
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);
@@ -2731,51 +2735,32 @@
             if (!currentUser) return;
 
             try {
+                // Simple query without orderBy to avoid index requirement
                 const errorsQuery = query(
                     collection(db, 'stageErrors'),
                     where('userId', '==', currentUser.uid),
-                    where('stageId', '==', 1),
-                    where('deleted', '==', false),
-                    orderBy('createdAt', 'desc')
+                    where('stageId', '==', 1)
                 );
 
                 const snapshot = await getDocs(errorsQuery);
-                currentErrors = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                currentErrors = snapshot.docs
+                    .map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    .filter(error => !error.deleted); // Filter deleted errors
+
+                // Sort manually by createdAt
+                currentErrors.sort((a, b) => {
+                    const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+                    const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+                    return bTime - aTime;
+                });
 
                 renderErrorsList();
             } catch (error) {
                 console.error('Error loading errors:', error);
-                
-                // If error is due to missing index, try without orderBy
-                try {
-                    const errorsQuerySimple = query(
-                        collection(db, 'stageErrors'),
-                        where('userId', '==', currentUser.uid),
-                        where('stageId', '==', 1),
-                        where('deleted', '==', false)
-                    );
-
-                    const snapshot = await getDocs(errorsQuerySimple);
-                    currentErrors = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-
-                    // Sort manually
-                    currentErrors.sort((a, b) => {
-                        const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
-                        const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
-                        return bTime - aTime;
-                    });
-
-                    renderErrorsList();
-                } catch (innerError) {
-                    console.error('Error loading errors (simple query):', innerError);
-                    showError('Error al cargar tus errores');
-                }
+                showError('Error al cargar tus errores: ' + error.message);
             }
         }
 
@@ -2947,7 +2932,7 @@
                     title: title || 'Error sin título',
                     answers: answers,
                     completedQuestions: completedQuestions,
-                    deleted: false,
+                    deleted: false, // Always include this field
                     updatedAt: Timestamp.now()
                 };
 
@@ -3113,50 +3098,31 @@
             if (!currentUser) return;
 
             try {
+                // Simple query without orderBy to avoid index requirement
                 const redQuery = query(
                     collection(db, 'stage2RED'),
-                    where('userId', '==', currentUser.uid),
-                    where('deleted', '==', false),
-                    orderBy('createdAt', 'desc')
+                    where('userId', '==', currentUser.uid)
                 );
 
                 const snapshot = await getDocs(redQuery);
-                currentREDItems = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
+                currentREDItems = snapshot.docs
+                    .map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }))
+                    .filter(item => !item.deleted); // Filter deleted items
+
+                // Sort manually by createdAt
+                currentREDItems.sort((a, b) => {
+                    const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
+                    const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
+                    return bTime - aTime;
+                });
 
                 renderREDList();
             } catch (error) {
                 console.error('Error loading RED items:', error);
-                
-                // Try without orderBy
-                try {
-                    const redQuerySimple = query(
-                        collection(db, 'stage2RED'),
-                        where('userId', '==', currentUser.uid),
-                        where('deleted', '==', false)
-                    );
-
-                    const snapshot = await getDocs(redQuerySimple);
-                    currentREDItems = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-
-                    // Sort manually
-                    currentREDItems.sort((a, b) => {
-                        const aTime = a.createdAt?.toMillis ? a.createdAt.toMillis() : 0;
-                        const bTime = b.createdAt?.toMillis ? b.createdAt.toMillis() : 0;
-                        return bTime - aTime;
-                    });
-
-                    renderREDList();
-                } catch (innerError) {
-                    console.error('Error loading RED items (simple query):', innerError);
-                    document.getElementById('redToolContent').innerHTML = 
-                        '<p style="color: #ef4444; padding: 1rem;">Error al cargar herramientas RED</p>';
-                }
+                showError('Error al cargar herramientas RED: ' + error.message);
             }
         }
 
@@ -3379,7 +3345,7 @@
                     step1: step1 || '',
                     step2: step2 || '',
                     step3: step3 || '',
-                    deleted: false,
+                    deleted: false, // Always include this field
                     updatedAt: Timestamp.now()
                 };
 
@@ -4282,14 +4248,32 @@
         window.unlockStepForUser = async function(userId) {
             try {
                 const selectedStep = parseInt(document.getElementById(`stepSelect_${userId}`).value);
+                
+                if (!selectedStep || isNaN(selectedStep)) {
+                    showError('Selecciona una etapa válida');
+                    return;
+                }
+                
                 const userRef = doc(db, 'users', userId);
                 const userDoc = await getDoc(userRef);
+                
+                if (!userDoc.exists()) {
+                    showError('Usuario no encontrado');
+                    return;
+                }
+                
                 const userData = userDoc.data();
+                console.log('Desbloqueando etapa', selectedStep, 'para usuario', userId);
                 
                 const unlockedSteps = userData.unlockedSteps || [0, 1];
                 if (!unlockedSteps.includes(selectedStep)) {
                     unlockedSteps.push(selectedStep);
                     unlockedSteps.sort((a, b) => a - b);
+                }
+                
+                // Also ensure Stage 0 is included
+                if (!unlockedSteps.includes(0)) {
+                    unlockedSteps.unshift(0);
                 }
 
                 await updateDoc(userRef, {
@@ -4297,11 +4281,16 @@
                     unlockedSteps: unlockedSteps
                 });
 
-                showSuccess(`Etapa ${selectedStep} desbloqueada para el alumno`);
-                loadAdminDashboard();
+                console.log('Etapa desbloqueada exitosamente');
+                showSuccess(`✅ Etapa ${selectedStep} desbloqueada para el alumno`);
+                
+                // Reload admin dashboard after a short delay
+                setTimeout(() => {
+                    loadAdminDashboard();
+                }, 500);
             } catch (error) {
                 console.error('Error unlocking step:', error);
-                showError('Error al desbloquear la etapa');
+                showError('Error al desbloquear la etapa: ' + error.message);
             }
         }
 
